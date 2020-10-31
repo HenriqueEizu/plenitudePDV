@@ -1,6 +1,6 @@
 <!-- <nav  class="navbar navbar-expand-md bg-dark navbar-dark fixed-top"> -->
     <nav  class="navbar navbar-expand-sm bg-secondary navbar-dark fixed-top">
-    
+
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse"
           aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -8,8 +8,9 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item" >
-              <a routerLinkActive="active" class="nav-link" [routerLink]="['listausuarios']">
-                Usuarios</a>
+              <a routerLinkActive="active" class="nav-link" [routerLink]="['/clientes']">
+                <img src="/assets/imagens/icons/clientes.png" class="mr-2" style="width: 20px; color: white;">
+                <i class="fa fa-app-store"></i>Clientes</a>
             </li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
@@ -17,7 +18,7 @@
               <div class="row">
                 <div class="col">
                   <div ngbDropdown >
-                    <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>usuarioLogado</button>
+                    <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle><img src="/assets/imagens/icons/user1.png" class="mr-2" style="width: 20px; color: white;">{{usuarioLogado.Usuario}}</button>
                     <!-- <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
                       <button ngbDropdownItem>Action - 1</button>
                       <button ngbDropdownItem>Another Action</button>
@@ -28,11 +29,11 @@
               </div>
             </li>
             <li>
-                <a href="#" > &nbsp;&nbsp;&nbsp;logout
-                  </a>
+              <a href="#" (click)="logout()" > &nbsp;&nbsp;&nbsp;logout
+                <img src="/assets/imagens/icons/sair.png" class="mr-2" style="width: 20px; color: white;">
+                </a>
             </li>
          </ul>
         </div>
       </nav>
-    
-    
+

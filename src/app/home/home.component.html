@@ -1,0 +1,23 @@
+<div *ngIf="blnLogado == false ">
+  <nav  class="navbar navbar-expand-md bg-dark navbar-dark fixed-top">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <ul class="navbar-nav mr-auto"></ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+          <a [routerLink]="['/login']" class="fa fa-user"> Login </a>
+        </li>
+    </ul>
+    </div>
+  </nav>
+</div>
+
+
+<section class="content">
+  <div  class="jumbotron welcome-jumbotron" style="height: 600px;">
+      <h1>Bem vindo ao PDV Plenitude</h1>
+  </div>
+</section>

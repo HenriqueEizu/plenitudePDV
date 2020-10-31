@@ -1,1 +1,419 @@
-<p>clientes works!</p>
+<div class="row">
+  <div class="col-sm-2 col-xs-2">
+      &nbsp;
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-2 col-xs-2">
+      &nbsp;
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-2 col-xs-2">
+      &nbsp;
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-2 col-xs-2">
+      &nbsp;
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-2 col-xs-2">&nbsp;</div>
+  <div class="col-sm-8 col-xs-8 badge badge-primary"> <h5><img src="/assets/imagens/icons/clientes.png" class="mr-2" style="width: 30px"> Cadastro de Clientes</h5></div>
+</div>
+<div class="row">
+  <div class="col-sm-2 col-xs-2">
+      &nbsp;
+  </div>
+
+  <div class="col-sm-8 col-xs-8 border border-primary rounded shadow-lg p-4 mb-4 bg-white">
+      <h4>Dados do Cliente</h4>
+      <form [formGroup]="clienteForm" novalidate>
+          <div class="row">
+              <div class="col-sm-2 col-xs-2">
+                  &nbsp;
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-sm-2 col-xs-2">
+                  &nbsp;
+              </div>
+              <div class="col-sm-2 col-xs-2">
+                      CPF:
+              </div>
+              <div class="col-sm-6  col-xs-6">
+                  <cft-input errorMessage="Campo obrigatório " label="cpf cliente">
+                      <input name="CnpjCpf" class="form-control" formControlName="CnpjCpf" autocomplete="off" placeholder="CPF">
+                  </cft-input>
+              </div>
+              <div class="col-xs-12 col-sm-2" >
+                  <!-- <span class="help-block pull-right has-error-block" *ngIf="usuarioForm.get('US_USLOGIN').hasError('loginInvalido') === 'VALID'" style="color:red"><i class="fa fa-remove"></i> Login já existente</span> -->
+                  <!-- <span class="help-block pull-right has-error-block" *ngIf="clienteForm.get('JO_JONOME').hasError('jogadorInvalido')" style="color:red"><i class="fa fa-remove"></i> Nome jogador já existente</span> -->
+              </div>
+          </div>
+
+          <div class="row">
+              <div class="col-sm-2 col-xs-2">
+                  &nbsp;
+              </div>
+              <div class="col-sm-2 col-xs-2">
+                      RG / IE:
+              </div>
+              <div class="col-sm-6  col-xs-6">
+                  <cft-input errorMessage="Campo obrigatório e com 2 carateres" label="RG / IE do Cliente usuário">
+                      <input name="IEstRG" class="form-control" formControlName="IEstRG" autocomplete="off" placeholder="RG /IE">
+                  </cft-input>
+              </div>
+              <div class="col-xs-12 col-sm-2" >
+                  <!-- <span class="help-block pull-right has-error-block" *ngIf="usuarioForm.get('US_USLOGIN').hasError('loginInvalido') === 'VALID'" style="color:red"><i class="fa fa-remove"></i> Login já existente</span> -->
+                  <!-- <span class="help-block pull-right has-error-block" *ngIf="jogadorForm.get('JO_JOAPELIDO').hasError('apelidoInvalido')" style="color:red"><i class="fa fa-remove"></i> Apelido já existente</span> -->
+              </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2 col-xs-2">
+                &nbsp;
+            </div>
+            <div class="col-sm-2 col-xs-2">
+                Pessoa:
+            </div>
+            <div class="col-sm-6 col-xs-6" style="text-align: left;">
+                <input type="radio" name="IndFisJur" class="form-control" formControlName="IndFisJur" autocomplete="off" placeholder="Ativo"> Física
+                <input type="radio" name="IndFisJur" class="form-control" formControlName="IndFisJur" autocomplete="off" placeholder="Ativo"> Jurídica
+            </div>
+          </div>
+          <div class="row">
+              <div class="col-sm-2 col-xs-2">
+                  &nbsp;
+              </div>
+              <div class="col-sm-2 col-xs-2">
+                  Nome:
+              </div>
+              <div class="col-sm-6  col-xs-6">
+                  <cft-input errorMessage="Nome é um campo obrigatório" label="Nome">
+                      <input name="Nome" class="form-control" formControlName="Nome" autocomplete="off" placeholder="Nome">
+                  </cft-input>
+              </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2 col-xs-2">
+                &nbsp;
+            </div>
+            <div class="col-sm-2 col-xs-2">
+              Apelido:
+            </div>
+            <div class="col-sm-6  col-xs-6">
+                <cft-input errorMessage="Apelido é um campo obrigatório" label="Nome">
+                    <input name="Apelido" class="form-control" formControlName="Apelido" autocomplete="off" placeholder="Apelido">
+                </cft-input>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-2 col-xs-2">
+                &nbsp;
+            </div>
+            <div class="col-sm-2 col-xs-2">
+              Orgão Emissor:
+            </div>
+            <div class="col-sm-6  col-xs-6">
+                <cft-input errorMessage="Orgão Emissor é um campo obrigatório" label="Orgão Emissor">
+                    <input name="OrgEmisRg" class="form-control" formControlName="OrgEmisRg" autocomplete="off" placeholder="Orgão Emissor">
+                </cft-input>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2 col-xs-2">
+                &nbsp;
+            </div>
+            <div class="col-sm-2 col-xs-2">
+              Estado Civil:
+            </div>
+            <div class="col-sm-6  col-xs-6">
+                <cft-input errorMessage="Estado civil é um campo obrigatório" label="Estado Civil">
+                    <input name="EstCivil" class="form-control" formControlName="EstCivil" autocomplete="off" placeholder="Estado Civil">
+                </cft-input>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2 col-xs-2">
+                &nbsp;
+            </div>
+            <div class="col-sm-2 col-xs-2">
+              Data de Nasc.:
+            </div>
+            <div class="col-sm-6  col-xs-6">
+                <cft-input errorMessage="Data de Nasc é um campo obrigatório" label="Data de Nasc.">
+                    <input name="DtNascimento" class="form-control" formControlName="DtNascimento" autocomplete="off" placeholder="Data de Nasc.">
+                </cft-input>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2 col-xs-2">
+                &nbsp;
+            </div>
+            <div class="col-sm-2 col-xs-2">
+              Profissao:
+            </div>
+            <div class="col-sm-6  col-xs-6">
+                <cft-input errorMessage="Profissao é um campo obrigatório" label="Profissao">
+                    <input name="ProfProfissao" class="form-control" formControlName="ProfProfissao" autocomplete="off" placeholder="Data Cadastro">
+                </cft-input>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2 col-xs-2">
+                &nbsp;
+            </div>
+            <div class="col-sm-2 col-xs-2">
+              Data Cadastro:
+            </div>
+            <div class="col-sm-6  col-xs-6">
+                <cft-input errorMessage="" label="Data Cadastro">
+                    <input name="DhIns" class="form-control" formControlName="DhIns" autocomplete="off" placeholder="Data Cadastro">
+                </cft-input>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2 col-xs-2">
+                &nbsp;
+            </div>
+            <div class="col-sm-2 col-xs-2">
+              CEP:
+            </div>
+            <div class="col-sm-6  col-xs-6">
+                <cft-input errorMessage="CEP é um campo obrigatório" label="CEP">
+                    <input #CEP name="CEP" class="form-control" formControlName="CEP" autocomplete="off" placeholder="CEP" (input)="ConsultaCEP(CEP.value)">
+                </cft-input>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2 col-xs-2">
+                &nbsp;
+            </div>
+            <div class="col-sm-2 col-xs-2">
+              UF:
+            </div>
+            <div class="col-sm-6  col-xs-6">
+                <select name="UF" class="form-control" formControlName="UF">
+                  <option *ngFor=  "let c of (estados)" [value]="c.UF">{{c.Estado}}</option>
+                </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-xs-12">
+                &nbsp;
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2 col-xs-2">
+                &nbsp;
+            </div>
+            <div class="col-sm-2 col-xs-2">
+              Localidade:
+            </div>
+            <div class="col-sm-6  col-xs-6">
+                <cft-input errorMessage="Localidade é um campo obrigatório" label="Localidade">
+                    <input name="Localidade" class="form-control" formControlName="Localidade" autocomplete="off" placeholder="Localidade/Cidade">
+                </cft-input>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2 col-xs-2">
+                &nbsp;
+            </div>
+            <div class="col-sm-2 col-xs-2">
+              Logradouro:
+            </div>
+            <div class="col-sm-6  col-xs-6">
+                <cft-input errorMessage="Logradouro é um campo obrigatório" label="Logradouro">
+                    <input name="Logradouro" class="form-control" formControlName="Logradouro" autocomplete="off" placeholder="Logradouro">
+                </cft-input>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2 col-xs-2">
+                &nbsp;
+            </div>
+            <div class="col-sm-2 col-xs-2">
+              Numero:
+            </div>
+            <div class="col-sm-6  col-xs-6">
+                <cft-input errorMessage="Numero é um campo obrigatório" label="Numero">
+                    <input name="Numero" class="form-control" formControlName="Numero" autocomplete="off" placeholder="Numero">
+                </cft-input>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2 col-xs-2">
+                &nbsp;
+            </div>
+            <div class="col-sm-2 col-xs-2">
+              Complemento:
+            </div>
+            <div class="col-sm-6  col-xs-6">
+                <cft-input errorMessage="Complemento é um campo obrigatório" label="Complemento">
+                    <input name="Complemento" class="form-control" formControlName="Complemento" autocomplete="off" placeholder="Complemento">
+                </cft-input>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2 col-xs-2">
+                &nbsp;
+            </div>
+            <div class="col-sm-2 col-xs-2">
+              Bairro:
+            </div>
+            <div class="col-sm-6  col-xs-6">
+                <cft-input errorMessage="Bairro é um campo obrigatório" label="Bairro">
+                    <input name="Bairro" class="form-control" formControlName="Bairro" autocomplete="off" placeholder="Bairro">
+                </cft-input>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2 col-xs-2">
+                &nbsp;
+            </div>
+            <div class="col-sm-2 col-xs-2">
+              EMail:
+            </div>
+            <div class="col-sm-6  col-xs-6">
+                <cft-input errorMessage="EMail é um campo obrigatório" label="EMail">
+                    <input name="EMail" class="form-control" formControlName="EMail" autocomplete="off" placeholder="EMail">
+                </cft-input>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2 col-xs-2">
+                &nbsp;
+            </div>
+            <div class="col-sm-2 col-xs-2">
+              Contato:
+            </div>
+            <div class="col-sm-6  col-xs-6">
+                <cft-input errorMessage="Contato é um campo obrigatório" label="Contato">
+                    <input name="Contato" class="form-control" formControlName="Contato" autocomplete="off" placeholder="Contato">
+                </cft-input>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2 col-xs-2">
+                &nbsp;
+            </div>
+            <div class="col-sm-2 col-xs-2">
+              DDD 1:
+            </div>
+            <div class="col-sm-6  col-xs-6">
+                <cft-input errorMessage="DDD 1 é um campo obrigatório" label="DDD 1">
+                    <input name="DDD1" class="form-control" formControlName="DDD1" autocomplete="off" placeholder="Contato">
+                </cft-input>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2 col-xs-2">
+                &nbsp;
+            </div>
+            <div class="col-sm-2 col-xs-2">
+              Fone 1:
+            </div>
+            <div class="col-sm-6  col-xs-6">
+                <cft-input errorMessage="Fone 1 é um campo obrigatório" label="Fone 1">
+                    <input name="Fone1" class="form-control" formControlName="Fone1" autocomplete="off" placeholder="Fone 1">
+                </cft-input>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2 col-xs-2">
+                &nbsp;
+            </div>
+            <div class="col-sm-2 col-xs-2">
+              Ramal:
+            </div>
+            <div class="col-sm-6  col-xs-6">
+                <cft-input errorMessage="Ramal é um campo obrigatório" label="Ramal">
+                    <input name="Ramal" class="form-control" formControlName="Ramal" autocomplete="off" placeholder="Ramal">
+                </cft-input>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2 col-xs-2">
+                &nbsp;
+            </div>
+            <div class="col-sm-2 col-xs-2">
+              DDD 2:
+            </div>
+            <div class="col-sm-6  col-xs-6">
+                <cft-input errorMessage="DDD 2 é um campo obrigatório" label="DDD 2">
+                    <input name="DDD2" class="form-control" formControlName="DDD2" autocomplete="off" placeholder="DDD 2">
+                </cft-input>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2 col-xs-2">
+                &nbsp;
+            </div>
+            <div class="col-sm-2 col-xs-2">
+              Fone 2:
+            </div>
+            <div class="col-sm-6  col-xs-6">
+                <cft-input errorMessage="Fone 2 é um campo obrigatório" label="Fone 2">
+                    <input name="Fone2" class="form-control" formControlName="Fone2" autocomplete="off" placeholder="Fone 2">
+                </cft-input>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2 col-xs-2">
+                &nbsp;
+            </div>
+            <div class="col-sm-2 col-xs-2">
+              DDD 3:
+            </div>
+            <div class="col-sm-6  col-xs-6">
+                <cft-input errorMessage="DDD 3 é um campo obrigatório" label="DDD 3">
+                    <input name="DDD3" class="form-control" formControlName="DDD3" autocomplete="off" placeholder="DDD 3">
+                </cft-input>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2 col-xs-2">
+                &nbsp;
+            </div>
+            <div class="col-sm-2 col-xs-2">
+              Fone 3:
+            </div>
+            <div class="col-sm-6  col-xs-6">
+                <cft-input errorMessage="Fone 3 é um campo obrigatório" label="Fone 3">
+                    <input name="Fone3" class="form-control" formControlName="Fone3" autocomplete="off" placeholder="Fone 3">
+                </cft-input>
+            </div>
+          </div>
+          <!-- <div class="row">
+              <div class="col-sm-2 col-xs-2">
+                  &nbsp;
+              </div>
+              <div class="col-sm-3 col-xs-3">
+                  Clube:
+              </div>
+              <div class="col-sm-5  col-xs-5" >
+                  <select name="JO_CLID" class="form-control" formControlName="JO_CLID">
+                      <option *ngFor=  "let c of (clubes)" [value]="c.CL_CLID">{{c.CL_CLNOME}}</option>
+                  </select>
+              </div>
+          </div> -->
+      </form>
+      <div class="row">
+          <div class="col-sm-2 col-xs-2">
+              &nbsp;
+          </div>
+          <div class="col-sm-8 col-xs-8">
+              <button (click)="SalvarCliente(clienteForm.value)"type="button" class="btn btn-primary pull-right btn-block" [disabled]="!clienteForm.valid" >
+                  <i class="fa fa-save"></i> Salvar
+              </button>
+          </div>
+          <div class="col-sm-3 col-xs-3" >
+              &nbsp;
+          </div>
+      </div>
+  </div>
+</div>
+
