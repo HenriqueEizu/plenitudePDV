@@ -107,7 +107,7 @@
                       </span>
                       </a>
                   </td>
-                  <td><a class="nav-link" [routerLink]="['/cliente',cliente.Id_Cli]">
+                  <td><a class="nav-link" (click)="ExcluirCliente(cliente.Id_Cli);"  [routerLink]="['/cliente',cliente.Id_Cli]">
                     <span tooltip="Editar" placement="top" show-delay="500">
                       <img src="/assets/imagens/icons/excluir.png" class="mr-2" style="width: 20px">
                       </span>

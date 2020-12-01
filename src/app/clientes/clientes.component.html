@@ -43,13 +43,14 @@
                       CPF:
               </div>
               <div class="col-sm-6  col-xs-6">
-                  <cft-input errorMessage="Campo obrigatório " label="cpf cliente">
-                      <input name="CnpjCpf" class="form-control" formControlName="CnpjCpf" autocomplete="off" placeholder="CPF">
+                  <cft-input errorMessage="Campo obrigatório e no formato de CPF/CNPJ" label="cpf cliente">
+                      <input  name="CnpjCpf" class="form-control" formControlName="CnpjCpf" autocomplete="off" placeholder="CPF">
                   </cft-input>
               </div>
               <div class="col-xs-12 col-sm-2" >
-                  <!-- <span class="help-block pull-right has-error-block" *ngIf="usuarioForm.get('US_USLOGIN').hasError('loginInvalido') === 'VALID'" style="color:red"><i class="fa fa-remove"></i> Login já existente</span> -->
-                  <!-- <span class="help-block pull-right has-error-block" *ngIf="clienteForm.get('JO_JONOME').hasError('jogadorInvalido')" style="color:red"><i class="fa fa-remove"></i> Nome jogador já existente</span> -->
+                <span *ngIf="clienteForm.get('CnpjCpf').getError('cpfNotValid')" style="color:red">
+                  <i class="fa fa-remove"></i> O CPF/CNPJ não é válido.
+                </span>
               </div>
           </div>
 
@@ -61,7 +62,7 @@
                       RG / IE:
               </div>
               <div class="col-sm-6  col-xs-6">
-                  <cft-input errorMessage="Campo obrigatório e com 2 carateres" label="RG / IE do Cliente usuário">
+                  <cft-input errorMessage="Campo obrigatório com maximo de 18 caracteres" label="RG / IE do Cliente usuário">
                       <input name="IEstRG" class="form-control" formControlName="IEstRG" autocomplete="off" placeholder="RG /IE">
                   </cft-input>
               </div>
@@ -71,18 +72,6 @@
               </div>
           </div>
           <div class="row">
-            <div class="col-sm-2 col-xs-2">
-                &nbsp;
-            </div>
-            <div class="col-sm-2 col-xs-2">
-                Pessoa:
-            </div>
-            <div class="col-sm-6 col-xs-6" style="text-align: left;">
-                <input type="radio" name="IndFisJur" class="form-control" formControlName="IndFisJur" autocomplete="off" placeholder="Ativo"> Física
-                <input type="radio" name="IndFisJur" class="form-control" formControlName="IndFisJur" autocomplete="off" placeholder="Ativo"> Jurídica
-            </div>
-          </div>
-          <div class="row">
               <div class="col-sm-2 col-xs-2">
                   &nbsp;
               </div>
@@ -90,7 +79,7 @@
                   Nome:
               </div>
               <div class="col-sm-6  col-xs-6">
-                  <cft-input errorMessage="Nome é um campo obrigatório" label="Nome">
+                  <cft-input errorMessage="Campo obrigatório com maximo de 60 caracteres" label="Nome">
                       <input name="Nome" class="form-control" formControlName="Nome" autocomplete="off" placeholder="Nome">
                   </cft-input>
               </div>
@@ -103,7 +92,7 @@
               Apelido:
             </div>
             <div class="col-sm-6  col-xs-6">
-                <cft-input errorMessage="Apelido é um campo obrigatório" label="Nome">
+                <cft-input errorMessage="Campo obrigatório com maximo de 20 caracteres" label="Nome">
                     <input name="Apelido" class="form-control" formControlName="Apelido" autocomplete="off" placeholder="Apelido">
                 </cft-input>
             </div>
@@ -117,7 +106,7 @@
               Orgão Emissor:
             </div>
             <div class="col-sm-6  col-xs-6">
-                <cft-input errorMessage="Orgão Emissor é um campo obrigatório" label="Orgão Emissor">
+                <cft-input errorMessage="Campo obrigatório com maximo de 6 caracteres" label="Orgão Emissor">
                     <input name="OrgEmisRg" class="form-control" formControlName="OrgEmisRg" autocomplete="off" placeholder="Orgão Emissor">
                 </cft-input>
             </div>
@@ -130,7 +119,7 @@
               Estado Civil:
             </div>
             <div class="col-sm-6  col-xs-6">
-                <cft-input errorMessage="Estado civil é um campo obrigatório" label="Estado Civil">
+                <cft-input errorMessage="Campo obrigatório com maximo de 30 caracteres" label="Estado Civil">
                     <input name="EstCivil" class="form-control" formControlName="EstCivil" autocomplete="off" placeholder="Estado Civil">
                 </cft-input>
             </div>
@@ -143,9 +132,23 @@
               Data de Nasc.:
             </div>
             <div class="col-sm-6  col-xs-6">
-                <cft-input errorMessage="Data de Nasc é um campo obrigatório" label="Data de Nasc.">
+                <div class="row">
+                  <div class="col-sm-10  col-xs-10" >
+                      <!-- <input class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d1="ngbDatepicker" formControlName="CP_CPDATALIMITEAPOSTA" > -->
+                      <input class="form-control" placeholder="dd/mm/aaaa" name="DtNascimento" ngbDatepicker #d1="ngbDatepicker"  formControlName="DtNascimento" >
+                  </div>
+                  <div class="col-sm-2  col-xs-2" >
+                      <button class="btn btn-primary" (click)="d1.toggle()" type="button"><i class="fa fa-table "></i></button>
+                  </div>
+                </div>
+                <!-- <cft-input errorMessage="Data de Nasc é um campo obrigatório" label="Data de Nasc.">
                     <input name="DtNascimento" class="form-control" formControlName="DtNascimento" autocomplete="off" placeholder="Data de Nasc.">
-                </cft-input>
+                </cft-input> -->
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2 col-xs-2">
+                &nbsp;
             </div>
           </div>
           <div class="row">
@@ -156,21 +159,8 @@
               Profissao:
             </div>
             <div class="col-sm-6  col-xs-6">
-                <cft-input errorMessage="Profissao é um campo obrigatório" label="Profissao">
-                    <input name="ProfProfissao" class="form-control" formControlName="ProfProfissao" autocomplete="off" placeholder="Data Cadastro">
-                </cft-input>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-2 col-xs-2">
-                &nbsp;
-            </div>
-            <div class="col-sm-2 col-xs-2">
-              Data Cadastro:
-            </div>
-            <div class="col-sm-6  col-xs-6">
-                <cft-input errorMessage="" label="Data Cadastro">
-                    <input name="DhIns" class="form-control" formControlName="DhIns" autocomplete="off" placeholder="Data Cadastro">
+                <cft-input errorMessage="Campo obrigatório com maximo de 30 caracteres" label="Profissao">
+                    <input name="ProfProfissao" class="form-control" formControlName="ProfProfissao" autocomplete="off" placeholder="Profissao">
                 </cft-input>
             </div>
           </div>
@@ -184,6 +174,7 @@
             <div class="col-sm-6  col-xs-6">
                 <cft-input errorMessage="CEP é um campo obrigatório" label="CEP">
                     <input #CEP name="CEP" class="form-control" formControlName="CEP" autocomplete="off" placeholder="CEP" (input)="ConsultaCEP(CEP.value)">
+                    <!-- <input  name="CEP" class="form-control" formControlName="CEP" autocomplete="off" placeholder="CEP" > -->
                 </cft-input>
             </div>
           </div>
@@ -195,7 +186,7 @@
               UF:
             </div>
             <div class="col-sm-6  col-xs-6">
-                <select name="UF" class="form-control" formControlName="UF">
+                <select name="UF" class="form-control" formControlName="UF" >
                   <option *ngFor=  "let c of (estados)" [value]="c.UF">{{c.Estado}}</option>
                 </select>
             </div>
@@ -213,8 +204,8 @@
               Localidade:
             </div>
             <div class="col-sm-6  col-xs-6">
-                <cft-input errorMessage="Localidade é um campo obrigatório" label="Localidade">
-                    <input name="Localidade" class="form-control" formControlName="Localidade" autocomplete="off" placeholder="Localidade/Cidade">
+                <cft-input errorMessage="Campo obrigatório com maximo de 30 caracteres" label="Localidade">
+                    <input name="Localidade" class="form-control" formControlName="Localidade" autocomplete="off" placeholder="Localidade/Cidade" >
                 </cft-input>
             </div>
           </div>
@@ -226,8 +217,8 @@
               Logradouro:
             </div>
             <div class="col-sm-6  col-xs-6">
-                <cft-input errorMessage="Logradouro é um campo obrigatório" label="Logradouro">
-                    <input name="Logradouro" class="form-control" formControlName="Logradouro" autocomplete="off" placeholder="Logradouro">
+                <cft-input errorMessage="Campo obrigatório com maximo de 30 caracteres" label="Logradouro">
+                    <input name="Logradouro" class="form-control" formControlName="Logradouro" autocomplete="off" placeholder="Logradouro" >
                 </cft-input>
             </div>
           </div>
@@ -239,7 +230,7 @@
               Numero:
             </div>
             <div class="col-sm-6  col-xs-6">
-                <cft-input errorMessage="Numero é um campo obrigatório" label="Numero">
+                <cft-input errorMessage="Campo obrigatório com maximo de 8 caracteres" label="Numero">
                     <input name="Numero" class="form-control" formControlName="Numero" autocomplete="off" placeholder="Numero">
                 </cft-input>
             </div>
@@ -252,7 +243,7 @@
               Complemento:
             </div>
             <div class="col-sm-6  col-xs-6">
-                <cft-input errorMessage="Complemento é um campo obrigatório" label="Complemento">
+                <cft-input errorMessage="Campo obrigatório com maximo de 40 caracteres" label="Complemento">
                     <input name="Complemento" class="form-control" formControlName="Complemento" autocomplete="off" placeholder="Complemento">
                 </cft-input>
             </div>
@@ -265,8 +256,8 @@
               Bairro:
             </div>
             <div class="col-sm-6  col-xs-6">
-                <cft-input errorMessage="Bairro é um campo obrigatório" label="Bairro">
-                    <input name="Bairro" class="form-control" formControlName="Bairro" autocomplete="off" placeholder="Bairro">
+                <cft-input errorMessage="Campo obrigatório com maximo de 40 caracteres" label="Bairro">
+                    <input name="Bairro" class="form-control" formControlName="Bairro" autocomplete="off" placeholder="Bairro" >
                 </cft-input>
             </div>
           </div>
@@ -291,99 +282,8 @@
               Contato:
             </div>
             <div class="col-sm-6  col-xs-6">
-                <cft-input errorMessage="Contato é um campo obrigatório" label="Contato">
+                <cft-input errorMessage="Campo obrigatório com maximo de 40 caracteres" label="Contato">
                     <input name="Contato" class="form-control" formControlName="Contato" autocomplete="off" placeholder="Contato">
-                </cft-input>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-2 col-xs-2">
-                &nbsp;
-            </div>
-            <div class="col-sm-2 col-xs-2">
-              DDD 1:
-            </div>
-            <div class="col-sm-6  col-xs-6">
-                <cft-input errorMessage="DDD 1 é um campo obrigatório" label="DDD 1">
-                    <input name="DDD1" class="form-control" formControlName="DDD1" autocomplete="off" placeholder="Contato">
-                </cft-input>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-2 col-xs-2">
-                &nbsp;
-            </div>
-            <div class="col-sm-2 col-xs-2">
-              Fone 1:
-            </div>
-            <div class="col-sm-6  col-xs-6">
-                <cft-input errorMessage="Fone 1 é um campo obrigatório" label="Fone 1">
-                    <input name="Fone1" class="form-control" formControlName="Fone1" autocomplete="off" placeholder="Fone 1">
-                </cft-input>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-2 col-xs-2">
-                &nbsp;
-            </div>
-            <div class="col-sm-2 col-xs-2">
-              Ramal:
-            </div>
-            <div class="col-sm-6  col-xs-6">
-                <cft-input errorMessage="Ramal é um campo obrigatório" label="Ramal">
-                    <input name="Ramal" class="form-control" formControlName="Ramal" autocomplete="off" placeholder="Ramal">
-                </cft-input>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-2 col-xs-2">
-                &nbsp;
-            </div>
-            <div class="col-sm-2 col-xs-2">
-              DDD 2:
-            </div>
-            <div class="col-sm-6  col-xs-6">
-                <cft-input errorMessage="DDD 2 é um campo obrigatório" label="DDD 2">
-                    <input name="DDD2" class="form-control" formControlName="DDD2" autocomplete="off" placeholder="DDD 2">
-                </cft-input>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-2 col-xs-2">
-                &nbsp;
-            </div>
-            <div class="col-sm-2 col-xs-2">
-              Fone 2:
-            </div>
-            <div class="col-sm-6  col-xs-6">
-                <cft-input errorMessage="Fone 2 é um campo obrigatório" label="Fone 2">
-                    <input name="Fone2" class="form-control" formControlName="Fone2" autocomplete="off" placeholder="Fone 2">
-                </cft-input>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-2 col-xs-2">
-                &nbsp;
-            </div>
-            <div class="col-sm-2 col-xs-2">
-              DDD 3:
-            </div>
-            <div class="col-sm-6  col-xs-6">
-                <cft-input errorMessage="DDD 3 é um campo obrigatório" label="DDD 3">
-                    <input name="DDD3" class="form-control" formControlName="DDD3" autocomplete="off" placeholder="DDD 3">
-                </cft-input>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-2 col-xs-2">
-                &nbsp;
-            </div>
-            <div class="col-sm-2 col-xs-2">
-              Fone 3:
-            </div>
-            <div class="col-sm-6  col-xs-6">
-                <cft-input errorMessage="Fone 3 é um campo obrigatório" label="Fone 3">
-                    <input name="Fone3" class="form-control" formControlName="Fone3" autocomplete="off" placeholder="Fone 3">
                 </cft-input>
             </div>
           </div>
@@ -400,19 +300,94 @@
                   </select>
               </div>
           </div> -->
+          <!--***********************************GRID-->
+          <dx-data-grid
+            id="gridContainer"
+            [dataSource]="dataSource"
+            keyExpr="IdTelefone"
+            [allowColumnReordering]="true"
+            [showBorders]="true"
+            (onEditingStart)="logEvent('EditingStart')"
+            (onEditorPreparing)="onEditorPreparing($event)"
+            (onInitNewRow)="logEvent('InitNewRow')"
+            (onRowInserting)="logEvent('RowInserting')"
+            (onRowInserted)="logEvent('RowInserted')"
+            (onRowUpdating)="logEvent('RowUpdating')"
+            (onRowUpdated)="logEvent('RowUpdated')"
+            (onRowRemoving)="logEvent('RowRemoving')"
+            (onRowRemoved)="logEvent('RowRemoved')"
+            (onSaving)="inserirTelefone(dataSource)"
+            (onSaved)="logEvent('Saved')"
+            (onEditCanceling)="logEvent('EditCanceling')"
+            (onEditCanceled)="logEvent('EditCanceled')">
+
+            <dxo-paging [enabled]="true"></dxo-paging>
+            <dxo-editing
+                mode="row"
+                [allowUpdating]="true"
+                [allowDeleting]="true"
+                [allowAdding]="true">
+            </dxo-editing>
+
+            <dxi-column dataField="DDD" caption="DDD" dataType="number" >
+              <dxi-validation-rule
+                type="required"
+                [pattern]="patternDDD" message="Formato DDD (11)!"
+                [validationCallback]="asyncValidation"
+              ></dxi-validation-rule>
+            </dxi-column>
+            <dxi-column dataField="Numero" dataType="number" >
+              <dxi-validation-rule
+              type="required"
+              [pattern]="FonePattern" message="Formato Numero (111111111)!"
+              [validationCallback]="asyncValidation"
+              ></dxi-validation-rule>
+            </dxi-column>
+            <dxi-column dataField="Ramal" >
+              <dxi-validation-rule
+              [pattern]="RamalPattern" message="Formato ramal (1111)!"
+              [validationCallback]="asyncValidation"
+              ></dxi-validation-rule>
+            </dxi-column>
+
+            <dxi-column
+                dataField="IndTipoFone"
+                caption="TipoTelefone"
+                [width]="125">
+                <dxo-lookup
+                    [dataSource]="tiposTelefone"
+                    displayExpr="DescTipoTelefone"
+                    valueExpr="IndTipoFone">
+                </dxo-lookup>
+            </dxi-column>
+            <!-- <dxi-column
+                dataField="BirthDate"
+                [width]="125"
+                dataType="date">
+            </dxi-column> -->
+        </dx-data-grid>
+        <!--***********************************GRID***********************************-->
       </form>
-      <div class="row">
-          <div class="col-sm-2 col-xs-2">
-              &nbsp;
-          </div>
-          <div class="col-sm-8 col-xs-8">
-              <button (click)="SalvarCliente(clienteForm.value)"type="button" class="btn btn-primary pull-right btn-block" [disabled]="!clienteForm.valid" >
-                  <i class="fa fa-save"></i> Salvar
+      <div class="dx-fieldset">
+        <dx-validation-summary id="summary"></dx-validation-summary>
+        <div class="row">
+            <div class="col-sm-2 col-xs-2">
+                &nbsp;
+            </div>
+            <div class="col-sm-8 col-xs-8">
+                <button (click)="SalvarCliente(clienteForm.value)"type="button" class="btn btn-primary pull-right btn-block" [disabled]="!clienteForm.valid" >
+                    <i class="fa fa-save"></i> Salvar
+                </button>
+            </div>
+            <div class="col-sm-8 col-xs-8">
+              <button (click)="findInvalidControls()"type="button" class="btn btn-primary pull-right btn-block" >
+                  <i class="fa fa-save"></i> teste
               </button>
           </div>
-          <div class="col-sm-3 col-xs-3" >
-              &nbsp;
-          </div>
+            <div class="col-sm-3 col-xs-3" >
+                &nbsp;
+            </div>
+        </div>
       </div>
   </div>
 </div>

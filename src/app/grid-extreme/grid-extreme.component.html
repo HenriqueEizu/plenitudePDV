@@ -1,0 +1,51 @@
+
+<div class="dx-button-content"><i class="dx-icon dx-icon-edit-button-addrow"></i><span class="dx-button-text">Add a row</span></div>
+
+<dx-data-grid
+    id="gridContainer"
+    [dataSource]="dataSource"
+    keyExpr="ID"
+    [allowColumnReordering]="true"
+    [showBorders]="true"
+    (onEditingStart)="logEvent('EditingStart')"
+    (onInitNewRow)="logEvent('InitNewRow')"
+    (onRowInserting)="logEvent('RowInserting')"
+    (onRowInserted)="logEvent('RowInserted')"
+    (onRowUpdating)="logEvent('RowUpdating')"
+    (onRowUpdated)="logEvent('RowUpdated')"
+    (onRowRemoving)="logEvent('RowRemoving')"
+    (onRowRemoved)="logEvent('RowRemoved')"
+    (onSaving)="logEvent('Saving')"
+    (onSaved)="logEvent('Saved')"
+    (onEditCanceling)="logEvent('EditCanceling')"
+    (onEditCanceled)="logEvent('EditCanceled')">
+
+    <dxo-paging [enabled]="true"></dxo-paging>
+    <dxo-editing
+         mode="row"
+         [allowUpdating]="true"
+         [allowDeleting]="true"
+         [allowAdding]="true">
+    </dxo-editing>
+
+    <dxi-column dataField="Prefix" caption="Title"></dxi-column>
+    <dxi-column dataField="FirstName"></dxi-column>
+    <dxi-column dataField="LastName"></dxi-column>
+    <dxi-column dataField="Position" [width]="130"></dxi-column>
+    <dxi-column
+        dataField="StateID"
+        caption="State"
+        [width]="125">
+        <dxo-lookup
+            [dataSource]="states"
+            displayExpr="Name"
+            valueExpr="ID">
+        </dxo-lookup>
+    </dxi-column>
+    <dxi-column
+        dataField="BirthDate"
+        [width]="125"
+        dataType="date">
+    </dxi-column>
+</dx-data-grid>
+

@@ -1,4 +1,3 @@
-
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms'
@@ -19,7 +18,7 @@ import { AppRoutingModule } from './app-routing';
 import {appRoutes} from './app-routing'
 import { AppComponent } from './app.component';
 
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateParserFormatter, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 // import {MatAutocompleteModule} from '@angular/material/autocomplete';
 // import {MatBadgeModule} from '@angular/material/badge';
@@ -56,6 +55,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 // import {MatTooltipModule} from '@angular/material/tooltip';
 // import {MatTreeModule} from '@angular/material/tree';
 import { NgxScrollTopModule } from 'ngx-scrolltop';
+import { DxBulletModule, DxButtonModule, DxDataGridModule, DxTemplateModule } from 'devextreme-angular';
 
 import { HeaderComponent } from './header/header.component';
 import { SharedModule} from  './shared/shared.module';
@@ -63,13 +63,22 @@ import { UsuarioModule } from './usuario/usuario.module';
 import { HomeComponent } from './home/home.component';
 import { ClientesModule } from './clientes/clientes.module';
 import { LoginComponent } from './login/login.component';
+import { GridExtremeModule} from './grid-extreme/grid-extreme.module'
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { CPFPipe } from './cpf.pipe';
+import { NgbDateCustomParserFormatter } from './NgbDateCustomParserFormatter';
+import { PedidosComponent } from './pedidos/pedidos.component';
+import { PedidosListComponent } from './pedidos/pedidos-list/pedidos-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
+    CPFPipe,
+    PedidosComponent,
+    PedidosListComponent
   ],
   imports: [
     BrowserModule,
@@ -82,6 +91,7 @@ import { LoginComponent } from './login/login.component';
     ModalModule.forRoot(),
     SharedModule.forRoot(),
     AppRoutingModule,
+    DxButtonModule,
 
     // MatAutocompleteModule,
     // MatBadgeModule,
@@ -120,10 +130,16 @@ import { LoginComponent } from './login/login.component';
     // MatTreeModule,
     NgxScrollTopModule,
     NgbModule,
+    // DxDataGridModule,
+    // DxButtonModule,
+    // DxDataGridModule,
+    // DxTemplateModule,
+    // DxBulletModule,
 
 
     UsuarioModule,
     ClientesModule,
+    GridExtremeModule,
 
 
   ],
@@ -131,9 +147,11 @@ import { LoginComponent } from './login/login.component';
               { provide: HTTP_INTERCEPTORS,
                 useClass: TokenInterceptor,
                 multi: true,
-              }
+              },
+              { provide: NgbDateParserFormatter, useClass: NgbDateCustomParserFormatter }
   //  ,LoginService
 ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+

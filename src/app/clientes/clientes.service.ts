@@ -6,7 +6,22 @@ import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { MEAT_API } from '../app.api';
 
-import { Cliente, Endereco, Estado } from './clientes.model';
+import { Cliente, Endereco, Estado, Telefone, TipoTelefone } from './clientes.model';
+
+
+let tiposFone: TipoTelefone[] = [{
+  "IndTipoFone" : "F",
+  "DescTipoTelefone"  : "Fixo"
+}, {
+  "IndTipoFone" : "C",
+  "DescTipoTelefone"  : "Celular"
+}, {
+  "IndTipoFone" : "X",
+  "DescTipoTelefone"  : "Fax"
+}, {
+  "IndTipoFone" : "I",
+  "DescTipoTelefone"  : "Indefinido"
+}];
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +30,10 @@ export class ClientesService {
 
   constructor(private http: HttpClient
     ,private router: Router) { }
+
+  getTipoTelefone() {
+      return tiposFone;
+  }
 
   GetIdCliente(id: number):Observable<Cliente>{
     var clienteLocal : Observable<Cliente>
@@ -26,6 +45,12 @@ export class ClientesService {
     var EnderecoLocal : Observable<Endereco>
     EnderecoLocal = this.http.get<Endereco>(`${MEAT_API}/cliente/ConsultaCEP/${id}` ).pipe();
     return EnderecoLocal;
+  }
+
+  ValidaCnpjCpf(id: any):Observable<any>{
+    var cpf : Observable<any>
+    cpf = this.http.get<any>(`${MEAT_API}/cliente/ValidaCnpjCpf/${id}` ).pipe();
+    return cpf;
   }
 
   GetAllClientes(campo : string,criterio : string): Observable<Cliente[]>{
@@ -42,12 +67,13 @@ export class ClientesService {
 
   SalvarCliente(cliente : Cliente): Observable<boolean>{
     if (cliente.Id_Cli){
-      return this.AlterarClube(cliente);
+      console.log("alterar cliente");
+      return this.AlterarCliente(cliente);
     }
-    return this.InserirClube(cliente);
+    return this.InserirCliente(cliente);
   }
 
-  InserirClube(cliente : Cliente) : Observable<boolean>{
+  InserirCliente(cliente : Cliente) : Observable<boolean>{
     return this.http.post<boolean>(`${MEAT_API}/cliente/Incluir` ,cliente)
   }
 
@@ -55,7 +81,7 @@ export class ClientesService {
     return this.http.delete<boolean>(`${MEAT_API}/cliente/Excluir/${id}`);
   }
 
-  AlterarClube(cliente : Cliente) : Observable<boolean>{
+  AlterarCliente(cliente : Cliente) : Observable<boolean>{
     return this.http.put<boolean>(`${MEAT_API}/cliente/Alterar/${cliente.Id_Cli}`,cliente).pipe(take(1));
   }
 
@@ -65,5 +91,10 @@ export class ClientesService {
     return clubes$;
   }
 
+  GetTelefonePorIdCliente(id: number): Observable<Telefone[]>{
+    let fones$ = new Observable<Telefone[]>();
+    fones$ = this.http.get<Telefone[]>(`${MEAT_API}/cliente/GetTelefonePorIdCliente/${id}` ).pipe();
+    return fones$;
+  }
 
 }

@@ -143,4 +143,22 @@ export class ClientesListComponent implements OnInit {
       this.blnCriterio = false;
   }
 
+  ExcluirCliente(id: number){
+    const result$ = this.alertService.showConfirm("Confirmação de Exclusão","Você realmente deseja excluir esta competicao?","Fechar","Excluir");
+    result$.asObservable()
+    .pipe(
+      take(1),
+      switchMap(result => result ? this.clienteService.ExcluirClube(id) : EMPTY)
+    ).subscribe(
+      success => {
+                   this.alertService.showAlertSuccess("Cliente excluído com sucesso");
+                  //  window.location.reload();
+                   this.router.navigate(['clientes'])
+                   },
+      error =>  {
+                this.alertService.showAlertDanger("Erro ao excluir cliente. Tente novamente") ;
+                }
+    )
+  }
+
 }

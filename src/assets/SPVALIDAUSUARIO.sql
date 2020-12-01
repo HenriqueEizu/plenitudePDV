@@ -6,7 +6,7 @@ Declare
 , @Usuario        Varchar(30)
 
 Exec dbo.[Sp_ValidaUsuario]
-  @Login          = 'LOFABRICA'
+  @Login          = 'LOJAFABRICA'
 , @Senha          = '10189'
 , @Id_Usr         = @Id_Usr    OutPut 
 , @Usuario        = @Usuario   OutPut 
