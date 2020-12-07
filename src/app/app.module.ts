@@ -62,13 +62,12 @@ import { SharedModule} from  './shared/shared.module';
 import { UsuarioModule } from './usuario/usuario.module';
 import { HomeComponent } from './home/home.component';
 import { ClientesModule } from './clientes/clientes.module';
+import { PedidosModule} from './pedidos/pedidos.module'
 import { LoginComponent } from './login/login.component';
 import { GridExtremeModule} from './grid-extreme/grid-extreme.module'
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { CPFPipe } from './cpf.pipe';
 import { NgbDateCustomParserFormatter } from './NgbDateCustomParserFormatter';
-import { PedidosComponent } from './pedidos/pedidos.component';
-import { PedidosListComponent } from './pedidos/pedidos-list/pedidos-list.component';
 
 @NgModule({
   declarations: [
@@ -77,8 +76,6 @@ import { PedidosListComponent } from './pedidos/pedidos-list/pedidos-list.compon
     HomeComponent,
     LoginComponent,
     CPFPipe,
-    PedidosComponent,
-    PedidosListComponent
   ],
   imports: [
     BrowserModule,
@@ -139,6 +136,7 @@ import { PedidosListComponent } from './pedidos/pedidos-list/pedidos-list.compon
 
     UsuarioModule,
     ClientesModule,
+    PedidosModule,
     GridExtremeModule,
 
 

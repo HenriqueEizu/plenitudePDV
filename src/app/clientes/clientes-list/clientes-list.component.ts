@@ -148,7 +148,7 @@ export class ClientesListComponent implements OnInit {
     result$.asObservable()
     .pipe(
       take(1),
-      switchMap(result => result ? this.clienteService.ExcluirClube(id) : EMPTY)
+      switchMap(result => result ? this.clienteService.ExcluirCliente(id) : EMPTY)
     ).subscribe(
       success => {
                    this.alertService.showAlertSuccess("Cliente excluído com sucesso");

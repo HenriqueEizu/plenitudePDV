@@ -1,3 +1,4 @@
+import { Usuario } from './../usuario/usuario.model';
 export class Pessoa {
 
   public IdPessoa	: number;
@@ -88,13 +89,32 @@ export interface PessoaTelefone{
   Sequencia	: number,
 }
 
-export interface Telefone{
-  IdTelefone	: number,
-  CodDdi	: string,
-  CodDdd	: string,
-  Numero	: string,
-  Ramal	: string,
-  IndTipoFone	: string
+export class Telefone{
+
+  public IdTelefone	: number;
+  get _IdTelefone(): number {return this.IdTelefone;}
+  set _IdTelefone(p : number) {this.IdTelefone = p; }
+
+  public CodDdi	: string;
+  get _CodDdi(): string {return this.CodDdi;}
+  set _CodDdi(p : string) {this.CodDdi = p; }
+
+  public CodDdd	: string;
+  get _CodDdd(): string {return this.CodDdd;}
+  set _CodDdd(p : string) {this.CodDdd = p; }
+
+  public Numero	: string;
+  get _Numero(): string {return this.Numero;}
+  set _Numero(p : string) {this.Numero = p; }
+
+  public Ramal	: string;
+  get _Ramal(): string {return this.Ramal;}
+  set _Ramal(p : string) {this.Ramal = p; }
+
+  public IndTipoFone	: string;
+  get _IndTipoFone(): string {return this.IndTipoFone;}
+  set _IndTipoFone(p : string) {this.IndTipoFone = p; }
+
 }
 
 export interface TipoTelefone{
@@ -163,25 +183,110 @@ export interface Estado {
 }
 
 export interface Cliente {
-  IdCliente	: number,
-  Id_Cli	: number,
-  Id_Cli_Lj	: number,
-  IdPessoa	: number,
-  OBJ_PESSOA : Pessoa,
-  Contato	: string,
-  ProfEmpresa	: string,
-  ProfCargo	: string,
-  ProfProfissao	: string,
-  ProfSalario	: number,
-  ProfDtAdmissao	: Date
-  BanCodBanco	: string,
-  BanNomeBanco	: string,
-  BanDtInicioBanco	: Date
-  BanAgencia	: string,
-  BanNumConta	: string,
-  BanChequeEspecial	: boolean,
-  IdUsuario : number
+
+   IdCliente	: number;
+   Id_Cli	: number;
+   Id_Cli_Lj	: number;
+   IdPessoa	: number;
+   OBJ_PESSOA	: Pessoa;
+   Contato	: string;
+   ProfEmpresa	: string;
+   ProfCargo	: string;
+   ProfProfissao	: string;
+   ProfSalario	: number;
+   ProfDtAdmissao	: Date;
+   BanCodBanco	: string;
+   BanNomeBanco	: string;
+   BanDtInicioBanco	: Date;
+   BanAgencia	: string;
+   BanNumConta	: string;
+   BanChequeEspecial	: boolean;
+   IdUsuario	: number;
+  // public usuario	: Usuario;
+  // get _usuario(): Usuario {return this.usuario;}
+  // set _usuario(p : Usuario) {this.usuario = p; }
+
 }
+
+// export class Cliente {
+
+//   public IdCliente	: number;
+//   get _IdCliente(): number {return this.IdCliente;}
+//   set _IdCliente(p : number) {this.IdCliente = p; }
+
+//   public Id_Cli	: number;
+//   get _Id_Cli(): number {return this.Id_Cli;}
+//   set _Id_Cli(p : number) {this.Id_Cli = p; }
+
+//   public Id_Cli_Lj	: number;
+//   get _Id_Cli_Lj(): number {return this.Id_Cli_Lj;}
+//   set _Id_Cli_Lj(p : number) {this.Id_Cli_Lj = p; }
+
+//   public IdPessoa	: number;
+//   get _IdPessoa(): number {return this.IdPessoa;}
+//   set _IdPessoa(p : number) {this.IdPessoa = p; }
+
+//   public OBJ_PESSOA	: Pessoa;
+//   get _OBJ_PESSOA(): Pessoa {return this.OBJ_PESSOA;}
+//   set _OBJ_PESSOA(p : Pessoa) {this.OBJ_PESSOA = p; }
+
+//   public Contato	: string;
+//   get _Contato(): string {return this.Contato;}
+//   set _Contato(p : string) {this.Contato = p; }
+
+//   public ProfEmpresa	: string;
+//   get _ProfEmpresa(): string {return this.ProfEmpresa;}
+//   set _ProfEmpresa(p : string) {this.ProfEmpresa = p; }
+
+//   public ProfCargo	: string;
+//   get _ProfCargo(): string {return this.ProfCargo;}
+//   set _ProfCargo(p : string) {this.ProfCargo = p; }
+
+//   public ProfProfissao	: string;
+//   get _ProfProfissao(): string {return this.ProfProfissao;}
+//   set _ProfProfissao(p : string) {this.ProfProfissao = p; }
+
+//   public ProfSalario	: number;
+//   get _ProfSalario(): number {return this.ProfSalario;}
+//   set _ProfSalario(p : number) {this.ProfSalario = p; }
+
+//   public ProfDtAdmissao	: Date;
+//   get _ProfDtAdmissao(): Date {return this.ProfDtAdmissao;}
+//   set _ProfDtAdmissao(p : Date) {this.ProfDtAdmissao = p; }
+
+//   public BanCodBanco	: string;
+//   get _BanCodBanco(): string {return this.BanCodBanco;}
+//   set _BanCodBanco(p : string) {this.BanCodBanco = p; }
+
+//   public BanNomeBanco	: string;
+//   get _BanNomeBanco(): string {return this.BanNomeBanco;}
+//   set _BanNomeBanco(p : string) {this.BanNomeBanco = p; }
+
+//   public BanDtInicioBanco	: Date;
+//   get _BanDtInicioBanco(): Date {return this.BanDtInicioBanco;}
+//   set _BanDtInicioBanco(p : Date) {this.BanDtInicioBanco = p; }
+
+//   public BanAgencia	: string;
+//   get _BanAgencia(): string {return this.BanAgencia;}
+//   set _BanAgencia(p : string) {this.BanAgencia = p; }
+
+//   public BanNumConta	: string;
+//   get _BanNumConta(): string {return this.BanNumConta;}
+//   set _BanNumConta(p : string) {this.BanNumConta = p; }
+
+//   public BanChequeEspecial	: string;
+//   get _BanChequeEspecial(): string {return this.BanChequeEspecial;}
+//   set _BanChequeEspecial(p : string) {this.BanChequeEspecial = p; }
+
+//   public IdUsuario	: number;
+//   get _IdUsuario(): number {return this.IdUsuario;}
+//   set _IdUsuario(p : number) {this.IdUsuario = p; }
+
+//   // public usuario	: Usuario;
+//   // get _usuario(): Usuario {return this.usuario;}
+//   // set _usuario(p : Usuario) {this.usuario = p; }
+
+// }
 
 export class Filtro{
   private _campo: string;

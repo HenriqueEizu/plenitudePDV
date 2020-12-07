@@ -77,7 +77,7 @@ export class ClientesService {
     return this.http.post<boolean>(`${MEAT_API}/cliente/Incluir` ,cliente)
   }
 
-  ExcluirClube(id : number) : Observable<boolean>{
+  ExcluirCliente(id : number) : Observable<boolean>{
     return this.http.delete<boolean>(`${MEAT_API}/cliente/Excluir/${id}`);
   }
 
