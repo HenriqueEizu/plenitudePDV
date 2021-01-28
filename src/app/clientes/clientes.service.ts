@@ -50,6 +50,7 @@ export class ClientesService {
   ValidaCnpjCpf(id: any):Observable<any>{
     var cpf : Observable<any>
     cpf = this.http.get<any>(`${MEAT_API}/cliente/ValidaCnpjCpf/${id}` ).pipe();
+    console.log(cpf );
     return cpf;
   }
 
@@ -58,6 +59,11 @@ export class ClientesService {
     params = params.append('campo', campo);
     params = params.append('criterio', criterio);
     var clientes$ = this.http.get<Cliente[]>(`${MEAT_API}/cliente/listaclientes`,{params: params}).pipe();
+    return clientes$;
+  }
+
+  GetClienteCPF(id: any): Observable<any>{
+    var clientes$ = this.http.get<any>(`${MEAT_API}/cliente/listaclienteCPF/${id}`).pipe();
     return clientes$;
   }
 

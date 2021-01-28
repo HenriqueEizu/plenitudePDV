@@ -56,6 +56,7 @@ import { NgbDateParserFormatter, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 // import {MatTreeModule} from '@angular/material/tree';
 import { NgxScrollTopModule } from 'ngx-scrolltop';
 import { DxBulletModule, DxButtonModule, DxDataGridModule, DxTemplateModule } from 'devextreme-angular';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 
 import { HeaderComponent } from './header/header.component';
 import { SharedModule} from  './shared/shared.module';
@@ -68,6 +69,7 @@ import { GridExtremeModule} from './grid-extreme/grid-extreme.module'
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { CPFPipe } from './cpf.pipe';
 import { NgbDateCustomParserFormatter } from './NgbDateCustomParserFormatter';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -89,6 +91,7 @@ import { NgbDateCustomParserFormatter } from './NgbDateCustomParserFormatter';
     SharedModule.forRoot(),
     AppRoutingModule,
     DxButtonModule,
+    TabsModule,
 
     // MatAutocompleteModule,
     // MatBadgeModule,
@@ -138,6 +141,7 @@ import { NgbDateCustomParserFormatter } from './NgbDateCustomParserFormatter';
     ClientesModule,
     PedidosModule,
     GridExtremeModule,
+    BrowserAnimationsModule,
 
 
   ],

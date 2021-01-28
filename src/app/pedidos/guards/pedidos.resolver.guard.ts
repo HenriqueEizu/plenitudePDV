@@ -1,8 +1,9 @@
+import { Vendedor } from './../pedidos.model';
 import { Injectable} from '@angular/core';
 import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Resolve} from '@angular/router';
 import {BehaviorSubject, Observable, of} from 'rxjs';
 
-import { Endereco, Telefone, Cliente } from '../../clientes/clientes.model';
+import { Endereco, Telefone, Cliente, Pessoa } from '../../clientes/clientes.model';
 import { Loja, Midia,Pedido} from '../pedidos.model'
 import { PedidosService} from '../pedidos.service'
 
@@ -25,8 +26,9 @@ constructor(private service: PedidosService){}
         var midia = new Midia();
         var endereco = new Endereco();
         var telefone = new Telefone();
+        var vendedor = new Vendedor();
+        var pessoa = new Pessoa();
         var cliente : Cliente;
-        // pessoa.OBJ_ENDERECO = endereco;
 
 
         return of ({
@@ -35,10 +37,12 @@ constructor(private service: PedidosService){}
               Id_Ped	: null,
               Id_Cli	: null,
               cliente	: cliente, //
+              vendedor : vendedor,
               Id_Loja	: null,
               loja	: loja, //
               IdMidia	: null,
               midia	: midia, //
+              DescMidia : null,
               FlMesmoEndEntrega	: null,
               IdEnderecoEntrega	: null,
               endereco	: endereco, //

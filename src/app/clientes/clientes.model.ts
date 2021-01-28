@@ -17,6 +17,10 @@ export class Pessoa {
   get _OBJ_ENDERECO(): Endereco {return this.OBJ_ENDERECO;}
   set _OBJ_ENDERECO(p : Endereco) {this.OBJ_ENDERECO = p; }
 
+  public OBJ_PESSOAENDERECO : PessoaEndereco;
+  get _OBJ_PESSOAENDERECO(): PessoaEndereco {return this.OBJ_PESSOAENDERECO;}
+  set _OBJ_PESSOAENDERECO(p : PessoaEndereco) {this.OBJ_PESSOAENDERECO = p; }
+
   public IndFisJur	: string;
   get _IndFisJur(): string {return this.IndFisJur;}
   set _IndFisJur(p : string) {this.IndFisJur = p; }

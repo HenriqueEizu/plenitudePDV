@@ -10,8 +10,8 @@ import { DeactivateGuard } from '../guards/deactive.guard'
 
 
 export const pedidoRoutes: Routes = [
-    {path: 'pedido',component : PedidosComponent,resolve:{ cliente :PedidosResolverGuard},canActivate : [AuthGuard],canDeactivate : [DeactivateGuard],canLoad:[AuthGuard]},
-    {path: 'pedido/:id',component : PedidosComponent,resolve:{ cliente :PedidosResolverGuard},canActivate : [AuthGuard],canDeactivate : [DeactivateGuard],canLoad:[AuthGuard]},
+    {path: 'pedido',component : PedidosComponent,resolve:{ pedido :PedidosResolverGuard},canActivate : [AuthGuard],canDeactivate : [DeactivateGuard],canLoad:[AuthGuard]},
+    {path: 'pedido/:id',component : PedidosComponent,resolve:{ pedido :PedidosResolverGuard},canActivate : [AuthGuard],canDeactivate : [DeactivateGuard],canLoad:[AuthGuard]},
     {path: 'pedidos', component: PedidosListComponent,canActivate : [AuthGuard],canLoad:[AuthGuard]},
 ]
 

@@ -146,7 +146,7 @@ export class ClientesComponent implements OnInit {
         }
     }
     alert(invalid);
-}
+  }
 
   VerificaCnpjCpf(cpf:string){
 

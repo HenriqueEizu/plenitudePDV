@@ -46,7 +46,7 @@
                   <cft-input errorMessage="Campo obrigatório e no formato de CPF/CNPJ" label="cpf cliente">
                       <input  name="CnpjCpf" class="form-control" formControlName="CnpjCpf" autocomplete="off" placeholder="CPF">
                   </cft-input>
-              </div>
+              </div>{{clienteForm.get('CnpjCpf').getError('cpfNotValid')}}
               <div class="col-xs-12 col-sm-2" >
                 <span *ngIf="clienteForm.get('CnpjCpf').getError('cpfNotValid')" style="color:red">
                   <i class="fa fa-remove"></i> O CPF/CNPJ não é válido.
@@ -301,7 +301,7 @@
               </div>
           </div> -->
           <!--***********************************GRID-->
-          <dx-data-grid
+        <dx-data-grid
             id="gridContainer"
             [dataSource]="dataSource"
             keyExpr="IdTelefone"

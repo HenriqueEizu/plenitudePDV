@@ -11,14 +11,68 @@ export class Loja {
   set _Fantasia(p : string) {this.Fantasia = p; }
 }
 
+export class Periodo {
+  public IdPeriodo	: string;
+  get _IdPeriodo(): string {return this.IdPeriodo;}
+  set _IdPeriodo(p : string) {this.IdPeriodo = p; }
+
+  public Descricao	: string;
+  get _Descricao(): string {return this.Descricao;}
+  set _Descricao(p : string) {this.Descricao = p; }
+}
+
 export class Midia {
   public IdMidia	: number;
   get _IdMidia(): number {return this.IdMidia;}
   set _IdMidia(p : number) {this.IdMidia = p; }
 
-  public Descricao	: string;
-  get _Descricao(): string {return this.Descricao;}
-  set _Descricao(p : string) {this.Descricao = p; }
+  public DescMidia	: string;
+  get _DescMidia(): string {return this.DescMidia;}
+  set _DescMidia(p : string) {this.DescMidia = p; }
+}
+
+export class Vendedor{
+
+  public IdVendPed	: number;
+  get _IdVendPed(): number {return this.IdVendPed;}
+  set _IdVendPed(p : number) {this.IdVendPed = p; }
+
+  public Id_Ped	: number;
+  get _Id_Ped(): number {return this.Id_Ped;}
+  set _Id_Ped(p : number) {this.Id_Ped = p; }
+
+  public IdVendedor	: number;
+  get _IdVendedor(): number {return this.IdVendedor;}
+  set _IdVendedor(p : number) {this.IdVendedor = p; }
+
+  public Nome	: number;
+  get _Nome(): number {return this.Nome;}
+  set _Nome(p : number) {this.Nome = p; }
+}
+
+export interface Estoque{
+  Id_Alm	: number,
+  Id_Loja	: number,
+  Descr	: string,
+  Padrao	: boolean,
+  Web_Ve	: boolean,
+  Ver_Est	: boolean,
+  Bloq_Est	: boolean,
+  Empenha	: boolean,
+  GeraOp	: boolean,
+  LimiProd	: boolean,
+  PrazoMinimo	: number
+}
+
+export interface ItensEstoque{
+  Id_Alp	: number,
+  Produto	: string,
+  Quantidade	: string,
+  Preco	: number,
+  Livre : boolean,
+  Qtd: number,
+  QtdPedido : number,
+  Id_Ped	: number,
 }
 
 export interface Pedido {
@@ -27,9 +81,11 @@ export interface Pedido {
   Id_Ped	: number;
   Id_Cli	: number;
   cliente	: Cliente;
+  vendedor : Vendedor;
   Id_Loja	: number;
   loja	: Loja;
   IdMidia	: number;
+  DescMidia : string;
   midia	: Midia;
   FlMesmoEndEntrega	: boolean;
   IdEnderecoEntrega	: number;
@@ -71,6 +127,22 @@ export interface Pedido {
   ObsMidia	: string;
   Observ	: string;
   Obs_Fin	: string;
+}
+
+export interface ItensPedido{
+  Id_IPv : number,
+  Produto : string,
+  Quantid : number,
+  Valuni : number,
+  Valtot : number,
+  Saida : string,
+  TipoFrete : string,
+}
+
+export interface RetornoPedido{
+  Id_Ped : string,
+  Ok : string,
+  MensErro : string,
 }
 
 // export class Pedido {
