@@ -20,10 +20,12 @@ export class AuthGuard implements CanActivate, CanLoad{
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean{
-
+    console.log(state.url);
+    console.log("lkjhlkjjhkljhkljjhhkjhjklhl");
     if (state.url == "/home"){
       this.blnHome = true;
     }else{
+
       this.blnHome = false;
     }
 

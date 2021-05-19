@@ -12,137 +12,138 @@ export class Loja {
 }
 
 export class Periodo {
-  public IdPeriodo	: string;
-  get _IdPeriodo(): string {return this.IdPeriodo;}
-  set _IdPeriodo(p : string) {this.IdPeriodo = p; }
+  public idPeriodo	: string;
+  get _IdPeriodo(): string {return this.idPeriodo;}
+  set _IdPeriodo(p : string) {this.idPeriodo = p; }
 
-  public Descricao	: string;
-  get _Descricao(): string {return this.Descricao;}
-  set _Descricao(p : string) {this.Descricao = p; }
+  public descricao	: string;
+  get _Descricao(): string {return this.descricao;}
+  set _Descricao(p : string) {this.descricao = p; }
 }
 
 export class Midia {
-  public IdMidia	: number;
-  get _IdMidia(): number {return this.IdMidia;}
-  set _IdMidia(p : number) {this.IdMidia = p; }
+  public idMidia	: number;
+  get _IdMidia(): number {return this.idMidia;}
+  set _IdMidia(p : number) {this.idMidia = p; }
 
-  public DescMidia	: string;
-  get _DescMidia(): string {return this.DescMidia;}
-  set _DescMidia(p : string) {this.DescMidia = p; }
+  public descMidia	: string;
+  get _DescMidia(): string {return this.descMidia;}
+  set _DescMidia(p : string) {this.descMidia = p; }
 }
 
 export class Vendedor{
 
-  public IdVendPed	: number;
-  get _IdVendPed(): number {return this.IdVendPed;}
-  set _IdVendPed(p : number) {this.IdVendPed = p; }
+  public idVendedor	: number;
+  get _IdVendedor(): number {return this.idVendedor;}
+  set _IdVendedor(p : number) {this.idVendedor = p; }
 
-  public Id_Ped	: number;
-  get _Id_Ped(): number {return this.Id_Ped;}
-  set _Id_Ped(p : number) {this.Id_Ped = p; }
+  public nome	: string;
+  get _Nome(): string {return this.nome;}
+  set _Nome(p : string) {this.nome = p; }
 
-  public IdVendedor	: number;
-  get _IdVendedor(): number {return this.IdVendedor;}
-  set _IdVendedor(p : number) {this.IdVendedor = p; }
+  public fantasia	: string;
+  get _Fantasia(): string {return this.fantasia;}
+  set _Fantasia(p : string) {this.fantasia = p; }
 
-  public Nome	: number;
-  get _Nome(): number {return this.Nome;}
-  set _Nome(p : number) {this.Nome = p; }
+  public senhaLoja	: string;
+  get _SenhaLoja(): string {return this.senhaLoja;}
+  set _SenhaLoja(p : string) {this.senhaLoja = p; }
+
 }
 
 export interface Estoque{
-  Id_Alm	: number,
-  Id_Loja	: number,
-  Descr	: string,
-  Padrao	: boolean,
-  Web_Ve	: boolean,
-  Ver_Est	: boolean,
-  Bloq_Est	: boolean,
-  Empenha	: boolean,
-  GeraOp	: boolean,
-  LimiProd	: boolean,
-  PrazoMinimo	: number
+  id_Alm	: number,
+  id_Loja	: number,
+  descr	: string,
+  padrao	: boolean,
+  web_Ve	: boolean,
+  ver_Est	: boolean,
+  bloq_Est	: boolean,
+  empenha	: boolean,
+  geraOp	: boolean,
+  limiProd	: boolean,
+  prazoMinimo	: number
 }
 
 export interface ItensEstoque{
-  Id_Alp	: number,
-  Produto	: string,
-  Quantidade	: string,
-  Preco	: number,
-  Livre : boolean,
-  Qtd: number,
-  QtdPedido : number,
-  Id_Ped	: number,
+  id_Alp	: number,
+  produto	: string,
+  quantidade	: string,
+  preco	: number,
+  livre : boolean,
+  qtd: number,
+  qtdPedido : number,
+  id_Ped	: number,
 }
 
 export interface Pedido {
 
-  IdPedido	: number;
-  Id_Ped	: number;
-  Id_Cli	: number;
+  idPedido	: number;
+  id_Ped	: number;
+  id_Cli	: number;
   cliente	: Cliente;
   vendedor : Vendedor;
-  Id_Loja	: number;
+  id_Loja	: number;
   loja	: Loja;
-  IdMidia	: number;
-  DescMidia : string;
+  idMidia	: number;
+  descMidia : string;
   midia	: Midia;
-  FlMesmoEndEntrega	: boolean;
-  IdEnderecoEntrega	: number;
+  flMesmoEndEntrega	: boolean;
+  idEnderecoEntrega	: number;
   endereco	: Endereco;
-  IdFoneEntrega	: number;
+  idFoneEntrega	: number;
   telefone	: Telefone;
-  Situacao	: number;
-  DescrSituacao	: string;
-  Tipo	: string;
-  DescrTipo	: string;
-  DtPed	: Date;
-  Entrega	: Date;
-  DtReceb	: Date;
-  Per_Ent	: string;
-  TotProd	: number;
-  Desconto	: number;
-  Desc_Por	: number;
-  TotPed	: number;
-  VlFrete	: number;
-  Val_Afin	: number;
-  Entregue	: boolean;
-  Cup_Fisc	: string;
-  Tem_Frt	: boolean;
-  Encerrou	: boolean;
-  Enviado	: boolean;
-  Nome_Cli	: string;
-  Versao	: number;
-  Codpdv	: string;
-  Impresso	: boolean;
-  Env_Mail	: boolean;
-  Id_PdOri	: number;
-  Bloq_Est	: boolean;
-  Prazo_Mp	: number;
-  Desc_Max	: number;
-  Nf_Pauli	: boolean;
-  TemCupom	: boolean;
-  NumCupom	: string;
-  EnvCupom	: boolean;
-  ObsMidia	: string;
-  Observ	: string;
-  Obs_Fin	: string;
+  situacao	: number;
+  descrSituacao	: string;
+  tipo	: string;
+  descrTipo	: string;
+  dtPed	: Date;
+  entrega	: Date;
+  tReceb	: Date;
+  per_Ent	: string;
+  totProd	: number;
+  desconto	: number;
+  desc_Por	: number;
+  totPed	: number;
+  vlFrete	: number;
+  val_Afin	: number;
+  entregue	: boolean;
+  cup_Fisc	: string;
+  tem_Frt	: boolean;
+  encerrou	: boolean;
+  enviado	: boolean;
+  nome_Cli	: string;
+  versao	: number;
+  codpdv	: string;
+  impresso	: boolean;
+  env_Mail	: boolean;
+  id_PdOri	: number;
+  bloq_Est	: boolean;
+  prazo_Mp	: number;
+  desc_Max	: number;
+  nf_Pauli	: boolean;
+  temCupom	: boolean;
+  numCupom	: string;
+  envCupom	: boolean;
+  obsMidia	: string;
+  observ	: string;
+  obs_Fin	: string;
 }
 
 export interface ItensPedido{
-  Id_IPv : number,
-  Produto : string,
-  Quantid : number,
-  Valuni : number,
-  Valtot : number,
-  Saida : string,
-  TipoFrete : string,
+  id_IPv : number,
+  produto : string,
+  quantid : number,
+  valuni : number,
+  valtot : number,
+  saida : string,
+  tipoFrete : string,
 }
 
 export interface RetornoPedido{
-  Id_Ped : string,
-  Ok : string,
-  MensErro : string,
+  id_Ped : string,
+  ok : string,
+  mensErro : string,
 }
 
 // export class Pedido {

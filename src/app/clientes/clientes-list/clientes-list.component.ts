@@ -119,7 +119,8 @@ export class ClientesListComponent implements OnInit {
        strCriterio = criterio.value
 
     this.clienteService.GetAllClientes(campo.value,strCriterio).subscribe((es : Cliente[]) => {
-      if (es[0].Id_Cli == null)
+      console.log(es)
+      if (es.length == 0)
       {
         this.clientes = null;
         this.total = 5;
@@ -129,9 +130,12 @@ export class ClientesListComponent implements OnInit {
         this.alertService.showAlertDanger("Nenhum cliente encontrado") ;
       }
       else{
+        console.log(es)
         this.clientes = es
+        this.clientes[0].obJ_PESSOA.nome = es[0]["obJ_PESSOA"]["nome"]
         this.total = es.length
       }
+      console.log("GetAllClientes");
     });
 
   }

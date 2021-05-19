@@ -43,7 +43,7 @@
                       Nº Pedido:
               </div>
               <div class="col-sm-6  col-xs-6">
-                <input name="Id_Ped" class="form-control" formControlName="Id_Ped" autocomplete="off" [attr.disabled]="true"  placeholder="Nº Pedido">
+                <input name="id_Ped" class="form-control" formControlName="id_Ped" autocomplete="off" [attr.disabled]="true"  placeholder="Nº Pedido">
               </div>
           </div>
           <div class="row">
@@ -60,11 +60,11 @@
             </div>
             <div class="col-sm-6  col-xs-6">
               <cft-input errorMessage="Campo obrigatório com maximo de 18 caracteres" label="Cliente">
-                <input name="Nome_Cli" class="form-control" formControlName="Nome_Cli" autocomplete="off" placeholder="Digite CPF/CNPF" [attr.disabled]="strDesabilitaCliente">
+                <input name="nome_Cli" class="form-control" formControlName="nome_Cli" autocomplete="off" placeholder="Digite CPF/CNPF" [attr.disabled]="strDesabilitaCliente">
               </cft-input>
             </div>
             <div class="col-xs-12 col-sm-2" >
-              <span *ngIf="pedidoForm.get('Nome_Cli').getError('clienteNotValid')" style="color:red">
+              <span *ngIf="pedidoForm.get('nome_Cli').getError('clienteNotValid')" style="color:red">
                 <i class="fa fa-remove"></i> O CPF/CNPJ não é válido.
               </span>
             </div>
@@ -93,7 +93,7 @@
                     Versão:
             </div>
             <div class="col-sm-6  col-xs-6">
-                <input name="Versao" class="form-control" formControlName="Versao" autocomplete="off" placeholder="Versão" [attr.disabled]="true">
+                <input name="versao" class="form-control" formControlName="versao" autocomplete="off" placeholder="Versão" [attr.disabled]="true">
             </div>
           </div>
           <div class="row">
@@ -109,7 +109,7 @@
                     Data:
             </div>
             <div class="col-sm-6  col-xs-6">
-                <input name="DtPed" class="form-control" formControlName="DtPed" autocomplete="off" placeholder="Data Pedido" [attr.disabled]="true">
+                <input name="dtPed" class="form-control" formControlName="dtPed" autocomplete="off" placeholder="Data Pedido" [attr.disabled]="true">
             </div>
 
           </div>
@@ -128,7 +128,7 @@
                         Observação:
                 </div>
                 <div class="col-sm-6  col-xs-6">
-                    <textarea class="form-control" name="Observ" rows="4" cols="50" formControlName="Observ" [attr.disabled]="blnDesabilitaCampos"></textarea>
+                    <textarea class="form-control" name="observ" rows="4" cols="50" formControlName="observ" [attr.disabled]="blnDesabilitaCampos"></textarea>
                 </div>
               </div>
               <div class="row">
@@ -144,7 +144,7 @@
                         Situação:
                 </div>
                 <div class="col-sm-6  col-xs-6">
-                    <input name="DescrSituacao" class="form-control" formControlName="DescrSituacao" autocomplete="off" placeholder="Situação" [attr.disabled]="true">
+                    <input name="descrSituacao" class="form-control" formControlName="descrSituacao" autocomplete="off" placeholder="Situação" [attr.disabled]="true">
                 </div>
               </div>
               <div class="row">
@@ -160,7 +160,7 @@
                         Ent.Min.:
                 </div>
                 <div class="col-sm-6  col-xs-6">
-                  <input name="EntMin" class="form-control"  autocomplete="off" placeholder="Ent.Min" [attr.disabled]="true" value="{{data}}">
+                  <input name="entMin" class="form-control"  autocomplete="off" placeholder="ent.Min" [attr.disabled]="true" value="{{data}}">
                 </div>
               </div>
               <div class="row">
@@ -179,7 +179,7 @@
                     <div class="row">
                       <div class="col-sm-10  col-xs-10" >
                         <cft-input errorMessage="" label="Observação">
-                          <input  class="form-control" placeholder="dd/mm/yyyy" name="Entrega" ngbDatepicker #d1="ngbDatepicker" formControlName="Entrega" [minDate]="dataMin" [readonly]="true">
+                          <input  class="form-control" placeholder="dd/mm/yyyy" name="entrega" ngbDatepicker #d1="ngbDatepicker" formControlName="entrega" [minDate]="dataMin" [readonly]="true">
                           <!-- <input  name="Entrega" class="form-control" formControlName="Entrega" autocomplete="off" placeholder="dd/mm/aaaa"> -->
                         </cft-input>
                       </div>
@@ -187,7 +187,7 @@
                           <button class="btn btn-primary" (click)="d1.toggle()" type="button" [attr.disabled]="blnDesabilitaCampos"><i class="fa fa-table " ></i></button>
                       </div>
                       <div class="col-xs-12 col-sm-12" >
-                        <span *ngIf="pedidoForm.get('Entrega').getError('dataEntrega')" style="color:red">
+                        <span *ngIf="pedidoForm.get('entrega').getError('dataEntrega')" style="color:red">
                           <i class="fa fa-remove"></i> Data não pode ser menor que a data de hoje.
                         </span>
                       </div>
@@ -207,8 +207,8 @@
                     Periodo:
                 </div>
                 <div class="col-sm-6  col-xs-6">
-                    <select name="IdPeriodo" class="form-control" formControlName="Per_Ent" [value]="4" [attr.disabled]="blnDesabilitaCampos">
-                      <option *ngFor=  "let c of (periodo)" [value]="c.IdPeriodo">{{c.Descricao}}</option>
+                    <select name="idPeriodo" class="form-control" formControlName="per_Ent" [value]="4" [attr.disabled]="blnDesabilitaCampos">
+                      <option *ngFor=  "let c of (periodo)" [value]="c.idPeriodo">{{c.descricao}}</option>
                     </select>
                 </div>
               </div>
@@ -225,8 +225,8 @@
                     Midia:
                 </div>
                 <div class="col-sm-6  col-xs-6">
-                  <select name="IdMidia" class="form-control" formControlName="IdMidia" #IdMidia [attr.disabled]="blnDesabilitaCampos">
-                    <option *ngFor=  "let c of (midias)" [value]="c.IdMidia">{{c.DescMidia}}</option>
+                  <select name="idMidia" class="form-control" formControlName="idMidia" #idMidia [attr.disabled]="blnDesabilitaCampos">
+                    <option *ngFor=  "let c of (midias)" [value]="c.idMidia">{{c.descMidia}}</option>
                   </select>
                 </div>
               </div>
@@ -244,7 +244,7 @@
                 </div>
                 <div class="col-sm-6  col-xs-6">
                   <cft-input errorMessage="Campo obrigatório com maximo de 60 caracteres" label="Midia" >
-                      <input name="DescMidia" class="form-control" formControlName="DescMidia" autocomplete="off" placeholder="Midia" [attr.disabled]="blnDesabilitaCampos">
+                      <input name="obsMidia" class="form-control" formControlName="obsMidia" autocomplete="off" placeholder="Midia" [attr.disabled]="blnDesabilitaCampos">
                   </cft-input>
                 </div>
                 <div class="col-xs-12 col-sm-2" >
@@ -261,8 +261,8 @@
                     Vendedores:
                 </div>
                 <div class="col-sm-6  col-xs-6">
-                  <select name="IdVendedor" class="form-control" formControlName="IdVendedor" [attr.disabled]="blnDesabilitaCampos">
-                    <option *ngFor=  "let c of (vendedores)" [value]="c.IdVendedor">{{c.Nome}}</option>
+                  <select name="idVendedor" class="form-control" formControlName="idVendedor" [attr.disabled]="blnDesabilitaCampos">
+                    <option *ngFor=  "let c of (vendedores)" [value]="c.idVendedor">{{c.nome}}</option>
                   </select>
                 </div>
               </div>
@@ -281,11 +281,11 @@
                       <i class="fa fa-save"></i> Salvar
                   </button>
               </div>
-              <div class="col-sm-8 col-xs-8">
+              <!-- <div class="col-sm-8 col-xs-8">
                 <button (click)="findInvalidControls()"type="button" class="btn btn-primary pull-right btn-block" >
                     <i class="fa fa-save"></i> teste
                 </button>
-              </div>
+              </div> -->
           </div>
             <div class="row">
               <div class="col-sm-2 col-xs-2">
@@ -312,33 +312,33 @@
                       <tbody>
                       <tr *ngFor="let ip of itensPedido ">
                         <td>
-                          <span [tooltip]="ip.Produto" placement="top" show-delay="500">
-                            {{ip.Produto != null ? ip.Produto.substring(0,60) : null}}
+                          <span [tooltip]="ip.produto" placement="top" show-delay="500">
+                            {{ip.produto != null ? ip.produto.substring(0,60) : null}}
                           </span>
                         </td>
                         <td>
-                          <span [tooltip]="ip.Quantid" placement="top" show-delay="500">
-                            {{ip.Quantid}}
+                          <span [tooltip]="ip.quantid" placement="top" show-delay="500">
+                            {{ip.quantid}}
                           </span>
                         </td>
                         <td>
-                          <span [tooltip]="ip.Valuni" placement="top" show-delay="500">
-                            {{ip.Valuni | currency : 'R$'}}
+                          <span [tooltip]="ip.valuni | currency : 'R$'" placement="top" show-delay="500">
+                            {{ip.valuni | currency : 'R$'}}
                           </span>
                         </td>
                         <td>
-                          <span [tooltip]="ip.Valtot" placement="top" show-delay="500">
-                            {{ip.Valtot | currency : 'R$'}}
+                          <span [tooltip]="ip.valtot | currency : 'R$'" placement="top" show-delay="500">
+                            {{ip.valtot | currency : 'R$'}}
                           </span>
                         </td>
                         <td>
-                          <span [tooltip]="ip.Saida" placement="top" show-delay="500">
-                            {{ip.Saida}}
+                          <span [tooltip]="ip.saida" placement="top" show-delay="500">
+                            {{ip.saida}}
                           </span>
                         </td>
                         <td>
-                          <span [tooltip]="ip.TipoFrete" placement="top" show-delay="500">
-                            {{ip.TipoFrete}}
+                          <span [tooltip]="ip.tipoFrete" placement="top" show-delay="500">
+                            {{ip.tipoFrete}}
                           </span>
                         </td>
                         <td><a class="nav-link linkPoint"  (click)="showChildModal(ip)">
@@ -388,8 +388,230 @@
                   </div>
                 </div>
               </tab>
-              <tab heading="Financeiro">Basic content 1</tab>
-              <tab heading="Entrega/Encerramento">Basic content 2</tab>
+              <tab heading="Financeiro">
+                <div class="row" style="border: 1px;">
+                  <div class="col-sm-12 col-xs-12 table-responsive-xl">
+                    <div class="row">
+                      <div class="col-sm-2 col-xs-2">
+                          &nbsp;
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-1 col-xs-1">
+                        Tot.Itens
+                      </div>
+                      <div class="col-sm-2 col-xs-2">
+                          <input name="obsMidia" class="form-control" formControlName="obsMidia" autocomplete="off" placeholder="Midia" [attr.disabled]="blnDesabilitaCampos">
+                      </div>
+                      <div class="col-sm-1 col-xs-1">
+                        Desconto(%)
+                      </div>
+                      <div class="col-sm-2 col-xs-2">
+                        <input name="obsMidia" class="form-control" formControlName="obsMidia" autocomplete="off" placeholder="Midia" [attr.disabled]="blnDesabilitaCampos">
+                      </div>
+                      <div class="col-sm-2 col-xs-2">
+                        <input name="obsMidia" class="form-control" formControlName="obsMidia" autocomplete="off" placeholder="Midia" [attr.disabled]="blnDesabilitaCampos">
+                      </div>
+                      <div class="col-sm-1 col-xs-1">
+                        &nbsp;
+                      </div>
+                      <div class="col-sm-1 col-xs-1">
+                        Total
+                      </div>
+                      <div class="col-sm-2 col-xs-2">
+                        <input name="obsMidia" class="form-control" formControlName="obsMidia" autocomplete="off" placeholder="Midia" [attr.disabled]="blnDesabilitaCampos">
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-2 col-xs-2">
+                          &nbsp;
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-1 col-xs-1">
+                        Frete
+                      </div>
+                      <div class="col-sm-2 col-xs-2">
+                          <input name="obsMidia" class="form-control" formControlName="obsMidia" autocomplete="off" placeholder="Midia" [attr.disabled]="blnDesabilitaCampos">
+                      </div>
+                      <div class="col-sm-1 col-xs-1">
+                        &nbsp;
+                      </div>
+                      <div class="col-sm-2 col-xs-2">
+                        Total a pagar
+                      </div>
+                      <div class="col-sm-2 col-xs-2">
+                        <input name="obsMidia" class="form-control" formControlName="obsMidia" autocomplete="off" placeholder="Midia" [attr.disabled]="blnDesabilitaCampos">
+                      </div>
+                      <div class="col-sm-1 col-xs-1">
+                        &nbsp;
+                      </div>
+                      <div class="col-sm-1 col-xs-1">
+                        Saldo
+                      </div>
+                      <div class="col-sm-2 col-xs-2">
+                        <input name="obsMidia" class="form-control" formControlName="obsMidia" autocomplete="off" placeholder="Midia" [attr.disabled]="blnDesabilitaCampos">
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-2 col-xs-2">
+                          &nbsp;
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-2 col-xs-2">
+                        Observaçoes Finacneiras;
+                      </div>
+                      <div class="col-sm-9 col-xs-9">
+                        <textarea name="Text1" cols="100" rows="5"></textarea>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-2 col-xs-2">
+                            &nbsp;
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-5 col-xs-5">
+                          <table class="table table-striped col-sm-12 col-xs-12">
+                            <thead>
+                            <tr>
+                              <th>Fr.Pgto</th>
+                              <th>Parcs</th>
+                              <th>Vl.Amort</th>
+                              <th>Tot.Parcs</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr >
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                            </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="col-sm-6 col-xs-6">
+                          <table class="table table-striped col-sm-12 col-xs-12">
+                            <thead>
+                            <tr>
+                              <th>Nº</th>
+                              <th>Doc</th>
+                              <th>Data</th>
+                              <th>Banco</th>
+                              <th>Praça</th>
+                              <th>Agência</th>
+                              <th>Cheque</th>
+                              <th>Valor</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr >
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                            </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-2 col-xs-2">
+                      &nbsp;
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-3 col-xs-3">
+                    <button class="btn btn-primary pull-right btn-block" data-toggle="modal" data-target="#Fabrica" type="button" [disabled]="blnDesabilitaBotoes">
+                      <img src="assets/imagens/icons/factory2.png" class="mr-2" style="width: 20px; color: white; ">
+                      Fábrica
+                  </button>
+                  </div>
+                  <div class="col-sm-1 col-xs-1"></div>
+                  <div class="col-sm-3 col-xs-3">
+                    <button class="btn btn-primary pull-right btn-block" data-toggle="modal" data-target="#Estoque" type="button" data-backdrop="static" data-keyboard="false" data-dismiss = "modal" data-whatever="@mdo" [disabled]="blnDesabilitaBotoes">
+                      <img src="assets/imagens/icons/estoque.png" class="mr-2" style="width: 20px; color: white; ">
+                      Estoque
+                    </button>
+                  </div>
+                  <div class="col-sm-1 col-xs-1"></div>
+                  <div class="col-sm-3 col-xs-3">
+                    <button class="btn btn-primary pull-right btn-block" data-toggle="modal" data-target="#Fabrica" type="button" [disabled]="blnDesabilitaBotoes">
+                      <img src="assets/imagens/icons/atualizar.png" class="mr-2" style="width: 15px; color: white; ">
+                      Atualizar
+                    </button>
+                  </div>
+                </div>
+              </tab>
+              <tab heading="Entrega/Encerramento">
+                <div class="row" style="border: 1px;">
+                  <div class="col-sm-12 col-xs-12 table-responsive-xl">
+                      <div class="row">
+                        <div class="col-sm-2 col-xs-2">
+                            &nbsp;
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-5 col-xs-5">
+                          <table class="table table-striped col-sm-12 col-xs-12">
+                            <thead>
+                            <tr>
+                              <th>Fr.Pgto</th>
+                              <th>Parcs</th>
+                              <th>Vl.Amort</th>
+                              <th>Tot.Parcs</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr >
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                            </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="col-sm-6 col-xs-6">
+                          <table class="table table-striped col-sm-12 col-xs-12">
+                            <thead>
+                            <tr>
+                              <th>Nº</th>
+                              <th>Doc</th>
+                              <th>Data</th>
+                              <th>Banco</th>
+                              <th>Praça</th>
+                              <th>Agência</th>
+                              <th>Cheque</th>
+                              <th>Valor</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr >
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                            </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+              </tab>
             </tabset>
           </div>
       </form>
@@ -457,7 +679,7 @@
           </div>
           <div class="col-sm-4 col-xs-4 ">
             <select #Id_Alm name="Id_Alm" class="form-control"  >
-              <option *ngFor=  "let c of (estoques)" [value]="c.Id_Alm">{{c.Descr}}</option>
+              <option *ngFor=  "let c of (estoques)" [value]="c.id_Alm">{{c.descr}}</option>
             </select>
           </div>
           <div class="col-sm-1 col-xs-1 ">
@@ -486,17 +708,17 @@
                 <tbody>
                 <tr *ngFor="let itens of itensEstoque">
                     <td>
-                      <span class="tooltip-test" [title]="itens.Produto">{{itens.Produto.substring(0,30)}}</span>
+                      <span class="tooltip-test" [title]="itens.produto">{{itens.produto.substring(0,30)}}</span>
                     </td>
                     <td>
-                      {{itens.Quantidade}}
+                      {{itens.quantidade}}
                     </td>
                     <td>
-                      {{itens.Preco | currency : 'R$'}}
+                      {{itens.preco | currency : 'R$'}}
                     </td>
                     <td>
                       <a (click)="emitDecreaseQty(itens)" class="btn btn-sm"><i class="fa fa-minus"></i></a>
-                          {{itens.QtdPedido}}
+                          {{itens.qtdPedido}}
                       <a (click)="emitIncreaseQty(itens)" class="btn btn-sm"><i class="fa fa-plus"></i></a>
                     </td>
                 </tr>
@@ -516,7 +738,7 @@
             </button>
           </div>
           <div class="col-sm-6 col-xs-6 ">
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
           </div>
         </div>
       </div>
@@ -540,7 +762,7 @@
             Produto:
           </div>
           <div class="col-sm-8 col-xs-8 ">
-            {{itensPedido == null ? "" : itensPedidoAlteracao.Produto }}
+            {{itensPedido == null ? "" : itensPedidoAlteracao.produto }}
           </div>
         </div>
         <div class="row">
@@ -553,7 +775,7 @@
             Quantidade:
           </div>
           <div class="col-sm-3 col-xs-3 ">
-            <input name="Quantid" class="form-control" placeholder="Nº Pedido" [value]="itensPedido == null ? '' : itensPedidoAlteracao.Quantid">
+            <input name="Quantid" class="form-control" placeholder="Nº Pedido" [value]="itensPedido == null ? '' : itensPedidoAlteracao.quantid">
           </div>
           <div class="col-sm-1 col-xs-1 ">
               Frete:
@@ -561,14 +783,14 @@
           <div class="col-sm-5 col-xs-5 ">
             <div class="row ">
               <div class="form-check col-sm-4 col-xs-4">
-                <input type="radio" class="form-check-input" name="tipoFrete" [checked]="itensPedido == null ? '' : itensPedidoAlteracao.TipoFrete == 'CLIENTE' ? true : false " > cliente
+                <input type="radio" class="form-check-input" name="tipoFrete" [checked]="itensPedido == null ? '' : itensPedidoAlteracao.tipoFrete == 'CLIENTE' ? true : false " > cliente
               </div>
               <div class="form-check col-sm-4 col-xs-4">
-                <input type="radio" class="form-check-input" name="tipoFrete"  [checked]="itensPedido == null ? '' : itensPedidoAlteracao.TipoFrete == 'FÁBRICA' ? true : false " > fábrica
+                <input type="radio" class="form-check-input" name="tipoFrete"  [checked]="itensPedido == null ? '' : itensPedidoAlteracao.tipoFrete == 'FÁBRICA' ? true : false " > fábrica
               </div>
               <!-- <div class="form-check disabled"> -->
               <div class="form-check disabled">
-                <input type="radio" class="form-check-input" name="tipoFrete" [checked]="itensPedido == null ? '' : itensPedidoAlteracao.TipoFrete == 'TERCEIROS' ? true : false " > terceiros
+                <input type="radio" class="form-check-input" name="tipoFrete" [checked]="itensPedido == null ? '' : itensPedidoAlteracao.tipoFrete == 'TERCEIROS' ? true : false " > terceiros
               </div>
               <!-- <div class=" "><input type="radio" [checked]="itensPedido == null ? '' : itensPedidoAlteracao.TipoFrete == 'CLIENTE' ? true : false " > cliente</div>
               <div class="col-sm-4 col-xs-4 "><input type="radio" [checked]="itensPedido == null ? '' : itensPedidoAlteracao.TipoFrete == 'FÁBRICA' ? true : false " > fabrica</div>
@@ -586,13 +808,13 @@
             Vl. Tabela:
           </div>
           <div class="col-sm-3 col-xs-3 ">
-            <input name="Quantid" class="form-control" placeholder="Nº Pedido" [value]="itensPedido == null ? '' :itensPedidoAlteracao.Quantid">
+            <input name="Quantid" class="form-control" placeholder="Nº Pedido" [value]="itensPedido == null ? '' :itensPedidoAlteracao.quantid">
           </div>
           <div class="col-sm-2 col-xs-2 ">
               Desconto(%):
           </div>
           <div class="col-sm-4 col-xs-4 ">
-            <input name="Quantid" class="form-control" placeholder="Nº Pedido" [value]="itensPedido == null ? '' :itensPedidoAlteracao.Quantid ">
+            <input name="Quantid" class="form-control" placeholder="Nº Pedido" [value]="itensPedido == null ? '' :itensPedidoAlteracao.quantid ">
           </div>
         </div>
         <div class="row">
@@ -605,13 +827,13 @@
             Unitário:
           </div>
           <div class="col-sm-3 col-xs-3 ">
-            <input name="Quantid" class="form-control" placeholder="Nº Pedido" [value]="itensPedido == null ? '' :itensPedidoAlteracao.Valuni | currency : 'R$'">
+            <input name="Quantid" class="form-control" placeholder="Nº Pedido" [value]="itensPedido == null ? '' :itensPedidoAlteracao.valuni | currency : 'R$'">
           </div>
           <div class="col-sm-2 col-xs-2 ">
               Vl. Total:
           </div>
           <div class="col-sm-4 col-xs-4 ">
-            <input name="Quantid" class="form-control" placeholder="Nº Pedido" [value]="itensPedido == null ? '' :itensPedidoAlteracao.Valtot | currency : 'R$'">
+            <input name="Quantid" class="form-control" placeholder="Nº Pedido" [value]="itensPedido == null ? '' :itensPedidoAlteracao.valtot | currency : 'R$'">
           </div>
         </div>
       </div>
@@ -621,11 +843,11 @@
         <div class="row">
           <div class="col-sm-6 col-xs-6 ">
             <button class="btn btn-primary pull-right btn-block" type="button" (click)="SalvarItensEstoque(itensEstoque)" [disabled]="!blnHabilitaInserirItensEstqoue" data-dismiss="modal">
-              Inserir
+              Alterar
             </button>
           </div>
           <div class="col-sm-6 col-xs-6 ">
-            <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="hideChildModal()">Close</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="hideChildModal()">Fechar</button>
           </div>
         </div>
       </div>

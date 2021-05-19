@@ -1,5 +1,5 @@
 
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -37,20 +37,25 @@ export class ClientesService {
 
   GetIdCliente(id: number):Observable<Cliente>{
     var clienteLocal : Observable<Cliente>
-    clienteLocal = this.http.get<Cliente>(`${MEAT_API}/cliente/GetIdCliente/${id}` ).pipe();
+    let params = new HttpParams();
+    params = params.append('id', String(id));
+    clienteLocal = this.http.get<Cliente>(`${MEAT_API}/cliente/GetIdCliente`,{params: params} ).pipe();
     return clienteLocal;
   }
 
   ConsultaCEP(id: string):Observable<Endereco>{
     var EnderecoLocal : Observable<Endereco>
-    EnderecoLocal = this.http.get<Endereco>(`${MEAT_API}/cliente/ConsultaCEP/${id}` ).pipe();
+    let params = new HttpParams();
+    params = params.append('id', String(id));
+    EnderecoLocal = this.http.get<Endereco>(`${MEAT_API}/cliente/ConsultaCEP`, {params: params} ).pipe();
     return EnderecoLocal;
   }
 
   ValidaCnpjCpf(id: any):Observable<any>{
     var cpf : Observable<any>
-    cpf = this.http.get<any>(`${MEAT_API}/cliente/ValidaCnpjCpf/${id}` ).pipe();
-    console.log(cpf );
+    let params = new HttpParams();
+    params = params.append('id', String(id));
+    cpf = this.http.get<any>(`${MEAT_API}/cliente/ValidaCnpjCpf`, {params: params} ).pipe();
     return cpf;
   }
 
@@ -58,12 +63,15 @@ export class ClientesService {
     let params = new HttpParams();
     params = params.append('campo', campo);
     params = params.append('criterio', criterio);
-    var clientes$ = this.http.get<Cliente[]>(`${MEAT_API}/cliente/listaclientes`,{params: params}).pipe();
+    var clientes$ = this.http.get<Cliente[]>(`${MEAT_API}/cliente/GetAllClientes`,{params: params}).pipe();
+    console.log("PASSOU SERVIÇO GetAllClientes");
     return clientes$;
   }
 
-  GetClienteCPF(id: any): Observable<any>{
-    var clientes$ = this.http.get<any>(`${MEAT_API}/cliente/listaclienteCPF/${id}`).pipe();
+  GetClienteCPF(id: any): Observable<Cliente>{
+    let params = new HttpParams();
+    params = params.append('id', id);
+    var clientes$ = this.http.get<Cliente>(`${MEAT_API}/cliente/GetClienteCPF`,{params: params}).pipe();
     return clientes$;
   }
 
@@ -72,7 +80,7 @@ export class ClientesService {
   }
 
   SalvarCliente(cliente : Cliente): Observable<boolean>{
-    if (cliente.Id_Cli){
+    if (cliente.id_Cli){
       console.log("alterar cliente");
       return this.AlterarCliente(cliente);
     }
@@ -80,7 +88,24 @@ export class ClientesService {
   }
 
   InserirCliente(cliente : Cliente) : Observable<boolean>{
-    return this.http.post<boolean>(`${MEAT_API}/cliente/Incluir` ,cliente)
+    const headers = new HttpHeaders()
+    headers.append("Accept","text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+    // var gp : any;
+    // headers.append('Content-Type','application/json')
+    headers.append("Accept-Encoding","gzip, deflate");
+    headers.append("Access-Control-Request-Headers","Content-type");
+    headers.append("Access-Control-Request-Method","POST,OPTIONS,GET");
+    headers.append('X-Requested-With','XMLHttpRequest');
+    headers.append('Access-Control-Allow-Origin', 'https://localhost:44377' );
+    headers.append('Content-Type', 'application/json');
+
+    var arrayNumeros : number[];
+
+    console.log(cliente);
+    cliente.id_Cli = 0;
+    cliente.idPessoa = 0;
+    cliente.obJ_PESSOA.idPessoaEndereco = arrayNumeros;
+    return this.http.post<boolean>(`${MEAT_API}/cliente/InserirCliente` ,cliente,{headers: headers});
   }
 
   ExcluirCliente(id : number) : Observable<boolean>{
@@ -88,7 +113,18 @@ export class ClientesService {
   }
 
   AlterarCliente(cliente : Cliente) : Observable<boolean>{
-    return this.http.put<boolean>(`${MEAT_API}/cliente/Alterar/${cliente.Id_Cli}`,cliente).pipe(take(1));
+    const headers = new HttpHeaders()
+    headers.append("Accept","text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+    headers.append("Accept-Encoding","gzip, deflate");
+    headers.append("Access-Control-Request-Headers","Content-type");
+    headers.append("Access-Control-Request-Method","POST,OPTIONS,GET");
+    headers.append('X-Requested-With','XMLHttpRequest');
+    headers.append('Access-Control-Allow-Origin', 'https://localhost:44377' );
+    headers.append('Content-Type', 'application/json');
+
+    console.log("alterar cliente gggggggggg");
+
+    return this.http.put<boolean>(`${MEAT_API}/cliente/AlterarCliente/`,cliente,{headers: headers}).pipe(take(1));
   }
 
   GetAllEstados(): Observable<Estado[]>{
@@ -99,7 +135,9 @@ export class ClientesService {
 
   GetTelefonePorIdCliente(id: number): Observable<Telefone[]>{
     let fones$ = new Observable<Telefone[]>();
-    fones$ = this.http.get<Telefone[]>(`${MEAT_API}/cliente/GetTelefonePorIdCliente/${id}` ).pipe();
+    let params = new HttpParams();
+    params = params.append('id', String(id));
+    fones$ = this.http.get<Telefone[]>(`${MEAT_API}/cliente/GetTelefonePorIdCliente`, {params: params} ).pipe();
     return fones$;
   }
 

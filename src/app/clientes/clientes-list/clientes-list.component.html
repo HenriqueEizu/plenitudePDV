@@ -70,10 +70,10 @@
               <table class="table table-striped col-sm-12 col-xs-12">
                 <thead>
                 <tr>
-                  <th scope="col" sortable="OBJ_PESSOA.NOME" (sort)="onSort($event)">Nome</th>
-                  <th scope="col" sortable="OBJ_PESSOA.CnpjCpf" (sort)="onSort($event)">CPF/CNPJ</th>
-                  <th scope="col" sortable="OBJ_PESSOA.IEstRG" (sort)="onSort($event)">RG/IE</th>
-                  <th scope="col" sortable="OBJ_PESSOA.IndFisJur" (sort)="onSort($event)">Tipo Pessoa</th>
+                  <th scope="col" sortable="obJ_PESSOA.NOME" (sort)="onSort($event)">Nome</th>
+                  <th scope="col" sortable="obJ_PESSOA.CnpjCpf" (sort)="onSort($event)">CPF/CNPJ</th>
+                  <th scope="col" sortable="obJ_PESSOA.IEstRG" (sort)="onSort($event)">RG/IE</th>
+                  <th scope="col" sortable="obJ_PESSOA.IndFisJur" (sort)="onSort($event)">Tipo Pessoa</th>
                   <th scope="col">Ação</th>
                   <th scope="col">Ação</th>
 
@@ -82,32 +82,32 @@
                 <tbody>
                 <tr *ngFor="let cliente of clientes | slice: pageSize | slice: 0:itemsPerPage">
                   <td>
-                    <span [tooltip]="cliente.OBJ_PESSOA.Nome" placement="top" show-delay="500">
-                      <ngb-highlight [result]="cliente.OBJ_PESSOA.Nome.substring(0,15)" [term]="service.searchTerm"></ngb-highlight>
+                    <span [tooltip]="cliente.obJ_PESSOA.nome" placement="top" show-delay="500">
+                      <ngb-highlight [result]="cliente.obJ_PESSOA.nome.substring(0,15)" [term]="service.searchTerm"></ngb-highlight>
                     </span>
                   </td>
                   <td>
-                    <span [tooltip]="cliente.OBJ_PESSOA.CnpjCpf" placement="top" show-delay="500">
-                      <ngb-highlight [result]="cliente.OBJ_PESSOA.CnpjCpf.substring(0,15) " [term]="service.searchTerm"></ngb-highlight>
+                    <span [tooltip]="cliente.obJ_PESSOA.cnpjCpf" placement="top" show-delay="500">
+                      <ngb-highlight [result]="cliente.obJ_PESSOA.cnpjCpf.substring(0,15) " [term]="service.searchTerm"></ngb-highlight>
                     </span>
                   </td>
                   <td>
-                    <span [tooltip]="cliente.OBJ_PESSOA.IEstRG" placement="top" show-delay="500">
-                      <ngb-highlight [result]="cliente.OBJ_PESSOA.IEstRG.substring(0,15)" [term]="service.searchTerm"></ngb-highlight>
+                    <span [tooltip]="cliente.obJ_PESSOA.iEstRG" placement="top" show-delay="500">
+                      <ngb-highlight [result]="cliente.obJ_PESSOA.iEstRG.substring(0,15) " [term]="service.searchTerm"></ngb-highlight>
                     </span>
                   </td>
                   <td>
-                    <span [tooltip]="cliente.OBJ_PESSOA.IndFisJur" placement="top" show-delay="500">
-                      <ngb-highlight [result]="cliente.OBJ_PESSOA.IndFisJur.substring(0,15)" [term]="service.searchTerm"></ngb-highlight>
+                    <span [tooltip]="cliente.obJ_PESSOA.indFisJur" placement="top" show-delay="500">
+                      <ngb-highlight [result]="cliente.obJ_PESSOA.indFisJur.substring(0,15) " [term]="service.searchTerm"></ngb-highlight>
                     </span>
                   </td>
-                  <td><a class="nav-link" [routerLink]="['/cliente',cliente.Id_Cli]">
+                  <td><a class="nav-link" [routerLink]="['/cliente',cliente.id_Cli]">
                     <span tooltip="Editar" placement="top" show-delay="500">
                         <i class="fa fa-edit"></i>
                       </span>
                       </a>
                   </td>
-                  <td><a class="nav-link" (click)="ExcluirCliente(cliente.Id_Cli);"  [routerLink]="['/cliente',cliente.Id_Cli]">
+                  <td><a class="nav-link" (click)="ExcluirCliente(cliente.id_Cli);"  [routerLink]="['/cliente',cliente.id_Cli]">
                     <span tooltip="Editar" placement="top" show-delay="500">
                       <img src="/assets/imagens/icons/excluir.png" class="mr-2" style="width: 20px">
                       </span>

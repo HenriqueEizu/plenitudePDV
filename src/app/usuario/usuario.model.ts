@@ -2,7 +2,7 @@ export interface Usuario {
         Id_Usr : number,
         Senha : string,
         Login : string,
-        Usuario :string,
+        usuario :string,
         FlAtivo : boolean,
         DtVencSenha : Date,
         IdEMail : string

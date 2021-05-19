@@ -67,15 +67,16 @@ export class UsuarioService{
 
   VerificaUsuario(usuario: Usuario): Observable<Usuario>{
     var usuarioLocal : Observable<Usuario>
-    // usuarioLocal = this.http.post<Usuario>(`${MEAT_API}/usuario`,usuario).pipe();
-    usuarioLocal = this.http.post<Usuario>(`${MEAT_API}/usuario/login`,usuario)
+    console.log("chegou aqui 12312312321")
+    usuarioLocal = this.http.post<Usuario>(`${MEAT_API}/usuario`,usuario).pipe();
+    // usuarioLocal = this.http.post<Usuario>(`${MEAT_API}/usuario/Login`,usuario)
     usuarioLocal.subscribe((us : any) => {
       console.log(usuarioLocal);
       if (us != null){
         // this.mostrarMenuEmmiter.emit(true);
         console.log(us.usuario + "usususususususuus")
         this.loggedIn.next(true);
-        this.usuarioCacheFunc.next(us.usuario);
+        this.usuarioCacheFunc.next(us);
         localStorage.setItem('token', us.token);
         this.router.navigate([''])
       }

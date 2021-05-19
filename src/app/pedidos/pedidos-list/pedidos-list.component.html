@@ -21,7 +21,7 @@
 
 <div class="row">
   <div class="col-sm-3 col-xs-3">&nbsp;</div>
-    <div class="col-sm-6 col-xs-6 badge badge-primary"> <h5><img src="/assets/imagens/icons/clientes.png" class="mr-2" style="width: 30px"> Clientes </h5></div>
+    <div class="col-sm-6 col-xs-6 badge badge-primary"> <h5><img src="/assets/imagens/icons/clientes.png" class="mr-2" style="width: 30px"> Pedidos </h5></div>
 </div>
 
 
@@ -70,12 +70,12 @@
               <table class="table table-striped col-sm-12 col-xs-12">
                 <thead>
                 <tr>
-                  <th scope="col" sortable="Id_Ped" (sort)="onSort($event)">Pedido</th>
-                  <th scope="col" sortable="cliente.OBJ_PESSOA.Nome" (sort)="onSort($event)">Cliente</th>
-                  <th scope="col" sortable="DtPed" (sort)="onSort($event)">Data</th>
-                  <th scope="col" sortable="Entrega" (sort)="onSort($event)">Entrega</th>
-                  <th scope="col" sortable="DescrSituacao" (sort)="onSort($event)">Situação</th>
-                  <th scope="col" sortable="DescrTipo" (sort)="onSort($event)">Tipo</th>
+                  <th scope="col" sortable="id_Ped" (sort)="onSort($event)">Pedido</th>
+                  <th scope="col" sortable="cliente.obJ_PESSOA.nome" (sort)="onSort($event)">Cliente</th>
+                  <th scope="col" sortable="dtPed" (sort)="onSort($event)">Data</th>
+                  <th scope="col" sortable="entrega" (sort)="onSort($event)">Entrega</th>
+                  <th scope="col" sortable="descrSituacao" (sort)="onSort($event)">Situação</th>
+                  <th scope="col" sortable="descrTipo" (sort)="onSort($event)">Tipo</th>
                   <th scope="col">Ação</th>
                   <th scope="col">Ação</th>
 
@@ -84,36 +84,36 @@
                 <tbody>
                 <tr *ngFor="let pedido of pedidos | slice: pageSize | slice: 0:itemsPerPage">
                   <td>
-                      <ngb-highlight [result]="pedido.Id_Ped" [term]="service.searchTerm"></ngb-highlight>
+                      <ngb-highlight [result]="pedido.id_Ped" [term]="service.searchTerm"></ngb-highlight>
                   </td>
                   <td>
-                    <span [tooltip]="pedido.cliente.OBJ_PESSOA.Nome" placement="top" show-delay="500">
-                      <ngb-highlight [result]="pedido.cliente.OBJ_PESSOA.Nome.substring(0,15)" [term]="service.searchTerm"></ngb-highlight>
+                    <span [tooltip]="pedido.cliente.obJ_PESSOA.nome" placement="top" show-delay="500">
+                      <ngb-highlight [result]="pedido.cliente.obJ_PESSOA.nome.substring(0,15)" [term]="service.searchTerm"></ngb-highlight>
                     </span>
                   </td>
                   <td>
-                      <ngb-highlight [result]="pedido.DtPed | date: 'dd/MM/yyyy'" [term]="service.searchTerm"></ngb-highlight>
+                      <ngb-highlight [result]="pedido.dtPed | date: 'dd/MM/yyyy'" [term]="service.searchTerm"></ngb-highlight>
                   </td>
                   <td>
-                      <ngb-highlight [result]="pedido.Entrega | date: 'dd/MM/yyyy'" [term]="service.searchTerm"></ngb-highlight>
+                      <ngb-highlight [result]="pedido.entrega | date: 'dd/MM/yyyy'" [term]="service.searchTerm"></ngb-highlight>
                   </td>
                   <td>
-                    <span [tooltip]="pedido.DescrSituacao" placement="top" show-delay="500">
-                      <ngb-highlight [result]="pedido.DescrSituacao.substring(0,5)" [term]="service.searchTerm"></ngb-highlight>
+                    <span [tooltip]="pedido.descrSituacao" placement="top" show-delay="500">
+                      <ngb-highlight [result]="pedido.descrSituacao.substring(0,5)" [term]="service.searchTerm"></ngb-highlight>
                     </span>
                   </td>
                   <td>
-                    <span [tooltip]="pedido.DescrTipo" placement="top" show-delay="500">
-                      <ngb-highlight [result]="pedido.DescrTipo.substring(0,5)" [term]="service.searchTerm"></ngb-highlight>
+                    <span [tooltip]="pedido.descrTipo" placement="top" show-delay="500">
+                      <ngb-highlight [result]="pedido.descrTipo.substring(0,5)" [term]="service.searchTerm"></ngb-highlight>
                     </span>
                   </td>
-                  <td><a class="nav-link" [routerLink]="['/pedido',pedido.Id_Ped]">
+                  <td><a class="nav-link" [routerLink]="['/pedido',pedido.id_Ped]">
                     <span tooltip="Editar" placement="top" show-delay="500">
                         <i class="fa fa-edit"></i>
                       </span>
                       </a>
                   </td>
-                  <td><a class="nav-link" (click)="ExcluirPedido(pedido.Id_Ped);"  [routerLink]="['/pedido',pedido.Id_Ped]">
+                  <td><a class="nav-link" (click)="ExcluirPedido(pedido.id_Ped);"  [routerLink]="['/pedido',pedido.id_Ped]">
                     <span tooltip="Editar" placement="top" show-delay="500">
                       <img src="/assets/imagens/icons/excluir.png" class="mr-2" style="width: 20px">
                       </span>

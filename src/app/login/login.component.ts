@@ -45,17 +45,26 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
       Login: this.formBuilder.control('',[Validators.required, Validators.minLength(6)]),
-      Senha: this.formBuilder.control('',[Validators.required, Validators.minLength(6)])
+      Senha: this.formBuilder.control('',[Validators.required, Validators.minLength(5)]),
+      Id_Usr : this.formBuilder.control('0'),
+      Usuario :this.formBuilder.control(''),
+      FlAtivo : this.formBuilder.control(true),
+      DtVencSenha : this.formBuilder.control(''),
+      IdEMail : this.formBuilder.control(''),
     })
   }
 
   VerificaUsuario(usuario: Usuario){
+    console.log("jjjjjjj");
+
     this.loginService.VerificaUsuario(usuario)
       .subscribe((usuarioLocal: Usuario) => {
         this.usuarioLocal = usuarioLocal
-        if (this.usuarioLocal == undefined || this.usuarioLocal == null){
+        console.log(usuarioLocal )
+        if (this.usuarioLocal.FlAtivo == false){
 
           // this.message = "Login ou Senha não conferem"
+          console.log("hhhhhhhhhhhhhhhhhhhhhh" )
           this.loginForm.reset();
         }
 

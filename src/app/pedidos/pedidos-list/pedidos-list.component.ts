@@ -126,7 +126,7 @@ export class PedidosListComponent implements OnInit {
        strCriterio = criterio.value
 
     this.pedidoService.GetAllPedidos(campo.value,strCriterio).subscribe((es : Pedido[]) => {
-      if (es[0].Id_Ped == null)
+      if (es.length == 0)
       {
         this.pedidos = null;
         this.total = 5;
@@ -136,6 +136,7 @@ export class PedidosListComponent implements OnInit {
         this.alertService.showAlertDanger("Nenhum pedido encontrado") ;
       }
       else{
+        console.log(es);
         this.pedidos = es
         this.total = es.length
       }

@@ -16,6 +16,9 @@ import { ClientesService } from './../clientes/clientes.service';
 import { AlertModalService } from '../shared/alertmodal/alertmodal.service';
 import { UsuarioService } from '../usuario/usuario.service';
 import { Usuario } from '../usuario/usuario.model';
+import { stringify } from '@angular/compiler/src/util';
+
+var o2x = require('object-to-xml');
 
 const sendRequest = function(value) {
   const validEmail = "test@dx-email.com";
@@ -76,6 +79,7 @@ export class ClientesComponent implements OnInit {
   ngOnInit(): void {
 
     this.clienteService.GetAllEstados().subscribe((es : Estado[]) => {
+      console.log(es);
       this.estados = es;
       });
 
@@ -85,51 +89,53 @@ export class ClientesComponent implements OnInit {
 
     this.cliente = this.route.snapshot.data['cliente'];
 
+    console.log(this.cliente);
+    console.log("hhhhhhhhhhhhhhhhh");
+    console.log(this.cliente.obJ_PESSOA.cnpjCpf);
+
     // if (this.cliente != null){
-      this.clienteService.GetTelefonePorIdCliente(this.cliente.Id_Cli).subscribe((es : Telefone[]) => {
+      this.clienteService.GetTelefonePorIdCliente(this.cliente.id_Cli).subscribe((es : Telefone[]) => {
         this.dataSource = es;
         });
     // }
-    console.log(this.cliente.Id_Cli);
-    console.log("hhhhhhhhhhhh");
-    if (this.cliente.Id_Cli != null){
+    if (this.cliente.id_Cli != null){
 
       // this.cliente.OBJ_PESSOA.DtNascimento
-      const [year, month, day] = this.cliente.OBJ_PESSOA.DtNascimento.split('-');
+      const [year, month, day] = this.cliente.obJ_PESSOA.dtNascimento.split('-');
       const obj = { year: parseInt(year), month: parseInt(month), day:
       parseInt(day.split(' ')[0].trim()) };
-      this.cliente.OBJ_PESSOA.DtNascimento = obj; //{year: 2017, month: 5, day: 13};
+      this.cliente.obJ_PESSOA.dtNascimento = obj; //{year: 2017, month: 5, day: 13};
       // console.log(obj)
     }
 
     // this.cliente.OBJ_PESSOA.DtNascimento = {year: 2017, month: 5, day: 13};
 
-
+    console.log(this.cliente);
 
     this.clienteForm = this.formBuilder.group({
-      Id_Cli : [this.cliente.Id_Cli],
-      CnpjCpf : this.formBuilder.control(this.cliente.OBJ_PESSOA.CnpjCpf,[Validators.required, Validators.minLength(11),Validators.maxLength(14)],[this.ValidaCnpjCpf.bind(this)]),
-      IEstRG : this.formBuilder.control(this.cliente.OBJ_PESSOA.IEstRG,[Validators.required, Validators.minLength(2),Validators.maxLength(18)]),
+      id_Cli : [this.cliente.id_Cli],
+      cnpjCpf : this.formBuilder.control(this.cliente.obJ_PESSOA.cnpjCpf,[Validators.required, Validators.minLength(11),Validators.maxLength(14)],[this.ValidaCnpjCpf.bind(this)]),
+      IEstRG : this.formBuilder.control(this.cliente.obJ_PESSOA.iEstRG,[Validators.required, Validators.minLength(2),Validators.maxLength(18)]),
       // IndFisJur : this.formBuilder.control(this.cliente.OBJ_PESSOA.IndFisJur,[Validators.required, Validators.minLength(1),Validators.maxLength(1)]),
-      IdPessoa : [this.cliente.OBJ_PESSOA.IdPessoa],
-      Nome : this.formBuilder.control(this.cliente.OBJ_PESSOA.Nome,[Validators.required, Validators.minLength(2),Validators.maxLength(60)]),
-      Apelido : this.formBuilder.control(this.cliente.OBJ_PESSOA.Apelido,[Validators.required, Validators.minLength(2),Validators.maxLength(20)]),
-      OrgEmisRg : this.formBuilder.control(this.cliente.OBJ_PESSOA.OrgEmisRg,[Validators.required, Validators.minLength(2),Validators.maxLength(6)]),
-      EstCivil : this.formBuilder.control(this.cliente.OBJ_PESSOA.EstCivil,[Validators.required, Validators.minLength(1),Validators.maxLength(30)]),
-      DtNascimento : this.formBuilder.control(this.cliente.OBJ_PESSOA.DtNascimento),
-      ProfProfissao : this.formBuilder.control(this.cliente.ProfProfissao,[Validators.required, Validators.minLength(2),Validators.maxLength(30)]),
-      DhIns : this.formBuilder.control(this.cliente.OBJ_PESSOA.DhIns),
-      IdPessoaEndereco : [this.cliente.OBJ_PESSOA.IdPessoaEndereco],
-      IdEndereco : [this.cliente.OBJ_PESSOA.IdEndereco],
-      CEP : this.formBuilder.control(this.cliente.OBJ_PESSOA.OBJ_ENDERECO.CEP ,[Validators.required,Validators.pattern(this.cepPattern),this.ConsultaCEP.bind(this)]),
-      UF : this.formBuilder.control(this.cliente.OBJ_PESSOA.OBJ_ENDERECO.UF,[Validators.required]),
-      Localidade : this.formBuilder.control(this.cliente.OBJ_PESSOA.OBJ_ENDERECO.Localidade,[Validators.required, Validators.minLength(2),Validators.maxLength(60)]),
-      Logradouro : this.formBuilder.control(this.cliente.OBJ_PESSOA.OBJ_ENDERECO.Logradouro,[Validators.required, Validators.minLength(2),Validators.maxLength(60)]),
-      Numero : this.formBuilder.control(this.cliente.OBJ_PESSOA.OBJ_ENDERECO.Numero,[Validators.required, Validators.minLength(2),Validators.maxLength(8),Validators.pattern(this.numberPattern)]),
-      Complemento : this.formBuilder.control(this.cliente.OBJ_PESSOA.OBJ_ENDERECO.Complemento,[Validators.required, Validators.minLength(2),Validators.maxLength(40)]),
-      Bairro : this.formBuilder.control(this.cliente.OBJ_PESSOA.OBJ_ENDERECO.Bairro,[Validators.required, Validators.minLength(2),Validators.maxLength(40)]),
-      EMail : this.formBuilder.control(this.cliente.OBJ_PESSOA.EMail,[Validators.required, Validators.pattern(this.emailPattern)]),
-      Contato : this.formBuilder.control(this.cliente.Contato,[Validators.required, Validators.minLength(2),Validators.maxLength(40)]),
+      idPessoa : [this.cliente.obJ_PESSOA.idPessoa],
+      nome : this.formBuilder.control(this.cliente.obJ_PESSOA.nome,[Validators.required, Validators.minLength(2),Validators.maxLength(60)]),
+      apelido : this.formBuilder.control(this.cliente.obJ_PESSOA.apelido,[Validators.required, Validators.minLength(2),Validators.maxLength(20)]),
+      orgEmisRg : this.formBuilder.control(this.cliente.obJ_PESSOA.orgEmisRg,[Validators.required, Validators.minLength(2),Validators.maxLength(6)]),
+      estCivil : this.formBuilder.control(this.cliente.obJ_PESSOA.estCivil,[Validators.required, Validators.minLength(1),Validators.maxLength(30)]),
+      dtNascimento : this.formBuilder.control(this.cliente.obJ_PESSOA.dtNascimento),
+      profProfissao : this.formBuilder.control(this.cliente.profProfissao,[Validators.required, Validators.minLength(2),Validators.maxLength(30)]),
+      dhIns : this.formBuilder.control(this.cliente.obJ_PESSOA.dhIns),
+      idPessoaEndereco : [this.cliente.obJ_PESSOA.idPessoaEndereco],
+      idEndereco : [this.cliente.obJ_PESSOA.idEndereco],
+      cep : this.formBuilder.control(this.cliente.obJ_PESSOA.obJ_ENDERECO.cep ,[Validators.required,Validators.pattern(this.cepPattern),this.ConsultaCEP.bind(this)]),
+      uf : this.formBuilder.control(this.cliente.obJ_PESSOA.obJ_ENDERECO.uf,[Validators.required]),
+      localidade : this.formBuilder.control(this.cliente.obJ_PESSOA.obJ_ENDERECO.localidade,[Validators.required, Validators.minLength(2),Validators.maxLength(60)]),
+      logradouro : this.formBuilder.control(this.cliente.obJ_PESSOA.obJ_ENDERECO.logradouro,[Validators.required, Validators.minLength(2),Validators.maxLength(60)]),
+      numero : this.formBuilder.control(this.cliente.obJ_PESSOA.obJ_ENDERECO.numero,[Validators.required, Validators.minLength(2),Validators.maxLength(8),Validators.pattern(this.numberPattern)]),
+      complemento : this.formBuilder.control(this.cliente.obJ_PESSOA.obJ_ENDERECO.complemento),
+      bairro : this.formBuilder.control(this.cliente.obJ_PESSOA.obJ_ENDERECO.bairro,[Validators.required, Validators.minLength(2),Validators.maxLength(40)]),
+      eMail : this.formBuilder.control(this.cliente.obJ_PESSOA.eMail,[Validators.required, Validators.pattern(this.emailPattern)]),
+      contato : this.formBuilder.control(this.cliente.contato,[Validators.required, Validators.minLength(2),Validators.maxLength(40)]),
     });
   }
 
@@ -152,12 +158,13 @@ export class ClientesComponent implements OnInit {
 
     return this.clienteService.ValidaCnpjCpf(cpf).pipe(
       delay(3000),
-      map((dados: {cpf : any}) => dados.cpf),
+      // map(e => e.cpfNotValid == false ? {cpfNotValid: false} : null ),
+      // map((dados: {cpfValid : any}) => dados.cpfValid),
       // tap(console.log),
       // map((dados: {cpfValid : any}) => dados.cpfValid == "false" ),
       // tap(console.log ),
-      map(dados => dados.cpfValid == false),
-      tap(console.log)
+      // map(dados => dados.cpfValid == false),
+      // tap(console.log)
     )
   }
 
@@ -165,8 +172,8 @@ export class ClientesComponent implements OnInit {
   ValidaCnpjCpf(formControl : FormControl)
   {
     return this.VerificaCnpjCpf(formControl.value).pipe(
-      tap(console.log),
-      map(e => e == true ? {cpfNotValid: true} : null ),
+      // tap(console.log),
+      map(e => e.cpfNotValid == true ? {cpfNotValid: true} : null ),
       tap(console.log)
     );
   }
@@ -174,10 +181,10 @@ export class ClientesComponent implements OnInit {
   ConsultaCEP(cep :string){
     if (cep.length > 7 ){
       this.clienteService.ConsultaCEP(cep).subscribe(( p : Endereco) => {
-        this.clienteForm.patchValue({ Logradouro: p.Logradouro});
-        this.clienteForm.patchValue({ UF: p.UF});
-        this.clienteForm.patchValue({ Localidade: p.Localidade});
-        this.clienteForm.patchValue({ Bairro: p.Bairro});
+        this.clienteForm.patchValue({ logradouro: p.logradouro});
+        this.clienteForm.patchValue({ uf: p.uf});
+        this.clienteForm.patchValue({ localidade: p.localidade});
+        this.clienteForm.patchValue({ bairro: p.bairro});
       });
     }
     return true;
@@ -196,11 +203,11 @@ export class ClientesComponent implements OnInit {
   }
 
   onEditorPreparing(e) {
-    if (e.dataField == 'DDD') {
+    if (e.dataField == 'codDdd') {
         e.editorName = 'dxTextBox';
         e.editorOptions.mask = '00';
     }
-    if (e.dataField == 'Numero') {
+    if (e.dataField == 'numero') {
       e.editorName = 'dxTextBox';
       e.editorOptions.mask = '00000-0000';
 
@@ -211,76 +218,94 @@ export class ClientesComponent implements OnInit {
       this.events = [];
   }
 
+  TransformaListaTelefone(lstTelefone : Telefone[]): string{
+    i : Number;
+    let ListaTelefone : string;
+    ListaTelefone = "";
+    for(var i = 0; i<= lstTelefone.length -1; i++){
+      ListaTelefone += "[" + lstTelefone[i].codDdd  + ",";
+      ListaTelefone += lstTelefone[i].codDdi + ",";
+      ListaTelefone += lstTelefone[i].idTelefone + ",";
+      ListaTelefone += lstTelefone[i].indTipoFone + ",";
+      ListaTelefone += lstTelefone[i].numero  + ",";
+      ListaTelefone += lstTelefone[i].ramal ;
+    }
+    return ListaTelefone;
+  }
+
   SalvarCliente(cliente: Cliente){
 
     var pessoaSalva = new Pessoa();
     var enderecoCliente = new Endereco();
     // var lstEnderecoCliente = [];
 
+    console.log(this.TransformaListaTelefone(this.dataSource))
 
-    let msgSuccess = "Clube inserido com sucesso";
-    let msgErro = "Erro ao incluir clube. Tente novamente";
+
+    let msgSuccess = "Cliente inserido com sucesso";
+    let msgErro = "Erro ao incluir cliente. Tente novamente";
     let msgQuestãoTitulo = "Confirmação de Inclusão"
-    let msgQuestaoCorpo = "Você realmente deseja inserir este clube?"
+    let msgQuestaoCorpo = "Você realmente deseja inserir este cliente?"
     let msgBotao = "Inserir"
     if (this.clienteForm.value.Id_Cli != null){
-      msgSuccess = "Clube alterado com sucesso";
-      msgErro = "Erro ao atualizar clube. Tente novamente"
+      msgSuccess = "Cliente alterado com sucesso";
+      msgErro = "Erro ao atualizar cliente. Tente novamente"
       msgQuestãoTitulo = "Confirmação de Alteração"
-      msgQuestaoCorpo = "Você realmente deseja alterar este clube?"
+      msgQuestaoCorpo = "Você realmente deseja alterar este cliente?"
       msgBotao = "Alterar"
     }
 
-    enderecoCliente.CEP = cliente["CEP"];
-    enderecoCliente.Complemento = cliente["Complemento"];
-    enderecoCliente.Logradouro = cliente["Logradouro"];
-    enderecoCliente.Bairro = cliente["Bairro"];
-    enderecoCliente.UF = cliente["UF"];
-    enderecoCliente.Numero = cliente["Numero"];
-    enderecoCliente.Localidade = cliente["Localidade"];
-    enderecoCliente.CodMuni = "1";
-    enderecoCliente.CodPais = "55";
-    enderecoCliente.PontoReferencia = "";
+    enderecoCliente.cep = cliente["cep"];
+    enderecoCliente.complemento = cliente["complemento"];
+    enderecoCliente.logradouro = cliente["logradouro"];
+    enderecoCliente.bairro = cliente["bairro"];
+    enderecoCliente.uf = cliente["uf"];
+    enderecoCliente.numero = cliente["numero"];
+    enderecoCliente.localidade = cliente["localidade"];
+    enderecoCliente.codMuni = "1";
+    enderecoCliente.codPais = "55";
+    enderecoCliente.pontoReferencia = "";
 
 
 
       // lstEnderecoCliente.push(new Endereco());
       // lstEnderecoCliente[i] = enderecoCliente;
-    pessoaSalva.IdPessoa = cliente["IdPessoa"];
-    pessoaSalva.IdPessoaEndereco = cliente["IdPessoaEndereco"];
-    pessoaSalva.Nome = cliente["Nome"];
-    pessoaSalva.Apelido = cliente["Apelido"];
-    pessoaSalva.CnpjCpf = cliente["CnpjCpf"];
-    pessoaSalva.IEstRG = cliente["IEstRG"];
-    pessoaSalva.OrgEmisRg = cliente["OrgEmisRg"];
-    pessoaSalva.DtEmisRg = cliente["DtEmisRg"];
-    pessoaSalva.DtNascimento = cliente["DtNascimento"]["year"] + "-" + cliente["DtNascimento"]["month"] + "-" + cliente["DtNascimento"]["day"];
-    pessoaSalva.EstCivil = cliente["EstCivil"];
-    pessoaSalva.EMail = cliente["EMail"];
-    pessoaSalva.HomePage = cliente["HomePage"];
-    pessoaSalva.Natural = cliente["Natural"];
-    pessoaSalva.lstTelefone = this.lstTelefone;
-    pessoaSalva.DhIns = this.myDate;
-    pessoaSalva.IndFisJur = String(cliente["CnpjCpf"]).length > 11 ? "J" : "F" ;
-    if (pessoaSalva.lstTelefone == undefined)
-      pessoaSalva.lstTelefone = this.dataSource;
+    pessoaSalva.idPessoa = cliente["idPessoa"];
+    pessoaSalva.idPessoaEndereco = cliente["idPessoaEndereco"];
+    pessoaSalva.idEndereco =  cliente["idEndereco"];
+    pessoaSalva.nome = cliente["nome"];
+    pessoaSalva.apelido = cliente["apelido"];
+    pessoaSalva.cnpjCpf = cliente["cnpjCpf"];
+    pessoaSalva.iEstRG = cliente["IEstRG"];
+    pessoaSalva.orgEmisRg = cliente["orgEmisRg"];
+    pessoaSalva.dtEmisRg = cliente["dtEmisRg"];
+    pessoaSalva.dtNascimento = cliente["dtNascimento"]["year"] + "-" + cliente["dtNascimento"]["month"] + "-" + cliente["dtNascimento"]["day"];
+    pessoaSalva.estCivil = cliente["estCivil"];
+    pessoaSalva.eMail = cliente["eMail"];
+    pessoaSalva.homePage = cliente["homePage"];
+    pessoaSalva.natural = cliente["natural"];
+    pessoaSalva.lstTelefone = this.TransformaListaTelefone(this.dataSource);
+    pessoaSalva.dhIns = this.myDate;
+    pessoaSalva.indFisJur = String(cliente["cnpjCpf"]).length > 11 ? "J" : "F" ;
+    // if (pessoaSalva.lstTelefone == undefined)
+    //   pessoaSalva.lstTelefone = this.dataSource;
 
 
 
-    cliente.OBJ_PESSOA = pessoaSalva;
-    cliente.OBJ_PESSOA.OBJ_ENDERECO = enderecoCliente;
-    cliente.IdUsuario = this.usuarioLogado.Id_Usr;
-    cliente.ProfSalario = 1111;
-    cliente.BanCodBanco = "1";
-    cliente.BanNomeBanco = "llll"
-    cliente.BanNumConta = "55"
-    cliente.BanAgencia = "kkk"
-    cliente.BanChequeEspecial = true;
+    cliente.obJ_PESSOA = pessoaSalva;
+    cliente.obJ_PESSOA.obJ_ENDERECO = enderecoCliente;
+    cliente.idUsuario = this.usuarioLogado["id_Usr"];
+    cliente.profSalario = 1111;
+    cliente.banCodBanco = "1";
+    cliente.banNomeBanco = "llll"
+    cliente.banNumConta = "55"
+    cliente.banAgencia = "kkk"
+    cliente.banChequeEspecial = true;
 
 
 
 
-    console.log(cliente);
+    console.log(this.usuarioLogado);
     console.log(this.dataSource);
 
     const result$ = this.alertService.showConfirm(msgQuestãoTitulo,msgQuestaoCorpo,"Fechar",msgBotao);

@@ -36,11 +36,11 @@ function sort(clientes: Cliente[], column: SortColumn, direction: string): Clien
 }
 
 function matches(cliente: Cliente, term: string, pipe: PipeTransform) {
-  return String(cliente.Id_Cli).toLowerCase().includes(term.toLowerCase())
-    || cliente.OBJ_PESSOA.Nome.toLowerCase().includes(term.toLowerCase())
-    || cliente.OBJ_PESSOA.CnpjCpf.toLowerCase().includes(term.toLowerCase())
-    || cliente.OBJ_PESSOA.IEstRG.toLowerCase().includes(term.toLowerCase())
-    || cliente.OBJ_PESSOA.IndFisJur.toLowerCase().includes(term.toLowerCase())
+  return String(cliente.id_Cli).toLowerCase().includes(term.toLowerCase())
+    || cliente.obJ_PESSOA.nome.toLowerCase().includes(term.toLowerCase())
+    || cliente.obJ_PESSOA.cnpjCpf.toLowerCase().includes(term.toLowerCase())
+    || cliente.obJ_PESSOA.iEstRG.toLowerCase().includes(term.toLowerCase())
+    || cliente.obJ_PESSOA.indFisJur.toLowerCase().includes(term.toLowerCase())
 }
 
 @Injectable({providedIn: 'root'})

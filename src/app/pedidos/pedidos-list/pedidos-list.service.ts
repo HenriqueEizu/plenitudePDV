@@ -36,12 +36,12 @@ function sort(pedidos: Pedido[], column: SortColumn, direction: string): Pedido[
 }
 
 function matches(pedido: Pedido, term: string, pipe: PipeTransform) {
-  return String(pedido.Id_Ped).toLowerCase().includes(term.toLowerCase())
-    || pedido.cliente.OBJ_PESSOA.Nome.toLowerCase().includes(term.toLowerCase())
-    || String(pedido.DtPed).toLowerCase().includes(term.toLowerCase())
-    || String(pedido.Entrega).toLowerCase().includes(term.toLowerCase())
-    || String(pedido.DescrSituacao).toLowerCase().includes(term.toLowerCase())
-    || String(pedido.DescrTipo).toLowerCase().includes(term.toLowerCase())
+  return String(pedido.id_Ped).toLowerCase().includes(term.toLowerCase())
+    || pedido.cliente.obJ_PESSOA.nome.toLowerCase().includes(term.toLowerCase())
+    || String(pedido.dtPed).toLowerCase().includes(term.toLowerCase())
+    || String(pedido.entrega).toLowerCase().includes(term.toLowerCase())
+    || String(pedido.descrSituacao).toLowerCase().includes(term.toLowerCase())
+    || String(pedido.descrTipo).toLowerCase().includes(term.toLowerCase())
 }
 
 @Injectable({providedIn: 'root'})

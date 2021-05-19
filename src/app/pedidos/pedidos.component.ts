@@ -9,7 +9,7 @@ import { AlertModalService } from '../shared/alertmodal/alertmodal.service';
 
 import { UsuarioService } from '../usuario/usuario.service';
 import { ClientesService } from './../clientes/clientes.service';
-import { Cliente } from './../clientes/clientes.model';
+import { Cliente, Telefone } from './../clientes/clientes.model';
 import { Midia, Pedido,Periodo,Vendedor, ItensPedido, Estoque, ItensEstoque,RetornoPedido } from './pedidos.model';
 import { PedidosService } from './pedidos.service';
 import { formatDate } from '@angular/common';
@@ -125,38 +125,40 @@ export class PedidosComponent implements OnInit {
 
 
 
-    if (this.pedido.Id_Ped != null){
-      this.nNumeroIped = this.pedido.Id_Ped;
+    if (this.pedido.id_Ped != null){
+      this.nNumeroIped = this.pedido.id_Ped;
       this.labelCpfCliente = "Cliente"
       this.strDesabilitaCliente = "true";
-      this.blnDesabilitaCampos = this.pedido.Situacao == 1 ? null :  "true";
+      this.blnDesabilitaCampos = this.pedido.situacao == 1 ? null :  "true";
       this.blnDesabilitaBotoes = false
-      if (this.pedido.Entrega != null)
-      this.pedido.Entrega = this.ConvertDataJson(this.pedido.Entrega);
-      this.data = formatDate(this.pedido.DtPed,"dd/MM/yyyy","en-US");
+      if (this.pedido.entrega != null)
+      this.pedido.entrega = this.ConvertDataJson(this.pedido.entrega);
+      this.data = formatDate(this.pedido.dtPed,"dd/MM/yyyy","en-US");
     }
 
-    console.log("chegou aqui");
+
 
     this.pedidoService.GetItensPedido(this.nNumeroIped == null ? 0 : this.nNumeroIped).subscribe((ie : ItensPedido[]) => {
       this.itensPedido = ie;
+      console.log("chegou aqui ffffffffffffffff");
+      console.log(ie);
       this.itensPedidoAlteracao = ie[0]
     });
 
     this.pedidoForm = this.formBuilder.group({
-      Id_Ped : [this.pedido.Id_Ped],
-      Id_Cli : this.formBuilder.control(this.pedido.Id_Cli),
-      Nome_Cli : this.formBuilder.control(this.pedido.Nome_Cli,[Validators.required],[this.ValidaCliente.bind(this)]),
-      Versao : [this.pedido.Versao == null ? 1 : this.pedido.Versao],
-      DtPed  : [this.data ],
-      DescrSituacao : [this.pedido.DescrSituacao],
-      DtNascimento : this.formBuilder.control(this.pedido.Entrega),
-      IdMidia : this.formBuilder.control(this.pedido.IdMidia,[Validators.required]),
-      DescMidia : this.formBuilder.control(this.pedido.DescMidia),
-      Observ : this.formBuilder.control(this.pedido.Observ),
-      IdVendedor : this.formBuilder.control(this.pedido.vendedor.IdVendedor,[Validators.required]),
-      Per_Ent : this.formBuilder.control(this.pedido.Per_Ent == null ? "T" : this.pedido.Per_Ent),
-      Entrega : this.formBuilder.control(this.pedido.Entrega == null ? this.dataMin : this.pedido.Entrega,[Validators.required,this.ValidaDataEntrega]),
+      id_Ped : [this.pedido.id_Ped],
+      id_Cli : this.formBuilder.control(this.pedido.id_Cli),
+      nome_Cli : this.formBuilder.control(this.pedido.nome_Cli,[Validators.required],[this.ValidaCliente.bind(this)]),
+      versao : [this.pedido.versao == null ? 1 : this.pedido.versao],
+      dtPed  : [this.data ],
+      descrSituacao : [this.pedido.descrSituacao],
+      dtNascimento : this.formBuilder.control(this.pedido.entrega),
+      idMidia : this.formBuilder.control(this.pedido.idMidia,[Validators.required]),
+      obsMidia : this.formBuilder.control(this.pedido.obsMidia),
+      observ : this.formBuilder.control(this.pedido.observ),
+      idVendedor : this.formBuilder.control(this.pedido.vendedor.idVendedor,[Validators.required]),
+      per_Ent : this.formBuilder.control(this.pedido.per_Ent == null ? "T" : this.pedido.per_Ent),
+      entrega : this.formBuilder.control(this.pedido.entrega == null ? this.dataMin : this.pedido.entrega,[Validators.required,this.ValidaDataEntrega]),
       // Entrega : this.formBuilder.control(this.pedido.Entrega == null ? this.dataMin : this.pedido.Entrega,[Validators.required,this.ValidaDataEntrega3(this.pedido)]),
     },{validator:PedidosComponent.ValidaMidia});
 
@@ -232,9 +234,9 @@ export class PedidosComponent implements OnInit {
       var d = new Date();
 
 
-      strAno = pedido.Entrega["year"];
-      strMes = pedido.Entrega["month"];
-      strDia = pedido.Entrega["day"];
+      strAno = pedido.entrega["year"];
+      strMes = pedido.entrega["month"];
+      strDia = pedido.entrega["day"];
 
       // console.log(strAno);
       // console.log(strMes);
@@ -314,10 +316,8 @@ export class PedidosComponent implements OnInit {
 
 
   static ValidaMidia(group: AbstractControl):{[key:string]: boolean}{
-    const idMidia = group.get('IdMidia').value;
-    const DescMidia = group.get('DescMidia').value;
-    console.log(idMidia)
-    console.log(DescMidia)
+    const idMidia = group.get('idMidia').value;
+    const DescMidia = group.get('obsMidia').value;
     if ((DescMidia == null || DescMidia== "") && idMidia == "6")
       return { midia: true}
 
@@ -329,14 +329,17 @@ export class PedidosComponent implements OnInit {
   {
     return this.VerificaCliente(formControl.value).pipe(
       tap((c) => {
-        if ( c.cliente != null ){
-          this.cliente = c.cliente.Nome
-          this.idcli  = c.cliente.Id_Cli
-          this.idEndereco  = c.cliente.IdEndereco
-          this.idEnderecoTipo  = c.cliente.tipoEndereco
+        if (c == null){
+          return;
+        }
+        if ( c.id_Cli != null ){
+          this.cliente = c.obJ_PESSOA.nome
+          this.idcli  = c.id_Cli
+          this.idEndereco  = c.obJ_PESSOA.idEndereco
+          this.idEnderecoTipo  = "";
           this.labelCliente = "Cliente:"
         }else{
-          if (this.pedido.Id_Ped == null){
+          if (this.pedido.id_Ped == null){
             var result$ = this.alertService.showConfirm("Cliente inexistente","Gostaria de ser direcionado para tela de Cadastro?","Fechar","+ Cliente")
             result$.asObservable().pipe(
               take(1),
@@ -345,7 +348,10 @@ export class PedidosComponent implements OnInit {
           }
         };
       }),
-      map(e => e.cliente == null ? this.pedido.Id_Ped == null ? {clienteNotValid: null} : true : true ),
+      map(e =>
+        {
+          if (e == null){return null;}
+          e.id_Cli == null ? this.pedido.id_Ped == null ? {clienteNotValid: null} : true : true} ),
       tap(console.log)
     );
   }
@@ -354,11 +360,11 @@ export class PedidosComponent implements OnInit {
     var f = new Periodo();
     var f1 = new Periodo();
     this.periodo = [f,f1];
-    f.IdPeriodo = "M";
-    f.Descricao = "MANHÃ";
+    f.idPeriodo = "M";
+    f.descricao = "MANHÃ";
     this.periodo[0] = f;
-    f1.IdPeriodo = "T";
-    f1.Descricao = "TARDE";
+    f1.idPeriodo = "T";
+    f1.descricao = "TARDE";
     this.periodo[1] = f1;
   }
 
@@ -401,10 +407,9 @@ export class PedidosComponent implements OnInit {
 
     let blnIsNumeric : Boolean;
     let strCriterio : string;
-    console.log(Id_Alm.value + " jjjjjjjjjjjjjjjjjjjjjjjj")
-
+    document.body.style.cursor  = 'wait';
     this.pedidoService.GetItensEstoque(Id_Alm.value,palavraChave.value, String(this.nNumeroIped)).subscribe((es : ItensEstoque[]) => {
-      if (es[0].Id_Alp == null)
+      if (es.length == 0)
       {
         this.itensEstoque = null;
         // this.total = 5;
@@ -416,37 +421,47 @@ export class PedidosComponent implements OnInit {
       else{
         this.itensEstoque = es
         this.qtdItensPesquisa = es.length
+        this.alertService.showAlertSuccess("Encontrados " + this.qtdItensPesquisa + " itens.") ;
       }
     });
+
+    document.body.style.cursor  = 'default';
 
     return false;
 
   }
 
   emitIncreaseQty(item: ItensEstoque){
-    if (item.Qtd > item.QtdPedido)
-      item.QtdPedido = item.QtdPedido + 1;
+    if (item.qtd > item.qtdPedido)
+      item.qtdPedido = item.qtdPedido + 1;
     this.increaseQty.emit(item)
-    this.blnHabilitaInserirItensEstqoue = this.itensEstoque.filter(c => c.QtdPedido > 0).length > 0
+    this.blnHabilitaInserirItensEstqoue = this.itensEstoque.filter(c => c.qtdPedido > 0).length > 0
     console.log(item)
   }
 
   emitDecreaseQty(item: ItensEstoque){
-    if (item.QtdPedido > 0)
-      item.QtdPedido = item.QtdPedido - 1;
+    if (item.qtdPedido > 0)
+      item.qtdPedido = item.qtdPedido - 1;
     this.decreaseQty.emit(item)
-    this.blnHabilitaInserirItensEstqoue = this.itensEstoque.filter(c => c.QtdPedido > 0).length > 0
+    this.blnHabilitaInserirItensEstqoue = this.itensEstoque.filter(c => c.qtdPedido > 0).length > 0
     console.log(item)
   }
 
   SalvarItensEstoque(itens : ItensEstoque[] ){
 
-    this.pedidoService.IncluirItemEstoquePedido(itens.filter(c => c.QtdPedido > 0)).subscribe(
+    var intCtr : number;
+    var lstItensEstoque : ItensEstoque[];
+    lstItensEstoque = itens.filter(c => c.qtdPedido > 0)
+    for(intCtr = 0; intCtr <= lstItensEstoque.length - 1;intCtr++){
+      lstItensEstoque[intCtr].id_Ped = this.nNumeroIped;
+    }
+    this.pedidoService.IncluirItemEstoquePedido(lstItensEstoque).subscribe(
       success => {
         this.pedidoService.GetItensPedido(this.nNumeroIped).subscribe((ie : ItensPedido[]) => {
           this.itensPedido = ie;
         });
         this.router.navigate(['pedido/' + this.nNumeroIped]);
+        this.alertService.showAlertSuccess("Item inserido com sucesso");
         },
       error =>  {
             this.alertService.showAlertDanger("Erro ao inserir item de pedido") ;
@@ -456,17 +471,19 @@ export class PedidosComponent implements OnInit {
 
   ExcluirItemPedido(ip : ItensPedido){
     var strMessage : string;
-    strMessage = "Gostaria realmente exlcluir do pedido o item *** " + ip.Produto.substring(0,60) + " *** do pedido " + this.nNumeroIped  + " ?";
-    var result$ = this.alertService.showConfirm("Confirmação Exclusão",strMessage,"Fechar","+ Cliente")
+    strMessage = "Gostaria realmente exlcluir do pedido o item *** " + ip.produto.substring(0,60) + " *** do pedido " + this.nNumeroIped  + " ?";
+    var result$ = this.alertService.showConfirm("Confirmação Exclusão",strMessage,"Fechar","Excluir")
     result$.asObservable()
       .pipe(
         take(1),
-        switchMap(result => result ? this.pedidoService.ExcluirItemPedido(ip) : EMPTY)
+        switchMap(result => result ? this.pedidoService.ExcluirItemPedido(ip.id_IPv) : EMPTY)
       ).subscribe(
         success => {
+                    this.pedidoService.GetItensPedido(this.nNumeroIped).subscribe((ie : ItensPedido[]) => {
+                      this.itensPedido = ie;
+                    });
+                    this.router.navigate(['pedido/' + this.nNumeroIped]);
                     this.alertService.showAlertSuccess("Item do pedido excluído com sucesso");
-                    console.log(success);
-                    this.router.navigate(['pedidos'])
                     },
         error =>  {
                   this.alertService.showAlertDanger("Erro ao excluir item de pedido") ;
@@ -489,16 +506,35 @@ export class PedidosComponent implements OnInit {
     // var pessoaSalva = new Pessoa();
     // var enderecoCliente = new Endereco();
     // var lstEnderecoCliente = [];
+    var instvendedor = new Vendedor();
     var retPedido : RetornoPedido;
 
     console.log(pedido);
 
-    if (this.pedido.Id_Ped == null){
-      pedido.Id_Cli = this.idcli;
-      pedido.IdEnderecoEntrega = this.idEndereco;
-      pedido.Tipo = this.idEnderecoTipo;
-      pedido.Nome_Cli = this.cliente;
+    if (this.pedido.id_Ped == null){
+      pedido.id_Cli = this.idcli;
+      pedido.idEnderecoEntrega = this.idEndereco;
+      pedido.tipo = this.idEnderecoTipo;
+      pedido.nome_Cli = this.cliente;
+      pedido.dtPed = new Date(Date.now());
+      pedido.id_Ped = 0;
     }
+
+
+
+
+    let dateString = pedido["entrega"]["year"] + "-" + pedido["entrega"]["month"] + "-" + pedido["entrega"]["day"];
+
+    let newDate = new Date(dateString);
+
+    pedido.entrega = newDate;
+
+
+    instvendedor.idVendedor = pedido["idVendedor"];
+    pedido.vendedor = instvendedor;
+    pedido.tipo = "P";
+    pedido.obs_Fin = "";
+    pedido.idFoneEntrega = 0;
 
     console.log(pedido);
 
@@ -507,7 +543,7 @@ export class PedidosComponent implements OnInit {
     let msgQuestãoTitulo = "Confirmação de Inclusão"
     let msgQuestaoCorpo = "Você realmente deseja inserir este Pedido?"
     let msgBotao = "Inserir"
-    if (this.pedido.Id_Ped != null){
+    if (this.pedido.id_Ped != null){
       msgSuccess = "Pedido alterado com sucesso";
       msgErro = "Erro ao atualizar Pedido. Tente novamente"
       msgQuestãoTitulo = "Confirmação de Alteração"
@@ -522,12 +558,15 @@ export class PedidosComponent implements OnInit {
         switchMap(result => result ? this.pedidoService.SalvarPedido(pedido) : EMPTY)
       ).subscribe(
         success => {
-                    console.log(success["Id_Ped"]);
-                    console.log("jjjjjjjjjjjjj");
-                    if (msgSuccess["OK"] == "0")
-                      this.alertService.showAlertDanger(msgErro) ;
-                    else
-                      this.router.navigate(['pedidos'])
+                    console.log(success.ok);
+                    console.log("jjjjj");
+                    if (success.ok == "1"){
+                      this.alertService.showAlertSuccess(msgSuccess) ;
+                      // this.router.navigate(['pedidos'])
+                    }
+                    else{
+                      this.alertService.showAlertDanger(success.mensErro) ;
+                    }
                     },
         error =>  {
                   console.log(error);

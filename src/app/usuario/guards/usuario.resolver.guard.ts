@@ -21,7 +21,7 @@ constructor(private service: UsuarioService){}
           Id_Usr : null,
           Login : null,
           Senha : null,
-          Usuario :null,
+          usuario :null,
           FlAtivo : null,
           DtVencSenha : null,
           IdEMail : null

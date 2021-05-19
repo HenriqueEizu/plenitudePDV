@@ -21,27 +21,27 @@ constructor(private service: ClientesService){}
 
         var pessoa = new Pessoa();
         var endereco = new Endereco();
-        pessoa.OBJ_ENDERECO = endereco;
+        pessoa.obJ_ENDERECO = endereco;
 
         return of ({
-          IdCliente	: null,
-          Id_Cli	: null,
-          Id_Cli_Lj	: null,
-          IdPessoa	: null,
-          OBJ_PESSOA : pessoa,
-          Contato	: null,
-          ProfEmpresa	: null,
-          ProfCargo	: null,
-          ProfProfissao	: null,
-          ProfSalario	: null,
-          ProfDtAdmissao	: null,
-          BanCodBanco	: null,
-          BanNomeBanco	: null,
-          BanDtInicioBanco	: null,
-          BanAgencia	: null,
-          BanNumConta	: null,
-          BanChequeEspecial	: null,
-          IdUsuario : null
+          idCliente	: null,
+          id_Cli	: null,
+          id_Cli_Lj	: null,
+          idPessoa	: null,
+          obJ_PESSOA : pessoa,
+          contato	: null,
+          profEmpresa	: null,
+          profCargo	: null,
+          profProfissao	: null,
+          profSalario	: null,
+          profDtAdmissao	: null,
+          banCodBanco	: null,
+          banNomeBanco	: null,
+          banDtInicioBanco	: null,
+          banAgencia	: null,
+          banNumConta	: null,
+          banChequeEspecial	: null,
+          idUsuario : null
         });
     }
 
