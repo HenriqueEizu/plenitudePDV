@@ -60,12 +60,10 @@ export class LoginComponent implements OnInit {
     this.loginService.VerificaUsuario(usuario)
       .subscribe((usuarioLocal: Usuario) => {
         this.usuarioLocal = usuarioLocal
-        console.log(usuarioLocal )
-        if (this.usuarioLocal.FlAtivo == false){
+        if (usuarioLocal == null){
 
-          // this.message = "Login ou Senha não conferem"
-          console.log("hhhhhhhhhhhhhhhhhhhhhh" )
-          this.loginForm.reset();
+          this.alertService.showAlertDanger("Login ou senha incorreta")
+          // this.loginForm.reset();
         }
 
       },(error : any) => this.handlerError());

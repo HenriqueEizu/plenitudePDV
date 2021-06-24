@@ -15,7 +15,7 @@ export class UsuarioService{
 
   // mostrarMenuEmmiter = new EventEmitter<boolean>();
 
-  private loggedIn = new BehaviorSubject<boolean>(false);
+  public loggedIn = new BehaviorSubject<boolean>(false);
 
   usuarioLogado1: Usuario = null;
 
@@ -25,7 +25,7 @@ export class UsuarioService{
     return this.usuarioLogado; // {2}
   }
 
-    get isLoggedIn() {
+    public get isLoggedIn() {
       return this.loggedIn.asObservable(); // {2}
     }
 
@@ -51,7 +51,7 @@ export class UsuarioService{
   }
 
   AlterarUsuario(usuario : Usuario) : Observable<boolean>{
-    return this.http.put<boolean>(`${MEAT_API}/usuario/Alterar/${usuario.Id_Usr}`,usuario).pipe(take(1));
+    return this.http.put<boolean>(`${MEAT_API}/usuario/Alterar/${usuario.id_Usr}`,usuario).pipe(take(1));
   }
 
   ExcluirUsuario(id : number) : Observable<boolean>{
@@ -59,7 +59,7 @@ export class UsuarioService{
   }
 
   SalvarUsuario(usuario : Usuario): Observable<boolean>{
-    if (usuario.Id_Usr){
+    if (usuario.id_Usr){
       return this.AlterarUsuario(usuario);
     }
     return this.InserirUsuario(usuario);
@@ -74,9 +74,10 @@ export class UsuarioService{
       console.log(usuarioLocal);
       if (us != null){
         // this.mostrarMenuEmmiter.emit(true);
-        console.log(us.usuario + "usususususususuus")
+        console.log(us);
         this.loggedIn.next(true);
         this.usuarioCacheFunc.next(us);
+        localStorage.setItem('id_usr', us.Id_Usr);
         localStorage.setItem('token', us.token);
         this.router.navigate([''])
       }

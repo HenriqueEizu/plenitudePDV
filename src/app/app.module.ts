@@ -71,6 +71,7 @@ import { CPFPipe } from './cpf.pipe';
 import { NgbDateCustomParserFormatter } from './NgbDateCustomParserFormatter';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -155,5 +156,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 ],
   bootstrap: [AppComponent]
 })
+
+
 export class AppModule { }
 

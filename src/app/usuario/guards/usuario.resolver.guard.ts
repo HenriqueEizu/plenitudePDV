@@ -18,13 +18,13 @@ constructor(private service: UsuarioService){}
         }
 
         return of ({
-          Id_Usr : null,
-          Login : null,
-          Senha : null,
+          id_Usr : null,
+          login : null,
+          senha : null,
           usuario :null,
-          FlAtivo : null,
-          DtVencSenha : null,
-          IdEMail : null
+          flAtivo : null,
+          dtVencSenha : null,
+          idEMail : null
         });
     }
 

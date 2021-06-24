@@ -76,6 +76,105 @@ export interface ItensEstoque{
   id_Ped	: number,
 }
 
+export interface FormaPagamento{
+  id_Frp	: number,
+  id_Ped	: number,
+  id_Forma	: number,
+  id_Plano	: number,
+  formaPag	: string,
+  dtLanc	: Date,
+  tp_Pagto	: string,
+  tot_Parc	: number,
+  numMinParcelas : number,
+  numMaxParcelas : number,
+  valDescFin	: number,
+  val_Fin	: number,
+  val_Entr	: number,
+  val_ARec	: number,
+  cont_Fin	: string,
+  dt_ContF	: Date,
+  aut_Cart	: string,
+  tem_Fret	: boolean,
+  dt_Venc	: Date,
+  dt_Baixa	: Date,
+  flCancelado	: boolean,
+  dhIns	: Date,
+  usrIns	: string
+  id_Usr : number
+}
+
+export class ItemPagamento{
+
+  public id_Item	: number;
+  get _Id_Item(): number {return this.id_Item;}
+  set _Id_Item(p : number) {this.id_Item = p; }
+
+  public id_Frp	: number;
+  get _Id_Frp(): number {return this.id_Frp;}
+  set _Id_Frp(p : number) {this.id_Frp = p; }
+
+  public num_Parc	: number;
+  get _Num_Parc(): number {return this.num_Parc;}
+  set _Num_Parc(p : number) {this.num_Parc = p; }
+
+  public formaPag	: string;
+  get _FormaPag(): string {return this.formaPag;}
+  set _FormaPag(p : string) {this.formaPag = p; }
+
+  public document	: string;
+  get _Document(): string {return this.document;}
+  set _Document(p : string) {this.document = p; }
+
+  public tp_Parc	: string;
+  get _Tp_Parc(): string {return this.tp_Parc;}
+  set _Tp_Parc(p : string) {this.tp_Parc = p; }
+
+  public valor	: number;
+  get _Valor(): number {return this.valor;}
+  set _Valor(p : number) {this.valor = p; }
+
+  public plan_Fin	: string;
+  get _Plan_Fin(): string {return this.plan_Fin;}
+  set _Plan_Fin(p : string) {this.plan_Fin = p; }
+
+  public val_Fin	: number;
+  get _Val_Fin(): number {return this.val_Fin;}
+  set _Val_Fin(p : number) {this.val_Fin = p; }
+
+  public banco	: string;
+  get _Banco(): string {return this.banco;}
+  set _Banco(p : string) {this.banco = p; }
+
+  public agencia	: string;
+  get _Agencia(): string {return this.agencia;}
+  set _Agencia(p : string) {this.agencia = p; }
+
+  public praca	: string;
+  get _Praca(): string {return this.praca;}
+  set _Praca(p : string) {this.praca = p; }
+
+  public num_Cheq	: string;
+  get _Num_Cheq(): string {return this.num_Cheq;}
+  set _Num_Cheq(p : string) {this.num_Cheq = p; }
+
+  public val_Cheq	: number;
+  get _Val_Cheq(): number {return this.val_Cheq;}
+  set _Val_Cheq(p : number) {this.val_Cheq = p; }
+
+  public dt_Venc	: Date;
+  get _Dt_Venc(): Date {return this.dt_Venc;}
+  set _Dt_Venc(p : Date) {this.dt_Venc = p; }
+
+  public val_ARec	: number;
+  get _Val_ARec(): number {return this.val_ARec;}
+  set _Val_ARec(p : number) {this.val_ARec = p; }
+
+  public valFrete	: number;
+  get _ValFrete(): number {return this.valFrete;}
+  set _Val_A_ValFreteRec(p : number) {this.valFrete = p; }
+
+}
+
 export interface Pedido {
 
   idPedido	: number;

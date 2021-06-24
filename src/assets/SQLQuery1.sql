@@ -124,4 +124,22 @@ declare @MensErro VarChar(500)
  select * from 
  select * from Cliente
 
+ select distinct tipo from      fn_formasPagvenda()
+
+select *  from      fn_formasPagvenda() where tipo <> 'F'
+
+c - credito
+b - Boleto
+K - Americanas
+Q - CHEQUE
+m - dEPOSITO CONTA cORRENTE/DINHEIRO
+f- fINANCEIRA -----FINANCEIRA 2019
+d - dEBITO ELO DEBITO
+p - PENDENCIA
+
+
+SELECT Id_Frp, Id_Ped, Id_Forma, Id_Plano, FormaPag, DtLanc, Tp_Pagto, Tot_Parc,
+ ValDescFin, Val_Fin, Val_Entr, Val_ARec, Cont_Fin, Dt_ContF,Aut_Cart, Tem_Fret, Dt_Venc, Dt_Baixa, FlCancelado, DhIns, UsrIns 
+                     FROM FRM_PED WHERE ID_PED = 1951212
+
 

@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { MEAT_API } from '../app.api';
 
-import { Pedido, Midia, Vendedor, Estoque, ItensPedido, ItensEstoque, RetornoPedido } from './pedidos.model';
+import { Pedido, Midia, Vendedor, Estoque, ItensPedido, ItensEstoque, RetornoPedido, FormaPagamento, ItemPagamento } from './pedidos.model';
 
 
 @Injectable({
@@ -51,6 +51,12 @@ export class PedidosService {
     GetAllVendedores(): Observable<Vendedor[]>{
       var vendedor$ = this.http.get<Vendedor[]>(`${MEAT_API}/pedido/GetAllVendedores`).pipe();
       return vendedor$;
+    }
+
+
+    GetAllFormaPagamentoDominio(): Observable<FormaPagamento[]>{
+      var formaPagto$ = this.http.get<FormaPagamento[]>(`${MEAT_API}/pedido/GetAllFormaPagamentoDominio`).pipe();
+      return formaPagto$;
     }
 
     GetIdPedido(id: number):Observable<Pedido>{
@@ -105,6 +111,19 @@ export class PedidosService {
       return this.http.put<RetornoPedido>(`${MEAT_API}/pedido/AlterarPedido/`,pedido,{headers: headers}).pipe(take(1));
     }
 
+    EncerraPedido(Idpedido : number) : Observable<RetornoPedido>{
+      const headers = new HttpHeaders()
+      headers.append("Accept","text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+      headers.append("Accept-Encoding","gzip, deflate");
+      headers.append("Access-Control-Request-Headers","Content-type");
+      headers.append("Access-Control-Request-Method","POST,OPTIONS,GET");
+      headers.append('X-Requested-With','XMLHttpRequest');
+      headers.append('Access-Control-Allow-Origin', 'https://localhost:44377' );
+      headers.append('Content-Type', 'application/json');
+
+      return this.http.put<RetornoPedido>(`${MEAT_API}/pedido/EncerraPedido/`,Idpedido,{headers: headers}).pipe(take(1));
+    }
+
     IncluirItemEstoquePedido(ItensEstoque :ItensEstoque[]){
       const headers = new HttpHeaders()
       headers.append("Accept","text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
@@ -117,6 +136,21 @@ export class PedidosService {
       return this.http.post<boolean>(`${MEAT_API}/pedido/IncluirItemEstoquePedido` ,ItensEstoque,{headers: headers}).pipe();
     }
 
+
+    IncluirFormaPagamento(formaPagto :FormaPagamento, itempagto : ItemPagamento){
+      const headers = new HttpHeaders()
+      headers.append("Accept","text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+      headers.append("Accept-Encoding","gzip, deflate");
+      headers.append("Access-Control-Request-Headers","Content-type");
+      headers.append("Access-Control-Request-Method","POST,OPTIONS,GET");
+      headers.append('X-Requested-With','XMLHttpRequest');
+      headers.append('Access-Control-Allow-Origin', 'https://localhost:44377' );
+      headers.append('Content-Type', 'application/json');
+
+      var data = {formaPagto : formaPagto, itempagto : itempagto};
+      return this.http.post<boolean>(`${MEAT_API}/pedido/IncluirFormaPagamento` ,{params : data},{headers: headers}).pipe();
+    }
+
     GetItensPedido(id: number): Observable<ItensPedido[]>{
       let params = new HttpParams();
       params = params.append('idPedido', String(id));
@@ -124,6 +158,27 @@ export class PedidosService {
       return itensPedido$
     }
 
+    GetFormaPagamento(idpedido: number): Observable<FormaPagamento[]>{
+      let params = new HttpParams();
+      params = params.append('idPedido', String(idpedido));
+      var formaPagto$ = this.http.get<FormaPagamento[]>(`${MEAT_API}/pedido/GetFormaPagamento/`,{params: params} ).pipe();
+      return formaPagto$
+    }
+
+    GetItensPagamento(idFormaPagamento: number): Observable<ItemPagamento[]>{
+      let params = new HttpParams();
+      params = params.append('idFormaPagamento', String(idFormaPagamento));
+      var itensPagto$ = this.http.get<ItemPagamento[]>(`${MEAT_API}/pedido/GetItensPagamento/`,{params: params} ).pipe();
+      return itensPagto$
+    }
+
+    ExcluirFormaPagamento(formaPagamento: FormaPagamento): Observable<boolean>{
+      let params = new HttpParams();
+      console.log(formaPagamento);
+      params = params.append('idFormaPagamento', String(formaPagamento.id_Frp));
+      var formaPagto$ = this.http.get<boolean>(`${MEAT_API}/pedido/ExcluirFormaPagamento/`,{params: params} ).pipe();
+      return formaPagto$
+    }
 
 
 }

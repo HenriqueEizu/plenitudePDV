@@ -1,19 +1,22 @@
+import { Usuario } from './../usuario/usuario.model';
 
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BsModalService, ModalDirective } from 'ngx-bootstrap/modal';
 import { BehaviorSubject, EMPTY, Observable } from 'rxjs';
-import { delay, map, switchMap, take, tap } from 'rxjs/operators';
+import { delay, map, switchMap, take, tap, filter } from 'rxjs/operators';
 import { AlertModalService } from '../shared/alertmodal/alertmodal.service';
 
 import { UsuarioService } from '../usuario/usuario.service';
 import { ClientesService } from './../clientes/clientes.service';
-import { Cliente, Telefone } from './../clientes/clientes.model';
-import { Midia, Pedido,Periodo,Vendedor, ItensPedido, Estoque, ItensEstoque,RetornoPedido } from './pedidos.model';
+import { Cliente, Endereco, Estado, Telefone } from './../clientes/clientes.model';
+import { Midia, Pedido,Periodo,Vendedor, ItensPedido, Estoque, ItensEstoque,RetornoPedido, FormaPagamento, ItemPagamento } from './pedidos.model';
 import { PedidosService } from './pedidos.service';
 import { formatDate } from '@angular/common';
+
 import { AnyAaaaRecord } from 'dns';
+import { StringLiteralType } from 'typescript';
 
 const sendRequest = function(value) {
   const validEmail = "test@dx-email.com";
@@ -33,6 +36,8 @@ export class PedidosComponent implements OnInit {
 
   @ViewChild('childModal') public childModal:ModalDirective;
 
+  @ViewChild('AlterarFormaPagtoModal') public AlterarFormaPagtoModal:ModalDirective;
+
   private blnDataEntrega = new BehaviorSubject<any>(false);
 
   get isDataEntrega() {
@@ -45,6 +50,9 @@ export class PedidosComponent implements OnInit {
   //   return this.blnDataEntrega.asObservable(); // {2}
   // }
 
+  public mask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+
+  estados : Estado[];
   pedidoForm: FormGroup;
   events: Array<string> = [];
   dataSource: Pedido[];
@@ -67,24 +75,67 @@ export class PedidosComponent implements OnInit {
   idPessoa : any;
   data : string;
   dataMin : any;
+  dataMinima : Date;
   labelCliente : string;
   labelCpfCliente : string = "CPF/CNPJ"
   dataEntregaDigitada : Date;
   itensPedido : ItensPedido[];
   itensPedidoAlteracao : ItensPedido = null;
+  lstFormaPagto : FormaPagamento[];
+  lstItensPagto : ItemPagamento[];
+  formaPagto : FormaPagamento = null;
+  itemPagto : ItemPagamento = null;
   estoques : Estoque[];
+  formaPagtoDominio : FormaPagamento[];
   blnCriterio : Boolean = false;
   itensEstoque : ItensEstoque[];
   qtdItensPesquisa : number = 0;
   blnHabilitaInserirItensEstqoue : boolean = false;
   blnDesabilitaCampos : string = null;
   strDesabilitaCliente : string = null;
-  blnDesabilitaBotoes : boolean = true;
+  blnDesabilitaBotoes : boolean = false;
   nNumeroIped : number ;
+  totalPedido : number ;
+  totalPago : number ;
+  usuarioLogado : Usuario;
+  blnGravaFormaPagto : Boolean = true;
+  blnOutraFormas : Boolean = true;
+  blnCheques : Boolean = true;
+  blnAutorizacao : Boolean = true;
+  strOperacaoFormaPagto : string = null;
+  currFormapagto;
+
+
 
   @Output() increaseQty = new EventEmitter<ItensEstoque>()
   @Output() decreaseQty = new EventEmitter<ItensEstoque>()
   @Input() IdMidia : number;
+  @ViewChild('val_Fin2') val_Fin2Input: ElementRef;
+  @ViewChild('id_Forma') id_FormaInput: ElementRef;
+  @ViewChild('cheque') chequeInput: ElementRef;
+  @ViewChild('banco') bancoInput: ElementRef;
+  @ViewChild('agencia') agenciaInput: ElementRef;
+  @ViewChild('praca') pracaInput: ElementRef;
+  @ViewChild('autorizacao') autorizacaoInput: ElementRef;
+  @ViewChild('NumParcelas') NumParcelasInput: ElementRef;
+  @ViewChild('ValorParcela') ValorParcelaInput: ElementRef;
+
+  @ViewChild('CEP') CEPInput: ElementRef;
+  @ViewChild('Uf') UfInput: ElementRef;
+  @ViewChild('Cidade') CidadeInput: ElementRef;
+  @ViewChild('Logradouro') LogradouroInput: ElementRef;
+  @ViewChild('NumeroCasa') NumeroCasaInput: ElementRef;
+  @ViewChild('Complemento') ComplementoInput: ElementRef;
+  @ViewChild('Bairro') BairroInput: ElementRef;
+  @ViewChild('PtoReferencia') PtoReferenciaInput: ElementRef;
+
+
+
+
+
+
+
+
 
   constructor(private pedidoService: PedidosService
     ,private loginService: UsuarioService
@@ -104,8 +155,28 @@ export class PedidosComponent implements OnInit {
     var d = new Date(); // date is now 2013-01-31
 
     this.data = formatDate(d,"dd/MM/yyyy","en-US");
-    this.dataMin = this.ConvertDataJson(d);
+    // this.dataMin = this.ConvertDataJson(d);
+    // console.log(this.dataMin)
+    // d.setDate(d.getDate() + 31);
+    // this.dataMinima = d;
+    // // this.dataMinima.setDate(this.dataMin) + 31;
+    // d.setDate(d.getDate() + parseInt("31"));
+    // console.log("dadadadadaddadad")
+    // console.log(d);
+
+
     this.PopulaPeriodo();
+
+    this.loginService.usuarioCacheFunc.subscribe((u : Usuario) =>{
+      this.usuarioLogado = u
+    });
+
+    this.clienteService.GetAllEstados().subscribe((es : Estado[]) => {
+      console.log(es);
+      this.estados = es;
+      });
+
+
 
     this.pedidoService.GetAllVendedores().subscribe((vd : Vendedor[]) => {
       this.vendedores = vd;
@@ -114,6 +185,10 @@ export class PedidosComponent implements OnInit {
     this.pedidoService.GetAllEstoques().subscribe((vd : Estoque[]) => {
       this.estoques = vd;
       });
+
+    this.pedidoService.GetAllFormaPagamentoDominio().subscribe((fp : FormaPagamento[]) => {
+      this.formaPagtoDominio = fp;
+    });
 
     this.pedidoService.GetAllMidia().subscribe((md : Midia[]) => {
       this.midias = md;
@@ -132,18 +207,34 @@ export class PedidosComponent implements OnInit {
       this.blnDesabilitaCampos = this.pedido.situacao == 1 ? null :  "true";
       this.blnDesabilitaBotoes = false
       if (this.pedido.entrega != null)
-      this.pedido.entrega = this.ConvertDataJson(this.pedido.entrega);
+      this.pedido.entrega = this.ConvertDataJson(this.pedido.entrega,0);
       this.data = formatDate(this.pedido.dtPed,"dd/MM/yyyy","en-US");
+      this.dataMinima = this.ConvertDataJson(this.pedido.entrega,31);
+      console.log("ffffffffffffffffffffffffffffffffffffffffffff");
+      console.log(this.pedido)
+
     }
 
 
 
     this.pedidoService.GetItensPedido(this.nNumeroIped == null ? 0 : this.nNumeroIped).subscribe((ie : ItensPedido[]) => {
       this.itensPedido = ie;
-      console.log("chegou aqui ffffffffffffffff");
-      console.log(ie);
+      this.totalPedido = ie.reduce((sum, current) => sum + current.valtot, 0);
       this.itensPedidoAlteracao = ie[0]
     });
+
+    this.pedidoService.GetFormaPagamento(this.nNumeroIped == null ? 0 : this.nNumeroIped).subscribe((ie : FormaPagamento[]) => {
+      this.lstFormaPagto = ie;
+      console.log(ie);
+      this.formaPagto = ie[0];
+      this.totalPago = ie.reduce((sum, current) => sum + current.val_Fin, 0);
+      this.pedidoService.GetItensPagamento(ie[0].id_Frp == null ? 0 : ie[0].id_Frp).subscribe((ip : ItemPagamento[]) => {
+          this.lstItensPagto = ip;
+          this.itemPagto = ip[0];
+        });
+
+    });
+
 
     this.pedidoForm = this.formBuilder.group({
       id_Ped : [this.pedido.id_Ped],
@@ -159,23 +250,52 @@ export class PedidosComponent implements OnInit {
       idVendedor : this.formBuilder.control(this.pedido.vendedor.idVendedor,[Validators.required]),
       per_Ent : this.formBuilder.control(this.pedido.per_Ent == null ? "T" : this.pedido.per_Ent),
       entrega : this.formBuilder.control(this.pedido.entrega == null ? this.dataMin : this.pedido.entrega,[Validators.required,this.ValidaDataEntrega]),
+      entregaMinima: this.formBuilder.control(this.pedido.entrega == null ? this.dataMin : this.dataMinima),
+      CEP: this.formBuilder.control(this.pedido.endereco.cep),
+      Uf: this.formBuilder.control(this.pedido.endereco.uf),
+      Cidade: this.formBuilder.control(this.pedido.endereco.localidade),
+      NumeroCasa: this.formBuilder.control(this.pedido.endereco.numero),
+      Complemento: this.formBuilder.control(this.pedido.endereco.complemento),
+      Logradouro: this.formBuilder.control(this.pedido.endereco.logradouro),
+      Bairro: this.formBuilder.control(this.pedido.endereco.bairro),
+      PtoReferencia: this.formBuilder.control(this.pedido.endereco.pontoReferencia),
       // Entrega : this.formBuilder.control(this.pedido.Entrega == null ? this.dataMin : this.pedido.Entrega,[Validators.required,this.ValidaDataEntrega3(this.pedido)]),
     },{validator:PedidosComponent.ValidaMidia});
 
 
   }
 
-  ConvertDataJson(data : Date) : any{
+
+  ConvertDataJson(data : Date, addDay : number) : any{
 
     var result : string;
     var strAno : string;
     var strMes : string;
     var strDia : string;
 
-    result = formatDate(data,"dd/MM/yyyy","en-US");
-    strAno = String(result).substr(6,4);
-    strMes = String(result).substr(3,2);
-    strDia = String(result).substr(0,2);
+
+
+
+
+    if (addDay > 0){
+      var intAno = data["year"]
+      var intMes = data["month"]
+      var intDia = data["day"]
+      var d = new Date(intAno,intMes,intDia);
+      d.setDate(d.getDate() + 31)
+      result = formatDate(d,"dd/MM/yyyy","en-US");
+      strAno = String(result).substr(6,4);
+      strMes = String(result).substr(3,2);
+      strDia = String(result).substr(0,2);
+    }
+    else{
+      console.log(data);
+      result = formatDate(data,"dd/MM/yyyy","en-US");
+      console.log(result);
+      strAno = String(result).substr(6,4);
+      strMes = String(result).substr(3,2);
+      strDia = String(result).substr(0,2);
+    }
 
     return {year: Number(strAno), month: Number(strMes), day: Number(strDia) };
 
@@ -458,6 +578,7 @@ export class PedidosComponent implements OnInit {
     this.pedidoService.IncluirItemEstoquePedido(lstItensEstoque).subscribe(
       success => {
         this.pedidoService.GetItensPedido(this.nNumeroIped).subscribe((ie : ItensPedido[]) => {
+        this.totalPedido = ie.reduce((sum, current) => sum + current.valtot, 0);
           this.itensPedido = ie;
         });
         this.router.navigate(['pedido/' + this.nNumeroIped]);
@@ -467,6 +588,65 @@ export class PedidosComponent implements OnInit {
             this.alertService.showAlertDanger("Erro ao inserir item de pedido") ;
             }
     );
+  }
+
+  IncluirFormaPagamentoModal(){
+    var strvalor : string;
+    var valorAmortizar : number;
+
+    valorAmortizar = this.totalPedido - this.totalPago;
+
+    this.strOperacaoFormaPagto = "Incluir";
+    this.ResetFormaPagamento();
+
+    if (String(valorAmortizar).indexOf(".") > -1)
+      strvalor = "R$ " + String(valorAmortizar).replace(".",",");
+    else
+      strvalor = "R$ " + String(valorAmortizar) + ",00";
+
+    this.NumParcelasInput.nativeElement.value = "1";
+    this.ValorParcelaInput.nativeElement.value = strvalor;
+    this.AlterarFormaPagtoModal.show();
+  }
+
+  SalvarFormaPagamento(formaPagto : FormaPagamento){
+    formaPagto.usrIns = this.usuarioLogado.usuario;
+    console.log(this.usuarioLogado);
+    formaPagto.id_Usr = this.usuarioLogado.id_Usr;
+
+    let tipoPagto = this.formaPagtoDominio.filter(c=> c.id_Forma == this.id_FormaInput.nativeElement.value);
+    var itempagto = new ItemPagamento();
+    formaPagto.id_Forma = tipoPagto[0].id_Forma;
+    formaPagto.tp_Pagto = tipoPagto[0].tp_Pagto;
+    formaPagto.aut_Cart = this.autorizacaoInput.nativeElement.value;
+    formaPagto.tot_Parc = this.NumParcelasInput.nativeElement.value;
+    formaPagto.val_Fin = Number(String(this.val_Fin2Input.nativeElement.value).replace('R$','').replace(',','.'));
+    itempagto.agencia = this.agenciaInput.nativeElement.value;
+    itempagto.banco = this.bancoInput.nativeElement.value;
+    itempagto.praca = this.pracaInput.nativeElement.value;
+    itempagto.num_Cheq = this.chequeInput.nativeElement.value;
+    itempagto.num_Parc = Number(this.NumParcelasInput.nativeElement.value);
+    itempagto.valor = Number(String(this.ValorParcelaInput.nativeElement.value).replace('R$','').replace(',','.'));
+    this.pedidoService.IncluirFormaPagamento(formaPagto,itempagto).subscribe(
+      success => {
+        this.pedidoService.GetItensPedido(this.nNumeroIped).subscribe((ie : ItensPedido[]) => {
+        this.totalPedido = ie.reduce((sum, current) => sum + current.valtot, 0);
+          this.itensPedido = ie;
+        });
+        this.pedidoService.GetFormaPagamento(this.nNumeroIped).subscribe((fp : FormaPagamento[]) => {
+          this.totalPago = fp.reduce((sum, current) => sum + current.val_Fin, 0);
+            this.lstFormaPagto = fp;
+          });
+
+        this.router.navigate(['pedido/' + this.nNumeroIped]);
+        this.alertService.showAlertSuccess("Item inserido com sucesso");
+        },
+      error =>  {
+            this.alertService.showAlertDanger("Erro ao inserir item de pedido") ;
+            }
+    );
+
+    this.AlterarFormaPagtoModal.hide();
   }
 
   ExcluirItemPedido(ip : ItensPedido){
@@ -491,9 +671,87 @@ export class PedidosComponent implements OnInit {
       )
   }
 
+
+  ExcluirFormaPagamento(fp : FormaPagamento){
+    console.log(fp);
+    var strMessage : string;
+    strMessage = "Gostaria realmente você deseja exlcluir a forma de pagamento *** " + fp.formaPag + " *** do pedido " + this.nNumeroIped  + " ?";
+    var result$ = this.alertService.showConfirm("Confirmação Exclusão",strMessage,"Fechar","Excluir")
+    result$.asObservable()
+      .pipe(
+        take(1),
+        switchMap(result => result ? this.pedidoService.ExcluirFormaPagamento(fp) : EMPTY)
+      ).subscribe(
+        success => {
+                    this.pedidoService.GetFormaPagamento(this.nNumeroIped).subscribe((fp : FormaPagamento[]) => {
+                      this.lstFormaPagto = fp;
+                      this.totalPago = fp.reduce((sum, current) => sum + current.val_Fin, 0);
+                      this.pedidoService.GetItensPagamento(fp[0].id_Frp).subscribe((ip : ItemPagamento[]) => {
+                        this.lstItensPagto = ip;
+                      });
+                    });
+                    this.router.navigate(['pedido/' + this.nNumeroIped]);
+                    this.alertService.showAlertSuccess("Item do pedido excluído com sucesso");
+                    },
+        error =>  {
+                  this.alertService.showAlertDanger("Erro ao excluir item de pedido") ;
+                  }
+      )
+  }
+
   public showChildModal(itemPedido : ItensPedido):void {
+
     this.itensPedidoAlteracao = itemPedido;
     this.childModal.show();
+
+  }
+
+  AlterarFormaPagamentoModal(formaPagto : FormaPagamento){
+    this.formaPagto = formaPagto;
+    this.pedidoService.GetItensPagamento(formaPagto.id_Frp).subscribe((ip : ItemPagamento[]) => {
+      let itensPagto = ip;
+      var strvalor : string;
+      var numValor : number;
+      var strValorFin : string;
+
+      numValor = this.totalPedido - this.totalPago;
+      if (String(numValor).indexOf(".") > -1)
+        strvalor = "R$ " + String(numValor).replace(".",",");
+      else
+        strvalor = "R$ " + String(numValor) + ",00";
+
+      if (String(itensPagto[0].valor).indexOf(".") > -1)
+        strValorFin = "R$ " + String(formaPagto.val_Fin).replace(".",",");
+      else
+        strValorFin = "R$ " + String(formaPagto.val_Fin) + ",00";
+
+      this.val_Fin2Input.nativeElement.value = strvalor;
+      this.id_FormaInput.nativeElement.value = formaPagto.id_Forma;
+      this.autorizacaoInput.nativeElement.value = formaPagto.aut_Cart;
+      this.NumParcelasInput.nativeElement.value = itensPagto[0].num_Parc;
+      this.chequeInput.nativeElement.value = itensPagto[0].num_Cheq;
+      this.bancoInput.nativeElement.value = itensPagto[0].banco;
+      this.agenciaInput.nativeElement.value = itensPagto[0].agencia;
+      this.pracaInput.nativeElement.value = itensPagto[0].praca;
+      this.NumParcelasInput.nativeElement.value = formaPagto.tot_Parc;
+      this.ValorParcelaInput.nativeElement.value = strValorFin;
+
+    });
+    this.strOperacaoFormaPagto = "Alterar";
+    this.AlterarFormaPagtoModal.show();
+  }
+
+  AlterarFormapagamentoFechar(){
+    this.AlterarFormaPagtoModal.hide();
+  }
+
+  SelecionarFormaPagamento(fp : FormaPagamento){
+    if (fp.id_Frp != null){
+      this.currFormapagto = fp.formaPag;
+      this.pedidoService.GetItensPagamento(fp.id_Frp == null ? 0 : fp.id_Frp).subscribe((ip : ItemPagamento[]) => {
+        this.lstItensPagto = ip;
+      });
+    }
 
   }
 
@@ -575,6 +833,177 @@ export class PedidosComponent implements OnInit {
       )
 
   }
+
+  SetarValidacaoGravacao(){
+
+    var strvalor : string;
+    var valorAmortizar : number;
+    var numParcMinimo : number;
+    var numParcMaximo : number;
+    var numeroParc  : number;
+
+    this.blnGravaFormaPagto  = true;
+    this.blnOutraFormas  = true;
+    this.blnCheques  = true;
+    this.blnAutorizacao  = true;
+
+    console.log("entrou no A ***************")
+    if (this.id_FormaInput == undefined)
+      return true;
+
+    console.log("entrou no AAAAA ***************")
+
+    let tipoPagto = this.formaPagtoDominio.filter(c=> c.id_Forma == this.id_FormaInput.nativeElement.value);
+
+    let valorFinan = Number(String(this.val_Fin2Input.nativeElement.value).replace("R$","").replace(",","."))
+
+    console.log(tipoPagto[0].tp_Pagto + " - tipo pagamento");
+
+    if (valorFinan > (this.totalPedido - this.totalPago)){
+      this.blnGravaFormaPagto = true;
+      return;
+    }
+    if (valorFinan == 0){
+      this.blnGravaFormaPagto = true;
+      return;
+    }
+
+    this.blnGravaFormaPagto  = false;
+
+    switch (tipoPagto[0].tp_Pagto){
+
+      case "Q": //cheque
+        console.log("passou pelo cheque")
+        this.blnCheques = false;
+        if (this.chequeInput.nativeElement.value == ""){
+          this.blnGravaFormaPagto = true;
+          return;
+        }
+        else if (this.agenciaInput.nativeElement.value == ""){
+          this.blnGravaFormaPagto = true;
+          return;
+        }
+        else if (this.bancoInput.nativeElement.value == ""){
+          this.blnGravaFormaPagto = true;
+          return;
+        }
+        else if (this.pracaInput.nativeElement.value == ""){
+          this.blnGravaFormaPagto = true;
+          return;
+        }
+        break;
+      case "D": //debito
+        // validar campo autorização
+        console.log("passou pelo debito")
+        this.blnAutorizacao = false;
+        if (this.autorizacaoInput.nativeElement.value == ""){
+          this.blnGravaFormaPagto = true;
+          return;
+        }
+        break;
+
+      case "C": //debito
+      // validar campo autorização
+
+        if (numeroParc == 0){
+          this.blnGravaFormaPagto = true;
+          return;
+        }
+        console.log("passou pelo credito")
+        this.blnAutorizacao = false;
+        var forPgto = this.formaPagtoDominio.filter(c=> c.id_Forma == this.id_FormaInput.nativeElement.value);
+        numParcMinimo = forPgto[0].numMinParcelas;
+        numParcMaximo = forPgto[0].numMaxParcelas;
+        numeroParc = Number(this.NumParcelasInput.nativeElement.value);
+
+        console.log(numParcMinimo +  " parc min")
+        console.log(numParcMaximo +  " parc max")
+        console.log(numeroParc +  " nº parc ")
+
+        if ((numeroParc => numParcMinimo > 1) && (numeroParc <= numParcMaximo) ) {
+          console.log("passou pelo credito cccccccccccccccccc")
+          this.blnOutraFormas = false;
+          valorAmortizar = (this.totalPedido - this.totalPago) / numeroParc;
+          if (String(valorAmortizar.toFixed(2)).indexOf(".") > -1)
+            strvalor = "R$ " + String(valorAmortizar.toFixed(2)).replace(".",",");
+          else
+            strvalor = "R$ " + String(valorAmortizar.toFixed(2)) + ",00";
+
+          this.ValorParcelaInput.nativeElement.value = strvalor;
+
+        }
+
+        if (numParcMaximo == 1 )
+          this.blnOutraFormas = true;
+
+        if (numeroParc > numParcMaximo){
+          this.blnGravaFormaPagto = true;
+          this.blnOutraFormas = false
+        }
+
+
+        if (this.autorizacaoInput.nativeElement.value == ""){
+          this.blnGravaFormaPagto = true;
+          return;
+        }
+
+        if (numParcMaximo > 1 && numeroParc == 1)
+          this.blnGravaFormaPagto = true;
+          return;
+
+        break;
+    }
+
+    this.blnGravaFormaPagto = false;
+  }
+
+  ResetFormaPagamento(){
+    var strvalor : string;
+    var valorAmortizar : number;
+
+    valorAmortizar = this.totalPedido - this.totalPago;
+    if (String(valorAmortizar).indexOf(".") > -1)
+      strvalor = "R$ " + String(valorAmortizar).replace(".",",");
+    else
+      strvalor = "R$ " + String(valorAmortizar) + ",00";
+
+    this.val_Fin2Input.nativeElement.value = strvalor;
+    this.id_FormaInput.nativeElement.value ="";
+    this.chequeInput.nativeElement.value ="";
+    this.bancoInput.nativeElement.value ="";
+    this.agenciaInput.nativeElement.value ="";
+    this.pracaInput.nativeElement.value ="";
+    this.autorizacaoInput.nativeElement.value ="";
+    this.NumParcelasInput.nativeElement.value ="";
+  }
+
+  ConsultaCEP(cep :string){
+    if (cep.length > 7 ){
+      this.clienteService.ConsultaCEP(cep).subscribe(( p : Endereco) => {
+        // this.clienteForm.patchValue({ logradouro: p.logradouro});
+        // this.clienteForm.patchValue({ uf: p.uf});
+        // this.clienteForm.patchValue({ localidade: p.localidade});
+        // this.clienteForm.patchValue({ bairro: p.bairro});
+      });
+    }
+    return true;
+  }
+
+  OpenCity(evt,cityName) {
+
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(cityName).style.display = "block";
+    evt.currentTarget.className += " active";
+  }
+
 
 
 }
