@@ -49,7 +49,7 @@
               </div>
               <div class="col-xs-1 col-sm-1" >
                 <span *ngIf="clienteForm.get('cnpjCpf').getError('cpfNotValid')" style="color:red">
-                  <i class="fa fa-remove"></i> O CPF/CNPJ não é válido.
+                  <i class="fa fa-remove"></i> O CPF/CNPJ não é válido ou já existente na base de dados.
                 </span>
               </div>
               <div class="col-sm-1 col-xs-1">
@@ -74,7 +74,7 @@
               </div>
               <div class="col-sm-3  col-xs-3">
                   <cft-input errorMessage="Campo obrigatório com maximo de 60 caracteres" label="Nome">
-                      <input name="nome" class="form-control" formControlName="nome" autocomplete="off" placeholder="Nome">
+                      <input name="nome" class="form-control" formControlName="nome" autocomplete="off" placeholder="Nome" style="text-transform:uppercase" >
                   </cft-input>
               </div>
               <div class="col-sm-1 col-xs-1">
@@ -85,7 +85,7 @@
               </div>
               <div class="col-sm-3  col-xs-3">
                   <cft-input errorMessage="Campo obrigatório com maximo de 20 caracteres" label="Nome">
-                      <input name="apelido" class="form-control" formControlName="apelido" autocomplete="off" placeholder="Apelido">
+                      <input name="apelido" class="form-control" formControlName="apelido" autocomplete="off" placeholder="Apelido" style="text-transform:uppercase" >
                   </cft-input>
               </div>
           </div>
@@ -99,7 +99,7 @@
             </div>
             <div class="col-sm-3  col-xs-3">
                 <cft-input errorMessage="Campo obrigatório com maximo de 6 caracteres" label="Orgão Emissor">
-                    <input name="orgEmisRg" class="form-control" formControlName="orgEmisRg" autocomplete="off" placeholder="Orgão Emissor">
+                    <input name="orgEmisRg" class="form-control" formControlName="orgEmisRg" autocomplete="off" placeholder="Orgão Emissor" style="text-transform:uppercase" >
                 </cft-input>
             </div>
             <div class="col-sm-1 col-xs-1">
@@ -109,9 +109,16 @@
               Estado Civil:<span style="color:red" tooltip="Campo Obrigatório" placement="top" show-delay="500">&nbsp;&nbsp;*</span>
             </div>
             <div class="col-sm-3  col-xs-3">
-                <cft-input errorMessage="Campo obrigatório com maximo de 30 caracteres" label="Estado Civil">
+              <select name="estCivil" class="form-control" formControlName="estCivil" >
+                <option value="C">Casado</option>
+                <option value="S">Solteiro</option>
+                <option value="D">Divorciado</option>
+                <option value="N">Não Informado</option>
+                <option value="O">Outros</option>
+              </select>
+                <!-- <cft-input errorMessage="Campo obrigatório com maximo de 30 caracteres" label="Estado Civil">
                     <input name="estCivil" class="form-control" formControlName="estCivil" autocomplete="off" placeholder="Estado Civil">
-                </cft-input>
+                </cft-input> -->
             </div>
           </div>
           <div class="row">
@@ -139,11 +146,11 @@
               &nbsp;
             </div>
             <div class="col-sm-1 col-xs-1">
-              Profissao:<span style="color:red" tooltip="Campo Obrigatório" placement="top" show-delay="500">&nbsp;&nbsp;*</span>
+              Profissao:
             </div>
             <div class="col-sm-3  col-xs-3">
                 <cft-input errorMessage="Campo obrigatório com maximo de 30 caracteres" label="profissao">
-                    <input name="profProfissao" class="form-control" formControlName="profProfissao" autocomplete="off" placeholder="Profissao">
+                    <input name="profProfissao" class="form-control" formControlName="profProfissao" autocomplete="off" placeholder="Profissao" style="text-transform:uppercase" >
                 </cft-input>
             </div>
           </div>
@@ -186,7 +193,7 @@
             </div>
             <div class="col-sm-3  col-xs-3">
                 <cft-input errorMessage="Campo obrigatório com maximo de 30 caracteres" label="localidade">
-                    <input name="localidade" class="form-control" formControlName="localidade" autocomplete="off" placeholder="Localidade/Cidade" >
+                    <input name="localidade" class="form-control" formControlName="localidade" autocomplete="off" placeholder="Localidade/Cidade" style="text-transform:uppercase" >
                 </cft-input>
             </div>
             <div class="col-sm-1 col-xs-1">
@@ -197,7 +204,7 @@
             </div>
             <div class="col-sm-3  col-xs-3">
                 <cft-input errorMessage="Campo obrigatório com maximo de 30 caracteres" label="Logradouro">
-                    <input name="logradouro" class="form-control" formControlName="logradouro" autocomplete="off" placeholder="Logradouro" >
+                    <input name="logradouro" class="form-control" formControlName="logradouro" autocomplete="off" placeholder="Logradouro" style="text-transform:uppercase" >
                 </cft-input>
             </div>
           </div>
@@ -210,7 +217,7 @@
             </div>
             <div class="col-sm-3  col-xs-3">
                 <cft-input errorMessage="Campo obrigatório com maximo de 8 caracteres" label="Numero">
-                    <input name="numero" class="form-control" formControlName="numero" autocomplete="off" placeholder="Numero">
+                    <input name="numero" class="form-control" formControlName="numero" autocomplete="off" placeholder="Numero" style="text-transform:uppercase" >
                 </cft-input>
             </div>
 
@@ -222,7 +229,7 @@
             </div>
             <div class="col-sm-3  col-xs-3">
                 <cft-input errorMessage="Campo obrigatório com maximo de 40 caracteres" label="Complemento">
-                    <input name="complemento" class="form-control" formControlName="complemento" autocomplete="off" placeholder="Complemento">
+                    <input name="complemento" class="form-control" formControlName="complemento" autocomplete="off" placeholder="Complemento" style="text-transform:uppercase" >
                 </cft-input>
             </div>
 
@@ -240,7 +247,7 @@
             </div>
             <div class="col-sm-3  col-xs-3">
                 <cft-input errorMessage="Campo obrigatório com maximo de 40 caracteres" label="Bairro">
-                    <input name="bairro" class="form-control" formControlName="bairro" autocomplete="off" placeholder="Bairro" >
+                    <input name="bairro" class="form-control" formControlName="bairro" autocomplete="off" placeholder="Bairro" style="text-transform:uppercase"  >
                 </cft-input>
             </div>
             <div class="col-sm-1 col-xs-1">
@@ -251,7 +258,7 @@
             </div>
             <div class="col-sm-3  col-xs-3">
                 <cft-input errorMessage="EMail é um campo obrigatório" label="EMail">
-                    <input name="eMail" class="form-control" formControlName="eMail" autocomplete="off" placeholder="EMail">
+                    <input name="eMail" class="form-control" formControlName="eMail" autocomplete="off" placeholder="EMail" style="text-transform:uppercase" >
                 </cft-input>
             </div>
           </div>
@@ -264,25 +271,81 @@
             </div>
             <div class="col-sm-3  col-xs-3">
                 <cft-input errorMessage="Campo obrigatório com maximo de 40 caracteres" label="Contato">
-                    <input name="contato" class="form-control" formControlName="contato" autocomplete="off" placeholder="Contato">
+                    <input name="contato" class="form-control" formControlName="contato" autocomplete="off" placeholder="Contato" style="text-transform:uppercase" >
                 </cft-input>
             </div>
           </div>
-          <!-- <div class="row">
-              <div class="col-sm-2 col-xs-2">
-                  &nbsp;
-              </div>
-              <div class="col-sm-3 col-xs-3">
-                  Clube:
-              </div>
-              <div class="col-sm-5  col-xs-5" >
-                  <select name="JO_CLID" class="form-control" formControlName="JO_CLID">
-                      <option *ngFor=  "let c of (clubes)" [value]="c.CL_CLID">{{c.CL_CLNOME}}</option>
-                  </select>
-              </div>
-          </div> -->
-          <!--***********************************GRID-->
-        <dx-data-grid
+
+          <div class="row">
+            <div class="col-sm-2 col-xs-2">
+                &nbsp;
+            </div>
+          </div>
+
+        <!--***********************************GRID-->
+        <div class="row" id="Telefones" >
+          <div class="col-sm-1 col-xs-1">
+            &nbsp;
+          </div>
+          <div class="col-sm-11 col-xs-11 table-responsive-xl">
+            <table class="table table-sm table-striped col-sm-11 col-xs-11">
+              <thead>
+              <tr>
+                <th>DDD</th>
+                <th>Numero</th>
+                <th>Ramal.</th>
+                <th>Tipo Telefone</th>
+                <th scope="col">Ação</th>
+                <th scope="col">Ação</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let tl of coltelefones ">
+                <td>
+                  <span [tooltip]="tl.codddd" placement="top" show-delay="500">
+                    {{tl.codddd }}
+                  </span>
+                </td>
+                <td>
+                  <span [tooltip]="tl.numero" placement="top" show-delay="500">
+                    {{tl.numero}}
+                  </span>
+                </td>
+                <td>
+                  <span [tooltip]="tl.ramal" placement="top" show-delay="500">
+                    {{tl.ramal}}
+                  </span>
+                </td>
+                <td>
+                  <span [tooltip]="tl.descTipoFone" placement="top" show-delay="500">
+                    {{tl.descTipoFone}}
+                  </span>
+                </td>
+                <td><a class="nav-link linkPoint"  (click)="EditarTelefoneModal(tl)">
+                  <span tooltip="Editar" placement="top" show-delay="500">
+                      <i class="fa fa-edit"></i>
+                    </span>
+                    </a>
+                </td>
+                <td>
+                  <a class="nav-link linkPoint" (click)="ExcluirTelefone(tl);"  >
+                  <span tooltip="Excluir" placement="top" show-delay="500">
+                    <img src="/assets/imagens/icons/excluir.png" class="mr-2" style="width: 20px">
+                    </span>
+                    </a>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2 col-xs-2">
+              &nbsp;
+          </div>
+        </div>
+
+        <!-- <dx-data-grid
             id="gridContainer"
             [dataSource]="dataSource"
             keyExpr="idTelefone"
@@ -310,29 +373,29 @@
                 [allowAdding]="true">
             </dxo-editing>
 
-            <dxi-column dataField="codDdd" caption="DDD" dataType="number" >
+            <dxi-column dataField="codddd" caption="DDD" dataType="number" >
               <dxi-validation-rule
-                type="required"
+                type="pattern"
                 [pattern]="patternDDD" message="Formato DDD (11)!"
                 [validationCallback]="asyncValidation"
               ></dxi-validation-rule>
             </dxi-column>
             <dxi-column dataField="numero" dataType="number" >
               <dxi-validation-rule
-              type="required"
+              type="pattern"
               [pattern]="FonePattern" message="Formato Numero (111111111)!"
               [validationCallback]="asyncValidation"
               ></dxi-validation-rule>
             </dxi-column>
             <dxi-column dataField="ramal" >
-              <dxi-validation-rule
+              <dxi-validation-rule type="pattern"
               [pattern]="RamalPattern" message="Formato ramal (1111)!"
               [validationCallback]="asyncValidation"
               ></dxi-validation-rule>
             </dxi-column>
 
             <dxi-column
-                dataField="indTipoFone"
+                dataField="indtipoFone"
                 caption="TipoTelefone"
                 [width]="125">
                 <dxo-lookup
@@ -341,13 +404,25 @@
                     valueExpr="IndTipoFone">
                 </dxo-lookup>
             </dxi-column>
-            <!-- <dxi-column
+            <dxi-column
                 dataField="BirthDate"
                 [width]="125"
                 dataType="date">
-            </dxi-column> -->
-        </dx-data-grid>
+            </dxi-column>
+        </dx-data-grid> -->
         <!--***********************************GRID***********************************-->
+
+        <div class="row">
+          <div class="col-sm-1 col-xs-1">
+            &nbsp;
+          </div>
+          <div class="col-sm-2 col-xs-2">
+            <button class="btn btn-primary pull-right btn-block" data-toggle="modal" data-target="#Fabrica" type="button" (click)="showTelefoneModal()">
+              <img src="assets/imagens/icons/phone.png" class="mr-2" style="width: 20px; color: white; ">
+              +
+          </button>
+          </div>
+        </div>
       </form>
       <div class="dx-fieldset">
         <dx-validation-summary id="summary"></dx-validation-summary>
@@ -371,6 +446,78 @@
             </div>
         </div>
       </div>
+  </div>
+</div>
+
+<!-- Modal EDITAR ITEMPEDIDO -->
+<div bsModal #telefoneModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Telefones</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="hideTelefoneModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <!-- Modal body -->
+      <div class="modal-body ">
+        <div class="row">
+          <div class="col-sm-1 col-xs-1 ">
+            DDD:
+          </div>
+          <div class="col-sm-2 col-xs-2 ">
+            <input #codddd name="codddd" class="form-control" placeholder="DDD" type="text" [allowNegativeNumbers]="false" mask="separator.2"   maxlength="2" (keyup)="ValidarGravacao()">
+          </div>
+          <div class="col-sm-1 col-xs-1 ">
+            &nbsp;
+          </div>
+          <div class="col-sm-2 col-xs-2 ">
+            Numero:
+          </div>
+          <div class="col-sm-3 col-xs-3 ">
+            <input #numero name="numero" class="form-control" placeholder="Número" type="text" [allowNegativeNumbers]="false" mask="separator.2"  maxlength="9" (keyup)="ValidarGravacao()">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-1 col-xs-1 ">
+            &nbsp;
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-1 col-xs-1 ">
+            Ramal:
+          </div>
+          <div class="col-sm-2 col-xs-2 ">
+            <input #ramal name="ramal" class="form-control" placeholder="Ramal" type="text" [allowNegativeNumbers]="false" mask="separator.2"  maxlength="4" (keyup)="ValidarGravacao()">
+          </div>
+          <div class="col-sm-1 col-xs-1 ">
+            &nbsp;
+          </div>
+          <div class="col-sm-2 col-xs-2 ">
+            Tipo Telefone:
+          </div>
+          <div class="col-sm-3 col-xs-3 ">
+            <select #indTipoFone name="indtipoFone" class="form-control"  >
+              <option *ngFor=  "let c of (tiposTelefone)" [value]="c.IndTipoFone">{{c.DescTipoTelefone}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <div class="row">
+          <div class="col-sm-6 col-xs-6 ">
+            <button class="btn btn-primary pull-right btn-block" type="button" data-dismiss="modal" [disabled]="!blnInserirTelefone" (click)="SalvarTelefone()">
+              Salvar
+            </button>
+          </div>
+          <div class="col-sm-6 col-xs-6 ">
+            <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="hideTelefoneModal()">Fechar</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 

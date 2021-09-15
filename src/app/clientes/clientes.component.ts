@@ -8,7 +8,7 @@ import {Router, ActivatedRoute} from '@angular/router'
 import localeBR from "@angular/common/locales/br";
 import { delay, map, tap, filter, take, switchMap } from 'rxjs/operators';
 import { IFormCanDeactivate } from '../guards/form-deactivate';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef, BsModalService, ModalDirective } from 'ngx-bootstrap/modal';
 registerLocaleData(localeBR, "br");
 
 import { Cliente, Pessoa, Endereco, Telefone, Estado } from '../clientes/clientes.model';
@@ -36,6 +36,12 @@ const sendRequest = function(value) {
 })
 export class ClientesComponent implements OnInit {
 
+  @ViewChild('telefoneModal') public telefoneModal:ModalDirective;
+  @ViewChild('codddd') coddddInput: ElementRef;
+  @ViewChild('numero') numeroInput: ElementRef;
+  @ViewChild('ramal') ramalInput: ElementRef;
+  @ViewChild('indTipoFone') IndTipoFoneInput: ElementRef;
+
   insertModalRef : BsModalRef;
   @ViewChild('template') template;
   blnExisteClube : boolean;
@@ -55,13 +61,18 @@ export class ClientesComponent implements OnInit {
   estados : Estado[];
   usuarioLogado : Usuario = null;
   events: Array<string> = [];
-  dataSource: Telefone[];
+  coltelefones: Telefone[];
   tiposTelefone : TipoTelefone[];
   patternDDD: any = /\d{2}/;
   FonePattern: any = /\d{9}/;
   RamalPattern: any = /\d{4}/;
   lstTelefone : Telefone[];
   _validacpf: Observable<boolean>;
+  blnInserirTelefone : boolean = false;
+  fone : Telefone;
+  idTelefone : number = 0;
+  ordenador : number= 0;
+  blnEditarTelefone : boolean = false;
 
   constructor(private clienteService: ClientesService
     ,private loginService: UsuarioService
@@ -77,6 +88,8 @@ export class ClientesComponent implements OnInit {
 
 
   ngOnInit(): void {
+
+
 
     this.clienteService.GetAllEstados().subscribe((es : Estado[]) => {
       console.log(es);
@@ -95,7 +108,9 @@ export class ClientesComponent implements OnInit {
 
     // if (this.cliente != null){
       this.clienteService.GetTelefonePorIdCliente(this.cliente.id_Cli).subscribe((es : Telefone[]) => {
-        this.dataSource = es;
+        console.log("***************telefone")
+        console.log(es)
+        this.coltelefones = es;
         });
     // }
     if (this.cliente.id_Cli != null){
@@ -118,12 +133,13 @@ export class ClientesComponent implements OnInit {
       IEstRG : this.formBuilder.control(this.cliente.obJ_PESSOA.iEstRG,[Validators.required, Validators.minLength(2),Validators.maxLength(18)]),
       // IndFisJur : this.formBuilder.control(this.cliente.OBJ_PESSOA.IndFisJur,[Validators.required, Validators.minLength(1),Validators.maxLength(1)]),
       idPessoa : [this.cliente.obJ_PESSOA.idPessoa],
+      idCliente : [this.cliente.idCliente],
       nome : this.formBuilder.control(this.cliente.obJ_PESSOA.nome,[Validators.required, Validators.minLength(2),Validators.maxLength(60)]),
       apelido : this.formBuilder.control(this.cliente.obJ_PESSOA.apelido,[Validators.required, Validators.minLength(2),Validators.maxLength(20)]),
       orgEmisRg : this.formBuilder.control(this.cliente.obJ_PESSOA.orgEmisRg,[Validators.required, Validators.minLength(2),Validators.maxLength(6)]),
-      estCivil : this.formBuilder.control(this.cliente.obJ_PESSOA.estCivil,[Validators.required, Validators.minLength(1),Validators.maxLength(30)]),
+      estCivil : this.formBuilder.control(this.cliente.obJ_PESSOA.estCivil,[Validators.required]),
       dtNascimento : this.formBuilder.control(this.cliente.obJ_PESSOA.dtNascimento),
-      profProfissao : this.formBuilder.control(this.cliente.profProfissao,[Validators.required, Validators.minLength(2),Validators.maxLength(30)]),
+      profProfissao : this.formBuilder.control(this.cliente.profProfissao),
       dhIns : this.formBuilder.control(this.cliente.obJ_PESSOA.dhIns),
       idPessoaEndereco : [this.cliente.obJ_PESSOA.idPessoaEndereco],
       idEndereco : [this.cliente.obJ_PESSOA.idEndereco],
@@ -156,7 +172,7 @@ export class ClientesComponent implements OnInit {
 
   VerificaCnpjCpf(cpf:string){
 
-    return this.clienteService.ValidaCnpjCpf(cpf).pipe(
+    return this.clienteService.ValidaCnpjCpf(cpf, this.cliente.id_Cli).pipe(
       delay(3000),
       // map(e => e.cpfNotValid == false ? {cpfNotValid: false} : null ),
       // map((dados: {cpfValid : any}) => dados.cpfValid),
@@ -194,44 +210,146 @@ export class ClientesComponent implements OnInit {
     return true;
   }
 
-  logEvent(eventName) {
-    this.events.unshift(eventName);
+  ValidarGravacao(){
+
+    this.blnInserirTelefone = true;
+    if (this.coddddInput.nativeElement.value == "")
+      this.blnInserirTelefone = false
+
+    if (this.numeroInput.nativeElement.value == "")
+      this.blnInserirTelefone = false
+
   }
 
-  inserirTelefone(e){
-    this.lstTelefone = e;
+  SalvarTelefone(){
+      var telefone = new Telefone;
+
+      telefone.idTelefone = this.idTelefone == 0 ? this.coltelefones.length + 1 : this.idTelefone;
+      telefone.codddd = String(this.coddddInput.nativeElement.value).trim();
+      telefone.numero = String(this.numeroInput.nativeElement.value).trim();
+      telefone.ramal = String(this.ramalInput.nativeElement.value).trim();
+      telefone.indusofone = this.IndTipoFoneInput.nativeElement.value;
+      telefone.descTipoFone = this.tiposTelefone.filter(c=> c.IndTipoFone == this.IndTipoFoneInput.nativeElement.value)[0].DescTipoTelefone
+      telefone.ordenador = this.ordenador;
+
+      if (this.blnEditarTelefone == true) {
+        const telefoneAlt = this.coltelefones.findIndex(c=> c.idTelefone === telefone.idTelefone);
+        this.coltelefones.splice(telefoneAlt,1)
+        console.log(this.coltelefones);
+      }
+      this.coltelefones.push(telefone);
+      this.coltelefones = this.coltelefones.sort((a,b)  => {
+        return a.idTelefone- b.idTelefone;
+      });
+      this.blnEditarTelefone = false;
+      this.hideTelefoneModal()
+
   }
 
-  onEditorPreparing(e) {
-    if (e.dataField == 'codDdd') {
-        e.editorName = 'dxTextBox';
-        e.editorOptions.mask = '00';
-    }
-    if (e.dataField == 'numero') {
-      e.editorName = 'dxTextBox';
-      e.editorOptions.mask = '00000-0000';
+  // logEvent(eventName) {
+  //   this.events.unshift(eventName);
+  // }
 
-    }
-  }
+  // inserirTelefone(e){
+  //   this.lstTelefone = e;
+  // }
 
-  clearEvents() {
-      this.events = [];
-  }
+  // onEditorPreparing(e) {
+  //   if (e.dataField == 'codddd') {
+  //       e.editorName = 'dxTextBox';
+  //       e.editorOptions.mask = '00';
+  //   }
+  //   if (e.dataField == 'numero') {
+  //     e.editorName = 'dxTextBox';
+  //     e.editorOptions.mask = '00000-0000';
+  //   }
+  // }
+
+  // clearEvents() {
+  //     this.events = [];
+  // }
 
   TransformaListaTelefone(lstTelefone : Telefone[]): string{
     i : Number;
     let ListaTelefone : string;
     ListaTelefone = "";
     for(var i = 0; i<= lstTelefone.length -1; i++){
-      ListaTelefone += "[" + lstTelefone[i].codDdd  + ",";
-      ListaTelefone += lstTelefone[i].codDdi + ",";
-      ListaTelefone += lstTelefone[i].idTelefone + ",";
-      ListaTelefone += lstTelefone[i].indTipoFone + ",";
+      ListaTelefone += "[" + lstTelefone[i].codddd  + ",";
+      ListaTelefone += lstTelefone[i].codddi + ",";
+      ListaTelefone += Number(lstTelefone[i].idTelefone) > 10000 ? Number(lstTelefone[i].idTelefone) - 10000 + "," : lstTelefone[i].idTelefone + ",";
+      ListaTelefone += lstTelefone[i].indusofone + ",";
       ListaTelefone += lstTelefone[i].numero  + ",";
       ListaTelefone += lstTelefone[i].ramal ;
+
+      console.log("jjjjjjjjjjjjjjjj")
+      console.log(Number(lstTelefone[i].idTelefone) > 10000 ? "iiiii" : "kkkkkkkkkk")
+
     }
+
+    console.log("coleção telefone")
+    console.log(ListaTelefone);
+
+
     return ListaTelefone;
   }
+
+  public showTelefoneModal():void {
+
+    this.idTelefone = 0;
+    this.blnEditarTelefone = false;
+    this.coddddInput.nativeElement.value = "";
+    this.numeroInput.nativeElement.value = "";
+    this.ramalInput.nativeElement.value = "";
+    this.telefoneModal.show();
+
+  }
+
+  EditarTelefoneModal(fone : Telefone){
+
+    var foneCarregado : Telefone;
+
+    this.blnEditarTelefone = true;
+    this.fone = fone;
+    foneCarregado = this.coltelefones.filter(c=> c.idTelefone == fone.idTelefone)[0]
+    this.idTelefone = foneCarregado.idTelefone;
+    this.coddddInput.nativeElement.value = foneCarregado.codddd;
+    this.numeroInput.nativeElement.value = foneCarregado.numero;
+    this.ramalInput.nativeElement.value = foneCarregado.ramal;
+    this.IndTipoFoneInput.nativeElement.value = foneCarregado.indusofone
+    this.ordenador = foneCarregado.ordenador;
+    this.ValidarGravacao();
+    this.telefoneModal.show();
+  }
+
+  RemoveItemtelefone(tl : Telefone): boolean{
+
+    this.coltelefones = this.coltelefones.filter(c=> c.idTelefone != tl.idTelefone) ;
+    return true;
+
+  }
+
+  ExcluirTelefone(tl : Telefone){
+    var strMessage : string;
+    strMessage = "Gostaria realmente exlcluir o telefone *** " + tl.codddd + "   " + tl.numero + " *** do cliente ?";
+    var result$ = this.alertService.showConfirm("Confirmação Exclusão",strMessage,"Fechar","Excluir")
+    result$
+      .pipe(
+        take(1),
+        switchMap(async (result) => result ? this.RemoveItemtelefone(tl) : EMPTY)
+      ).subscribe(
+        success => {
+                    this.alertService.showAlertSuccess("Telefone excluído com sucesso");
+                    },
+        error =>  {
+                  this.alertService.showAlertDanger("Erro ao excluir telefone do cliente") ;
+                  }
+      )
+  }
+
+
+  public hideTelefoneModal():void {
+    this.telefoneModal.hide();
+   }
 
   SalvarCliente(cliente: Cliente){
 
@@ -239,7 +357,7 @@ export class ClientesComponent implements OnInit {
     var enderecoCliente = new Endereco();
     // var lstEnderecoCliente = [];
 
-    console.log(this.TransformaListaTelefone(this.dataSource))
+    console.log(this.TransformaListaTelefone(this.coltelefones))
 
 
     let msgSuccess = "Cliente inserido com sucesso";
@@ -247,7 +365,10 @@ export class ClientesComponent implements OnInit {
     let msgQuestãoTitulo = "Confirmação de Inclusão"
     let msgQuestaoCorpo = "Você realmente deseja inserir este cliente?"
     let msgBotao = "Inserir"
-    if (this.clienteForm.value.Id_Cli != null){
+    console.log("ggggggggggggggggggggg")
+    console.log(this.clienteForm)
+    console.log("ggggggggggggggggggggg")
+    if (this.cliente.id_Cli != null){
       msgSuccess = "Cliente alterado com sucesso";
       msgErro = "Erro ao atualizar cliente. Tente novamente"
       msgQuestãoTitulo = "Confirmação de Alteração"
@@ -284,7 +405,7 @@ export class ClientesComponent implements OnInit {
     pessoaSalva.eMail = cliente["eMail"];
     pessoaSalva.homePage = cliente["homePage"];
     pessoaSalva.natural = cliente["natural"];
-    pessoaSalva.lstTelefone = this.TransformaListaTelefone(this.dataSource);
+    pessoaSalva.lstTelefone = this.TransformaListaTelefone(this.coltelefones);
     pessoaSalva.dhIns = this.myDate;
     pessoaSalva.indFisJur = String(cliente["cnpjCpf"]).length > 11 ? "J" : "F" ;
     // if (pessoaSalva.lstTelefone == undefined)
@@ -293,9 +414,11 @@ export class ClientesComponent implements OnInit {
 
 
     cliente.obJ_PESSOA = pessoaSalva;
+    cliente.idCliente = cliente["idCliente"] == null ? 0 : cliente["idCliente"] = "" ? 0 : cliente["idCliente"];
     cliente.obJ_PESSOA.obJ_ENDERECO = enderecoCliente;
     cliente.idUsuario = this.usuarioLogado["id_Usr"];
     cliente.profSalario = 1111;
+    cliente.profProfissao = cliente["profProfissao"];
     cliente.banCodBanco = "1";
     cliente.banNomeBanco = "llll"
     cliente.banNumConta = "55"
@@ -306,7 +429,7 @@ export class ClientesComponent implements OnInit {
 
 
     console.log(this.usuarioLogado);
-    console.log(this.dataSource);
+    console.log(this.coltelefones);
 
     const result$ = this.alertService.showConfirm(msgQuestãoTitulo,msgQuestaoCorpo,"Fechar",msgBotao);
     result$.asObservable()

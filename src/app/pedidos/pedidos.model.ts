@@ -202,7 +202,7 @@ export interface Pedido {
   per_Ent	: string;
   totProd	: number;
   desconto	: number;
-  desc_Por	: number;
+  desc_Por	: number
   totPed	: number;
   vlFrete	: number;
   val_Afin	: number;
@@ -243,6 +243,34 @@ export interface RetornoPedido{
   id_Ped : string,
   ok : string,
   mensErro : string,
+}
+
+export class RetornoCalculaPedido{
+
+  public id_Ped	: number;
+  get _Id_Ped(): number {return this.id_Ped;}
+  set _Id_Ped(p : number) {this.id_Ped = p; }
+
+  public entrega	: Date;
+  get _entrega(): Date {return this.entrega;}
+  set _entrega(p : Date) {this.entrega = p; }
+
+  public saldo	: number;
+  get _saldo(): number {return this.saldo;}
+  set _saldo(p : number) {this.saldo = p; }
+
+}
+
+export class Parcela{
+
+  public id_Key	: number;
+  get _Id_Key(): number {return this.id_Key;}
+  set _Id_Key(p : number) {this.id_Key = p; }
+
+  public parcela	: number;
+  get _parcela(): number {return this.parcela;}
+  set _parcela(p : number) {this.parcela = p; }
+
 }
 
 // export class Pedido {

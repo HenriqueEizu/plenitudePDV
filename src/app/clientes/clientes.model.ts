@@ -104,13 +104,13 @@ export class Telefone{
   get _IdTelefone(): number {return this.idTelefone;}
   set _IdTelefone(p : number) {this.idTelefone = p; }
 
-  public codDdi	: string;
-  get _CodDdi(): string {return this.codDdi;}
-  set _CodDdi(p : string) {this.codDdi = p; }
+  public codddi	: string;
+  get _CodDdi(): string {return this.codddi;}
+  set _CodDdi(p : string) {this.codddi = p; }
 
-  public codDdd	: string;
-  get _CodDdd(): string {return this.codDdd;}
-  set _CodDdd(p : string) {this.codDdd = p; }
+  public codddd	: string;
+  get _CodDdd(): string {return this.codddd;}
+  set _CodDdd(p : string) {this.codddd = p; }
 
   public numero	: string;
   get _Numero(): string {return this.numero;}
@@ -120,9 +120,17 @@ export class Telefone{
   get _Ramal(): string {return this.ramal;}
   set _Ramal(p : string) {this.ramal = p; }
 
-  public indTipoFone	: string;
-  get _IndTipoFone(): string {return this.indTipoFone;}
-  set _IndTipoFone(p : string) {this.indTipoFone = p; }
+  public indusofone	: string;
+  get _IndTipoFone(): string {return this.indusofone;}
+  set _IndTipoFone(p : string) {this.indusofone = p; }
+
+  public descTipoFone	: string;
+  get _descTipoFone(): string {return this.descTipoFone;}
+  set _descTipoFone(p : string) {this.descTipoFone = p; }
+
+  public ordenador	: number;
+  get _ordenador(): number {return this.ordenador;}
+  set _ordenador(p : number) {this.ordenador = p; }
 
 }
 

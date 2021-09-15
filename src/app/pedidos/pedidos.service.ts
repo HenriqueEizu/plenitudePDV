@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { MEAT_API } from '../app.api';
 
-import { Pedido, Midia, Vendedor, Estoque, ItensPedido, ItensEstoque, RetornoPedido, FormaPagamento, ItemPagamento } from './pedidos.model';
+import { Pedido, Midia, Vendedor, Estoque, ItensPedido, ItensEstoque, RetornoPedido, FormaPagamento, ItemPagamento, RetornoCalculaPedido } from './pedidos.model';
 
 
 @Injectable({
@@ -17,10 +17,11 @@ export class PedidosService {
   constructor(private http: HttpClient
     ,private router: Router) { }
 
-    GetAllPedidos(campo : string,criterio : string): Observable<Pedido[]>{
+    GetAllPedidos(campo : string,criterio : string, blnIntegrado : boolean): Observable<Pedido[]>{
       let params = new HttpParams();
       params = params.append('campo', campo);
       params = params.append('criterio', criterio);
+      params = params.append('integrado', String(blnIntegrado));
       var clientes$ = this.http.get<Pedido[]>(`${MEAT_API}/pedido/GetAllPedidos`,{params: params}).pipe();
       return clientes$;
     }
@@ -111,7 +112,7 @@ export class PedidosService {
       return this.http.put<RetornoPedido>(`${MEAT_API}/pedido/AlterarPedido/`,pedido,{headers: headers}).pipe(take(1));
     }
 
-    EncerraPedido(Idpedido : number) : Observable<RetornoPedido>{
+    EncerraPedido(pedido : Pedido) : Observable<RetornoPedido>{
       const headers = new HttpHeaders()
       headers.append("Accept","text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
       headers.append("Accept-Encoding","gzip, deflate");
@@ -121,7 +122,14 @@ export class PedidosService {
       headers.append('Access-Control-Allow-Origin', 'https://localhost:44377' );
       headers.append('Content-Type', 'application/json');
 
-      return this.http.put<RetornoPedido>(`${MEAT_API}/pedido/EncerraPedido/`,Idpedido,{headers: headers}).pipe(take(1));
+      return this.http.post<RetornoPedido>(`${MEAT_API}/pedido/EncerraPedido/`,pedido,{headers: headers}).pipe(take(1));
+    }
+
+    PedidoRecalcula(IdPedido : number): Observable<RetornoCalculaPedido>{
+      let params = new HttpParams();
+      params = params.append('idPedido', String(IdPedido));
+
+      return this.http.get<RetornoCalculaPedido>(`${MEAT_API}/pedido/PedidoRecalcula/` ,{params: params}).pipe();
     }
 
     IncluirItemEstoquePedido(ItensEstoque :ItensEstoque[]){
@@ -137,7 +145,7 @@ export class PedidosService {
     }
 
 
-    IncluirFormaPagamento(formaPagto :FormaPagamento, itempagto : ItemPagamento){
+    IncluirFormaPagamento(formaPagto :FormaPagamento, itempagto : ItemPagamento) : Observable<RetornoPedido>{
       const headers = new HttpHeaders()
       headers.append("Accept","text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
       headers.append("Accept-Encoding","gzip, deflate");
@@ -148,7 +156,7 @@ export class PedidosService {
       headers.append('Content-Type', 'application/json');
 
       var data = {formaPagto : formaPagto, itempagto : itempagto};
-      return this.http.post<boolean>(`${MEAT_API}/pedido/IncluirFormaPagamento` ,{params : data},{headers: headers}).pipe();
+      return this.http.post<RetornoPedido>(`${MEAT_API}/pedido/IncluirFormaPagamento` ,{params : data},{headers: headers}).pipe(take(1));
     }
 
     GetItensPedido(id: number): Observable<ItensPedido[]>{

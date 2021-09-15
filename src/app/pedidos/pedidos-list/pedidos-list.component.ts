@@ -1,6 +1,6 @@
 
 import {DecimalPipe} from '@angular/common';
-import {Component, QueryList, ViewChildren,OnInit, ViewChild} from '@angular/core';
+import {Component, QueryList, ViewChildren,OnInit, ViewChild, ElementRef} from '@angular/core';
 import {Observable, EMPTY, BehaviorSubject} from 'rxjs';
 
 import {Pedido} from '../pedidos.model';
@@ -108,12 +108,15 @@ export class PedidosListComponent implements OnInit {
     this.insertModalRef.hide();
   }
 
-  ConsultarCliente(campo : HTMLInputElement, criterio : HTMLInputElement){
+  ConsultarCliente(campo : HTMLInputElement, criterio : HTMLInputElement, integrado : HTMLInputElement){
 
     let blnIsNumeric : Boolean;
     let strCriterio : string;
+    let blnIntegrado : boolean;
 
     console.log(Number(criterio.value));
+    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+    blnIntegrado = integrado.checked;
 
     if (campo.value == "PD.Id_Ped"){
       blnIsNumeric = isNaN(Number(criterio.value))
@@ -125,7 +128,7 @@ export class PedidosListComponent implements OnInit {
     else
        strCriterio = criterio.value
 
-    this.pedidoService.GetAllPedidos(campo.value,strCriterio).subscribe((es : Pedido[]) => {
+    this.pedidoService.GetAllPedidos(campo.value,strCriterio, blnIntegrado).subscribe((es : Pedido[]) => {
       if (es.length == 0)
       {
         this.pedidos = null;

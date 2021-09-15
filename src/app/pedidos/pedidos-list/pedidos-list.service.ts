@@ -74,7 +74,7 @@ export class PedidoListService {
       this._total$.next(result.total);
     });
 
-    this.pedidoServ.GetAllPedidos('','').subscribe((es : any[]) => {
+    this.pedidoServ.GetAllPedidos('','',false).subscribe((es : any[]) => {
       this.PEDIDOS = es;
       console.log(this.PEDIDOS)
       this._search$.next();

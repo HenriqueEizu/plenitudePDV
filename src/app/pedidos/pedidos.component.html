@@ -20,7 +20,7 @@
 </div>
 <div class="row">
   <div class="col-sm-1 col-xs-1">&nbsp;</div>
-  <div class="col-sm-10 col-xs-10 badge badge-primary"> <h5><img src="/assets/imagens/icons/clientes.png" class="mr-2" style="width: 30px"> Cadastro de Clientes</h5></div>
+  <div class="col-sm-10 col-xs-10 badge badge-primary"> <h5><img src="/assets/imagens/icons/pedido.png" class="mr-2" style="width: 30px"> Cadastro de Pedidos</h5></div>
 </div>
 <div class="row">
   <div class="col-sm-1 col-xs-1">
@@ -37,35 +37,23 @@
           </div>
           <div class="row">
               <div class="col-sm-2 col-xs-2">
-                  &nbsp;
-              </div>
-              <div class="col-sm-2 col-xs-2">
                       Nº Pedido:
               </div>
-              <div class="col-sm-6  col-xs-6">
+              <div class="col-sm-3  col-xs-3">
                 <input name="id_Ped" class="form-control" formControlName="id_Ped" autocomplete="off" [attr.disabled]="true"  placeholder="Nº Pedido">
               </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-2 col-xs-2">
-                &nbsp;
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-2 col-xs-2">
-              &nbsp;
-            </div>
             <div class="col-sm-2 col-xs-2">
                     {{labelCpfCliente}}
             </div>
-            <div class="col-sm-6  col-xs-6">
-              <cft-input errorMessage="Campo obrigatório com maximo de 18 caracteres" label="Cliente">
+            <div class="col-sm-3  col-xs-3">
+              <cft-input errorMessage="*" label="Cliente">
                 <input name="nome_Cli" class="form-control" formControlName="nome_Cli" autocomplete="off" placeholder="Digite CPF/CNPF" [attr.disabled]="strDesabilitaCliente">
               </cft-input>
             </div>
-            <div class="col-xs-12 col-sm-2" >
+            <div class="col-xs-2 col-sm-2" >
+              <!-- <span *ngIf="blnClienteInvalido" style="color:red"> -->
               <span *ngIf="pedidoForm.get('nome_Cli').getError('clienteNotValid')" style="color:red">
-                <i class="fa fa-remove"></i> O CPF/CNPJ não é válido.
+                <i class="fa fa-remove"></i> Cliente inexistente na base de dados.
               </span>
             </div>
           </div>
@@ -73,10 +61,18 @@
             <div class="col-sm-2 col-xs-2">
               &nbsp;
             </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2 col-xs-2">
+                    Versão:
+            </div>
+            <div class="col-sm-3  col-xs-3">
+                <input name="versao" class="form-control" formControlName="versao" autocomplete="off" placeholder="Versão" [attr.disabled]="true">
+            </div>
             <div class="col-sm-2 col-xs-2">
                     {{labelCliente}}
             </div>
-            <div class="col-sm-6  col-xs-6">
+            <div class="col-sm-4  col-xs-4">
               {{cliente}}
             </div>
           </div>
@@ -87,773 +83,712 @@
           </div>
           <div class="row">
             <div class="col-sm-2 col-xs-2">
-                &nbsp;
-            </div>
-            <div class="col-sm-2 col-xs-2">
-                    Versão:
-            </div>
-            <div class="col-sm-6  col-xs-6">
-                <input name="versao" class="form-control" formControlName="versao" autocomplete="off" placeholder="Versão" [attr.disabled]="true">
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-2 col-xs-2">
-                &nbsp;
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-2 col-xs-2">
-                &nbsp;
-            </div>
-            <div class="col-sm-2 col-xs-2">
                     Data:
             </div>
-            <div class="col-sm-6  col-xs-6">
+            <div class="col-sm-3  col-xs-3">
                 <input name="dtPed" class="form-control" formControlName="dtPed" autocomplete="off" placeholder="Data Pedido" [attr.disabled]="true">
             </div>
-
-          </div>
-          <div>
-            <div class="row">
-              <div class="col-sm-2 col-xs-2">
-                  &nbsp;
-              </div>
+            <div class="col-sm-2 col-xs-2">
+                    Observação:
             </div>
-            <div>
+            <div class="col-sm-3  col-xs-3">
+                <textarea class="form-control" name="observ" rows="4" cols="50" formControlName="observ" [attr.disabled]="blnDesabilitaCampos" style="text-transform:uppercase" ></textarea>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2 col-xs-2">
+                &nbsp;
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2 col-xs-2">
+                    Situação:
+            </div>
+            <div class="col-sm-3  col-xs-3">
+                <input name="descrSituacao" class="form-control" formControlName="descrSituacao" autocomplete="off" placeholder="Situação" [attr.disabled]="true">
+            </div>
+            <div class="col-sm-2 col-xs-2">
+                    Ent.Min.:
+            </div>
+            <div class="col-sm-3  col-xs-3">
+              <input name="entMin" class="form-control"  autocomplete="off" placeholder="ent.Min" [attr.disabled]="true" value="{{data}}">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2 col-xs-2">
+                &nbsp;
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2 col-xs-2">
+              Periodo:
+            </div>
+            <div class="col-sm-3  col-xs-3">
+                <select name="idPeriodo" class="form-control" formControlName="per_Ent" [value]="4" [attr.disabled]="blnDesabilitaCampos">
+                  <option *ngFor=  "let c of (periodo)" [value]="c.idPeriodo">{{c.descricao}}</option>
+                </select>
+            </div>
+            <div class="col-sm-2 col-xs-2">
+                Entrega:
+            </div>
+            <div class="col-sm-3  col-xs-3">
               <div class="row">
-                <div class="col-sm-2 col-xs-2">
-                    &nbsp;
-                </div>
-                <div class="col-sm-2 col-xs-2">
-                        Observação:
-                </div>
-                <div class="col-sm-6  col-xs-6">
-                    <textarea class="form-control" name="observ" rows="4" cols="50" formControlName="observ" [attr.disabled]="blnDesabilitaCampos"></textarea>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-sm-2 col-xs-2">
-                    &nbsp;
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-sm-2 col-xs-2">
-                    &nbsp;
-                </div>
-                <div class="col-sm-2 col-xs-2">
-                        Situação:
-                </div>
-                <div class="col-sm-6  col-xs-6">
-                    <input name="descrSituacao" class="form-control" formControlName="descrSituacao" autocomplete="off" placeholder="Situação" [attr.disabled]="true">
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-sm-2 col-xs-2">
-                    &nbsp;
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-sm-2 col-xs-2">
-                    &nbsp;
-                </div>
-                <div class="col-sm-2 col-xs-2">
-                        Ent.Min.:
-                </div>
-                <div class="col-sm-6  col-xs-6">
-                  <input name="entMin" class="form-control"  autocomplete="off" placeholder="ent.Min" [attr.disabled]="true" value="{{data}}">
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-sm-2 col-xs-2">
-                    &nbsp;
-                </div>
-              </div>
-              <div class="row">
-                  <div class="col-sm-2 col-xs-2">
-                      &nbsp;
-                  </div>
-                  <div class="col-sm-2 col-xs-2">
-                      Entrega:
-                  </div>
-                  <div class="col-sm-6  col-xs-6">
-                    <div class="row">
-                      <div class="col-sm-10  col-xs-10" >
-                        <cft-input errorMessage="" label="Observação">
-                          <input  class="form-control" placeholder="dd/mm/yyyy" name="entrega" ngbDatepicker #d1="ngbDatepicker" formControlName="entrega" [minDate]="dataMin" [readonly]="true">
-                          <!-- <input  name="Entrega" class="form-control" formControlName="Entrega" autocomplete="off" placeholder="dd/mm/aaaa"> -->
-                        </cft-input>
-                      </div>
-                      <div class="col-sm-2  col-xs-2" >
-                          <button class="btn btn-primary" (click)="d1.toggle()" type="button" [attr.disabled]="blnDesabilitaCampos"><i class="fa fa-table " ></i></button>
-                      </div>
-                      <div class="col-xs-12 col-sm-12" >
-                        <span *ngIf="pedidoForm.get('entrega').getError('dataEntrega')" style="color:red">
-                          <i class="fa fa-remove"></i> Data não pode ser menor que a data de hoje.
-                        </span>
-                      </div>
-                    </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-sm-2 col-xs-2">
-                    &nbsp;
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-sm-2 col-xs-2">
-                    &nbsp;
-                </div>
-                <div class="col-sm-2 col-xs-2">
-                    Periodo:
-                </div>
-                <div class="col-sm-6  col-xs-6">
-                    <select name="idPeriodo" class="form-control" formControlName="per_Ent" [value]="4" [attr.disabled]="blnDesabilitaCampos">
-                      <option *ngFor=  "let c of (periodo)" [value]="c.idPeriodo">{{c.descricao}}</option>
-                    </select>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-sm-2 col-xs-2">
-                    &nbsp;
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-sm-2 col-xs-2">
-                    &nbsp;
-                </div>
-                <div class="col-sm-2 col-xs-2">
-                    Midia:
-                </div>
-                <div class="col-sm-6  col-xs-6">
-                  <select name="idMidia" class="form-control" formControlName="idMidia" #idMidia [attr.disabled]="blnDesabilitaCampos">
-                    <option *ngFor=  "let c of (midias)" [value]="c.idMidia">{{c.descMidia}}</option>
-                  </select>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-sm-2 col-xs-2">
-                    &nbsp;
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-sm-2 col-xs-2">
-                    &nbsp;
-                </div>
-                <div class="col-sm-2 col-xs-2">
-                    Outras:
-                </div>
-                <div class="col-sm-6  col-xs-6">
-                  <cft-input errorMessage="Campo obrigatório com maximo de 60 caracteres" label="Midia" >
-                      <input name="obsMidia" class="form-control" formControlName="obsMidia" autocomplete="off" placeholder="Midia" [attr.disabled]="blnDesabilitaCampos">
+                <div class="col-sm-10  col-xs-10" >
+                  <cft-input errorMessage="" label="Observação">
+                    <input  class="form-control" placeholder="dd/mm/yyyy" name="entrega" ngbDatepicker #d1="ngbDatepicker" formControlName="entrega" [minDate]="dataMin" [readonly]="true">
+                    <!-- <input  name="Entrega" class="form-control" formControlName="Entrega" autocomplete="off" placeholder="dd/mm/aaaa"> -->
                   </cft-input>
                 </div>
-                <div class="col-xs-12 col-sm-2" >
-                  <span *ngIf="pedidoForm.hasError('midia')" style="color:red">
-                    <i class="fa fa-remove"></i> Com a opção Outras na midia este campo deve ser preechido".
+                <div class="col-sm-2  col-xs-2" >
+                    <button class="btn btn-primary" (click)="d1.toggle()" type="button" [attr.disabled]="blnDesabilitaCampos"><i class="fa fa-table " ></i></button>
+                </div>
+                <div class="col-xs-12 col-sm-12" >
+                  <span *ngIf="pedidoForm.get('entrega').getError('dataEntrega')" style="color:red">
+                    <i class="fa fa-remove"></i> Data não pode ser menor que a data de hoje.
                   </span>
                 </div>
               </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2 col-xs-2">
+                &nbsp;
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2 col-xs-2">
+                Midia:
+            </div>
+            <div class="col-sm-3  col-xs-3">
+              <select name="idMidia" class="form-control" formControlName="idMidia" #idMidia [attr.disabled]="blnDesabilitaCampos">
+                <option *ngFor=  "let c of (midias)" [value]="c.idMidia">{{c.descMidia}}</option>
+              </select>
+            </div>
+            <div class="col-sm-2 col-xs-2">
+                Outras:
+            </div>
+            <div class="col-sm-3  col-xs-3">
+              <cft-input errorMessage="Campo obrigatório com maximo de 60 caracteres" label="Midia" >
+                  <input name="obsMidia" class="form-control" formControlName="obsMidia" autocomplete="off" placeholder="Midia" [attr.disabled]="blnDesabilitaCampos" style="text-transform:uppercase" >
+              </cft-input>
+            </div>
+            <div class="col-xs-2 col-sm-2" >
+              <span *ngIf="pedidoForm.hasError('midia')" style="color:red">
+                <i class="fa fa-remove"></i> Com a opção Outras na midia este campo deve ser preechido".
+              </span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2 col-xs-2">
+                &nbsp;
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2 col-xs-2">
+                Vendedores:
+            </div>
+            <div class="col-sm-3  col-xs-3">
+              <select name="idVendedor" class="form-control" formControlName="idVendedor" [attr.disabled]="blnDesabilitaCampos">
+                <option *ngFor=  "let c of (vendedores)" [value]="c.idVendedor">{{c.nome}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2 col-xs-2">
+                &nbsp;
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2 col-xs-2">
+                &nbsp;
+            </div>
+            <div class="col-sm-8 col-xs-8">
+                <button (click)="SalvarPedido(pedidoForm.value)"type="button" class="btn btn-primary pull-right btn-block" [disabled]="!pedidoForm.valid || blnPedidoIntegrado" >
+                    <i class="fa fa-save"></i> Salvar
+                </button>
+            </div>
+            <div class="col-sm-8 col-xs-8">
+              <!-- <button (click)="findInvalidControls()"type="button" class="btn btn-primary pull-right btn-block" >
+                  <i class="fa fa-save"></i> teste
+              </button> -->
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2 col-xs-2">
+                &nbsp;
+            </div>
+          </div>
+          <!-- <tabset> -->
+            <div class="tab">
+              <button class="tablinks active" id="AbaProdutos" (click)="AbaAtiva($event,'Produtos')">Produtos</button>
+              <button class="tablinks" (click)="AbaAtiva($event,'Financeiro')">Financeiro</button>
+              <button class="tablinks" (click)="AbaAtiva($event,'Entrega')">Entrega/Encerramento</button>
+            </div>
+            <!-- ****************************PRODUTOS*********************************** -->
+            <!-- <tab heading="Produtos" id="tab1" class="bordatab"> -->
+            <div id="Produtos" class="tabcontent" >
+              <div class="row" style="border: 1px;">
+                <div class="col-sm-12 col-xs-12 table-responsive-xl">
+                  <table class="table table-sm table-striped col-sm-12 col-xs-12">
+                    <thead>
+                    <tr>
+                      <th>Produto</th>
+                      <th>Quant.</th>
+                      <th>Vl.Unit.</th>
+                      <th>Vl.Total</th>
+                      <th>Saída</th>
+                      <th>Frete</th>
+                      <th scope="col">Ação</th>
+                      <th scope="col">Ação</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let ip of itensPedido ">
+                      <td>
+                        <span [tooltip]="ip.produto" placement="top" show-delay="500">
+                          {{ip.produto != null ? ip.produto.substring(0,60) : null}}
+                        </span>
+                      </td>
+                      <td>
+                        <span [tooltip]="ip.quantid" placement="top" show-delay="500">
+                          {{ip.quantid}}
+                        </span>
+                      </td>
+                      <td>
+                        <span [tooltip]="ip.valuni | currency : 'R$'" placement="top" show-delay="500">
+                          {{ip.valuni | currency : 'R$'}}
+                        </span>
+                      </td>
+                      <td>
+                        <span [tooltip]="ip.valtot | currency : 'R$'" placement="top" show-delay="500">
+                          {{ip.valtot | currency : 'R$'}}
+                        </span>
+                      </td>
+                      <td>
+                        <span [tooltip]="ip.saida" placement="top" show-delay="500">
+                          {{ip.saida}}
+                        </span>
+                      </td>
+                      <td>
+                        <span [tooltip]="ip.tipoFrete" placement="top" show-delay="500">
+                          {{ip.tipoFrete}}
+                        </span>
+                      </td>
+                      <td><a class="nav-link linkPoint"  (click)="showChildModal(ip)">
+                        <span tooltip="Editar" placement="top" show-delay="500">
+                            <i class="fa fa-edit"></i>
+                          </span>
+                          </a>
+                      </td>
+                      <td>
+                        <a class="nav-link linkPoint" (click)="ExcluirItemPedido(ip);"  >
+                        <span tooltip="Excluir" placement="top" show-delay="500">
+                          <img src="/assets/imagens/icons/excluir.png" class="mr-2" style="width: 20px">
+                          </span>
+                          </a>
+                      </td>
+
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-2 col-xs-2">
+                  &nbsp;
+                </div>
+                <div class="col-sm-2 col-xs-2">
+                  <b>TOTAL:</b>
+                </div>
+                <div class="col-sm-8 col-xs-8">
+                  <p class="bg-light text-dark">{{totalPedido - numValorFrete + numValorDesconto | currency : 'R$'}}</p>
+
+                </div>
+              </div>
               <div class="row">
                 <div class="col-sm-2 col-xs-2">
                     &nbsp;
                 </div>
-                <div class="col-sm-2 col-xs-2">
-                    Vendedores:
-                </div>
-                <div class="col-sm-6  col-xs-6">
-                  <select name="idVendedor" class="form-control" formControlName="idVendedor" [attr.disabled]="blnDesabilitaCampos">
-                    <option *ngFor=  "let c of (vendedores)" [value]="c.idVendedor">{{c.nome}}</option>
-                  </select>
-                </div>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-sm-2 col-xs-2">
-                  &nbsp;
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-sm-2 col-xs-2">
-                  &nbsp;
-              </div>
-              <div class="col-sm-8 col-xs-8">
-                  <button (click)="SalvarPedido(pedidoForm.value)"type="button" class="btn btn-primary pull-right btn-block" [disabled]="!pedidoForm.valid" >
-                      <i class="fa fa-save"></i> Salvar
-                  </button>
-              </div>
-              <!-- <div class="col-sm-8 col-xs-8">
-                <button (click)="findInvalidControls()"type="button" class="btn btn-primary pull-right btn-block" >
-                    <i class="fa fa-save"></i> teste
+              <div class="row">
+                <div class="col-sm-3 col-xs-3">
+                  <button class="btn btn-primary pull-right btn-block" data-toggle="modal" data-target="#Fabrica" type="button" [disabled]="blnDesabilitaBotoes || blnPedidoIntegrado || pedido.id_Ped == null">
+                    <img src="assets/imagens/icons/factory2.png" class="mr-2" style="width: 20px; color: white; ">
+                    Fábrica
                 </button>
-              </div> -->
-            </div>
-            <div class="row">
-              <div class="col-sm-2 col-xs-2">
-                  &nbsp;
-              </div>
-            </div>
-            <!-- <tabset> -->
-              <div class="tab">
-                <button class="tablinks" (click)="OpenCity($event,'Produtos')">Produtos</button>
-                <button class="tablinks" (click)="OpenCity($event,'Financeiro')">Financeiro</button>
-                <button class="tablinks" (click)="OpenCity($event,'Entrega')">Entrega/Encerramento</button>
-              </div>
-              <!-- ****************************PRODUTOS*********************************** -->
-              <!-- <tab heading="Produtos" id="tab1" class="bordatab"> -->
-              <div id="Produtos" class="tabcontent">
-                <div class="row" style="border: 1px;">
-                  <div class="col-sm-12 col-xs-12 table-responsive-xl">
-                    <table class="table table-sm table-striped col-sm-12 col-xs-12">
-                      <thead>
-                      <tr>
-                        <th>Produto</th>
-                        <th>Quant.</th>
-                        <th>Vl.Unit.</th>
-                        <th>Vl.Total</th>
-                        <th>Saída</th>
-                        <th>Frete</th>
-                        <th scope="col">Ação</th>
-                        <th scope="col">Ação</th>
-                      </tr>
-                      </thead>
-                      <tbody>
-                      <tr *ngFor="let ip of itensPedido ">
-                        <td>
-                          <span [tooltip]="ip.produto" placement="top" show-delay="500">
-                            {{ip.produto != null ? ip.produto.substring(0,60) : null}}
-                          </span>
-                        </td>
-                        <td>
-                          <span [tooltip]="ip.quantid" placement="top" show-delay="500">
-                            {{ip.quantid}}
-                          </span>
-                        </td>
-                        <td>
-                          <span [tooltip]="ip.valuni | currency : 'R$'" placement="top" show-delay="500">
-                            {{ip.valuni | currency : 'R$'}}
-                          </span>
-                        </td>
-                        <td>
-                          <span [tooltip]="ip.valtot | currency : 'R$'" placement="top" show-delay="500">
-                            {{ip.valtot | currency : 'R$'}}
-                          </span>
-                        </td>
-                        <td>
-                          <span [tooltip]="ip.saida" placement="top" show-delay="500">
-                            {{ip.saida}}
-                          </span>
-                        </td>
-                        <td>
-                          <span [tooltip]="ip.tipoFrete" placement="top" show-delay="500">
-                            {{ip.tipoFrete}}
-                          </span>
-                        </td>
-                        <td><a class="nav-link linkPoint"  (click)="showChildModal(ip)">
-                          <span tooltip="Editar" placement="top" show-delay="500">
-                              <i class="fa fa-edit"></i>
-                            </span>
-                            </a>
-                        </td>
-                        <td>
-                          <a class="nav-link linkPoint" (click)="ExcluirItemPedido(ip);"  >
-                          <span tooltip="Excluir" placement="top" show-delay="500">
-                            <img src="/assets/imagens/icons/excluir.png" class="mr-2" style="width: 20px">
-                            </span>
-                            </a>
-                        </td>
-
-                      </tr>
-                      </tbody>
-                    </table>
-                  </div>
                 </div>
-                <div class="row">
-                  <div class="col-sm-2 col-xs-2">
-                    &nbsp;
-                  </div>
-                  <div class="col-sm-2 col-xs-2">
-                    <b>TOTAL:</b>
-                  </div>
-                  <div class="col-sm-8 col-xs-8">
-                    <p class="bg-light text-dark">{{totalPedido | currency : 'R$'}}</p>
-
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-sm-2 col-xs-2">
-                      &nbsp;
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-sm-3 col-xs-3">
-                    <button class="btn btn-primary pull-right btn-block" data-toggle="modal" data-target="#Fabrica" type="button" [disabled]="blnDesabilitaBotoes">
-                      <img src="assets/imagens/icons/factory2.png" class="mr-2" style="width: 20px; color: white; ">
-                      Fábrica
+                <div class="col-sm-1 col-xs-1"></div>
+                <div class="col-sm-3 col-xs-3">
+                  <!-- <button class="btn btn-primary pull-right btn-block" data-toggle="modal" data-target="#Estoque" type="button" data-backdrop="static" data-keyboard="false" data-dismiss = "modal" data-whatever="@mdo" [disabled]="blnDesabilitaBotoes || blnPedidoIntegrado || pedido.id_Ped == null"> -->
+                    <button class="btn btn-primary pull-right btn-block" data-toggle="modal" data-target="#Estoque" type="button" data-backdrop="static" data-keyboard="false" data-dismiss = "modal" data-whatever="@mdo" [disabled]="blnDesabilitaBotoes || blnPedidoIntegrado || pedido.id_Ped == null">
+                    <img src="assets/imagens/icons/estoque.png" class="mr-2" style="width: 20px; color: white; ">
+                    Estoque
                   </button>
-                  </div>
-                  <div class="col-sm-1 col-xs-1"></div>
-                  <div class="col-sm-3 col-xs-3">
-                    <button class="btn btn-primary pull-right btn-block" data-toggle="modal" data-target="#Estoque" type="button" data-backdrop="static" data-keyboard="false" data-dismiss = "modal" data-whatever="@mdo" [disabled]="blnDesabilitaBotoes">
-                      <img src="assets/imagens/icons/estoque.png" class="mr-2" style="width: 20px; color: white; ">
-                      Estoque
-                    </button>
-                  </div>
-                  <div class="col-sm-1 col-xs-1"></div>
-                  <div class="col-sm-3 col-xs-3">
-                    <button class="btn btn-primary pull-right btn-block" data-toggle="modal" data-target="#Fabrica" type="button" [disabled]="blnDesabilitaBotoes">
-                      <img src="assets/imagens/icons/atualizar.png" class="mr-2" style="width: 15px; color: white; ">
-                      Atualizar
-                    </button>
-                  </div>
+                </div>
+                <div class="col-sm-1 col-xs-1"></div>
+                <div class="col-sm-3 col-xs-3">
+                  <button class="btn btn-primary pull-right btn-block" data-toggle="modal" data-target="#Fabrica" type="button" [disabled]="blnDesabilitaBotoes ">
+                    <img src="assets/imagens/icons/atualizar.png" class="mr-2" style="width: 15px; color: white; ">
+                    Atualizar
+                  </button>
                 </div>
               </div>
-              <!-- </tab> -->
-              <!-- ****************FINACNCEIRO *********************** -->
-              <div id="Financeiro" class="tabcontent">
-              <!-- <tab heading="Financeiro"> -->
-                <div class="row" style="border: 1px;">
-                  <div class="col-sm-12 col-xs-12 table-responsive-xl">
-                    <div class="row">
-                      <div class="col-sm-2 col-xs-2">
-                          &nbsp;
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-sm-1 col-xs-1">
-                        Tot.Itens
-                      </div>
-                      <div class="col-sm-2 col-xs-2">
-                        <input class="form-control" autocomplete="off" [attr.disabled]="true" value="{{totalPedido | currency : 'R$'}}">
-                      </div>
-                      <div class="col-sm-1 col-xs-1">
-                        Desconto(%)
-                      </div>
-                      <div class="col-sm-2 col-xs-2">
-                        <input name="obsMidia" class="form-control" formControlName="obsMidia" autocomplete="off" placeholder="Midia" [attr.disabled]="blnDesabilitaCampos">
-                      </div>
-                      <div class="col-sm-2 col-xs-2">
-                        <input name="obsMidia" class="form-control" formControlName="obsMidia" autocomplete="off" placeholder="Midia" [attr.disabled]="blnDesabilitaCampos">
-                      </div>
-                      <div class="col-sm-1 col-xs-1">
+            </div>
+            <!-- </tab> -->
+            <!-- ****************FINACNCEIRO *********************** -->
+            <div id="Financeiro" class="tabcontent">
+            <!-- <tab heading="Financeiro"> -->
+              <div class="row" style="border: 1px;">
+                <div class="col-sm-12 col-xs-12 table-responsive-xl">
+                  <div class="row">
+                    <div class="col-sm-2 col-xs-2">
                         &nbsp;
-                      </div>
-                      <div class="col-sm-1 col-xs-1">
-                        Total
-                      </div>
-                      <div class="col-sm-2 col-xs-2">
-                        <input class="form-control" autocomplete="off" [attr.disabled]="true" value="{{totalPedido | currency : 'R$'}}">
-                      </div>
                     </div>
-                    <div class="row">
-                      <div class="col-sm-2 col-xs-2">
-                          &nbsp;
-                      </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-1 col-xs-1">
+                      Tot.Itens
                     </div>
-                    <div class="row">
-                      <div class="col-sm-1 col-xs-1">
-                        Frete
-                      </div>
-                      <div class="col-sm-2 col-xs-2">
-                          <input name="obsMidia" class="form-control" formControlName="obsMidia" autocomplete="off" placeholder="Midia" [attr.disabled]="blnDesabilitaCampos">
-                      </div>
-                      <div class="col-sm-1 col-xs-1">
+                    <div class="col-sm-2 col-xs-2">
+                      <input class="form-control" autocomplete="off" [attr.disabled]="true" value="{{totalPedido  | currency : 'R$'}}">
+                    </div>
+                    <div class="col-sm-1 col-xs-1">
+                      Desconto(%)
+                    </div>
+                    <div class="col-sm-2 col-xs-2">
+                      <!-- <input type="number" pattern="\d*" maxlength="4" style="-moz-appearance:auto;"> -->
+                      <input #Desc_Por name="Desc_Por" class="form-control" formControlName="Desc_Por" placeholder="Desconto%" [disabled]="!blnItensPedido || blnItensPagto || ((totalPedido - totalPago) == 0)"  type="text" [allowNegativeNumbers]="false" mask="separator.2" maxlength="2" (keyup)="AtualizaValorPedido(Desc_Por.value,'Porcentagem')">
+                    </div>
+                    <div class="col-sm-2 col-xs-2">
+                      <input #Desconto class="form-control" autocomplete="off" placeholder="Desconto" formControlName="Desconto"  prefix="R$ " type="text" [allowNegativeNumbers]="false" mask="separator.2" thousandSeparator="."  [disabled]="!blnItensPedido || blnItensPagto || ((totalPedido - totalPago) == 0)" (keyup)="AtualizaValorPedido(Desconto.value,'Desconto')">
+                    </div>
+                    <div class="col-sm-1 col-xs-1">
+                      &nbsp;
+                    </div>
+                    <div class="col-sm-1 col-xs-1">
+                      Total (- desconto)
+                    </div>
+                    <div class="col-sm-2 col-xs-2">
+                      <input class="form-control" autocomplete="off" [attr.disabled]="true" value="{{(totalPedido + numValorFrete ) | currency : 'R$'}}">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-2 col-xs-2">
                         &nbsp;
-                      </div>
-                      <div class="col-sm-2 col-xs-2">
-                        Total a pagar
-                      </div>
-                      <div class="col-sm-2 col-xs-2">
-                        <input class="form-control" autocomplete="off" [attr.disabled]="true" value="{{totalPedido | currency : 'R$'}}">
-                      </div>
-                      <div class="col-sm-1 col-xs-1">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-1 col-xs-1">
+                      Frete
+                    </div>
+                    <div class="col-sm-2 col-xs-2">
+                        <input #VlFrete class="form-control" formControlName="VlFrete" autocomplete="off" placeholder="Frete" prefix="R$ " type="text" [allowNegativeNumbers]="false" mask="separator.2" thousandSeparator="." autocomplete="off" placeholder="Frete" [disabled]="!blnItensPedido" (keyup)="AtualizaValorPedido(VlFrete.value,'VlFrete')">
+                        <!-- <input class="form-control" #VlFrete name="VlFrete" prefix="R$ " formControlName="VlFrete" type="text" [allowNegativeNumbers]="false" mask="separator.2" thousandSeparator="." autocomplete="off" placeholder="Frete" [attr.disabled]="blnDesabilitaCampos"> -->
+                        <!-- <input class="form-control" autocomplete="off" placeholder="Frete" [attr.disabled]="blnDesabilitaCampos"> -->
+                    </div>
+                    <div class="col-sm-1 col-xs-1">
+                      &nbsp;
+                    </div>
+                    <div class="col-sm-2 col-xs-2">
+                      Total a pagar(+frete - desc)
+                    </div>
+                    <div class="col-sm-2 col-xs-2">
+                      <input class="form-control" autocomplete="off" [attr.disabled]="true" value="{{(totalPedido + numValorFrete - numValorDesconto ) | currency : 'R$'}}">
+                    </div>
+                    <div class="col-sm-1 col-xs-1">
+                      &nbsp;
+                    </div>
+                    <div class="col-sm-1 col-xs-1">
+                      Saldo (não inclui frete)
+                    </div>
+                    <div class="col-sm-2 col-xs-2">
+                      <input name="obsMidia" class="form-control" formControlName="obsMidia" autocomplete="off" placeholder="Midia" [attr.disabled]="true" value="{{(totalPedido + numValorFrete - numValorDesconto) - totalPago | currency : 'R$'}}">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-2 col-xs-2">
                         &nbsp;
-                      </div>
-                      <div class="col-sm-1 col-xs-1">
-                        Saldo
-                      </div>
-                      <div class="col-sm-2 col-xs-2">
-                        <input name="obsMidia" class="form-control" formControlName="obsMidia" autocomplete="off" placeholder="Midia" [attr.disabled]="blnDesabilitaCampos" value="{{totalPedido - totalPago | currency : 'R$'}}">
-                      </div>
                     </div>
-                    <div class="row">
-                      <div class="col-sm-2 col-xs-2">
-                          &nbsp;
-                      </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-2 col-xs-2">
+                      Observaçoes Finacneiras;
                     </div>
-                    <div class="row">
-                      <div class="col-sm-2 col-xs-2">
-                        Observaçoes Finacneiras;
-                      </div>
-                      <div class="col-sm-10 col-xs-10">
-                        <textarea name="Text1" cols="100" rows="5"></textarea>
-                      </div>
+                    <div class="col-sm-10 col-xs-10">
+                      <textarea name="Text1" cols="100" rows="5"></textarea>
                     </div>
-                    <div class="row">
-                      <div class="col-sm-2 col-xs-2">
-                          &nbsp;
-                      </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-2 col-xs-2">
+                        &nbsp;
                     </div>
-                    <div class="row">
-                      <div class="col-sm-5 col-xs-5 container well">
-                        <table id="myTable" class="table table-sm table-striped col-sm-12 col-xs-12 table-hover">
-                          <thead>
-                          <tr>
-                            <th>Fr.Pgto</th>
-                            <th><span tooltip="Parcelas">Par</span></th>
-                            <th>Vl.Amort</th>
-                            <th>Tot.Parcs</th>
-                            <th></th>
-                            <th></th>
-                          </tr>
-                          </thead>
-                          <tbody>
-                          <tr *ngFor="let fp of lstFormaPagto " (click)="SelecionarFormaPagamento(fp)" [class.active]="true">
-                            <td>
-                              <span [tooltip]="fp.formaPag" placement="top" show-delay="500">
-                                {{fp.formaPag != null ? fp.formaPag.substring(0,6) : null}}
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-5 col-xs-5 container well">
+                      <table id="myTable" class="table table-sm table-striped col-sm-12 col-xs-12 table-hover">
+                        <thead>
+                        <tr>
+                          <th>Fr.Pgto</th>
+                          <th><span tooltip="Parcelas">Par</span></th>
+                          <th>Vl.Amort</th>
+                          <th>Tot.Parcs</th>
+                          <th></th>
+                          <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let fp of lstFormaPagto " (click)="SelecionarFormaPagamento(fp)" [class.active]="true">
+                          <td>
+                            <span [tooltip]="fp.formaPag" placement="top" show-delay="500">
+                              {{fp.formaPag != null ? fp.formaPag.substring(0,6) : null}}
+                            </span>
+                          </td>
+                          <td>
+                              {{fp.tot_Parc }}
+                          </td>
+                          <td>
+                              {{fp.val_ARec | currency : 'R$'}}
+                          </td>
+                          <td>
+                              {{fp.val_Fin | currency : 'R$'}}
+                          </td>
+                          <td><a class="nav-link linkPoint"  (click)="AlterarFormaPagamentoModal(fp)">
+                            <span tooltip="Editar" placement="top" show-delay="500">
+                                <i class="fa fa-edit"></i>
                               </span>
-                            </td>
-                            <td>
-                                {{fp.tot_Parc }}
-                            </td>
-                            <td>
-                                {{fp.val_ARec | currency : 'R$'}}
-                            </td>
-                            <td>
-                                {{fp.val_Fin | currency : 'R$'}}
-                            </td>
-                            <td><a class="nav-link linkPoint"  (click)="AlterarFormaPagamentoModal(fp)">
-                              <span tooltip="Editar" placement="top" show-delay="500">
-                                  <i class="fa fa-edit"></i>
-                                </span>
-                                </a>
-                            </td>
-                            <td>
-                              <a class="nav-link linkPoint" (click)="ExcluirFormaPagamento(fp);"  >
-                              <span tooltip="Excluir" placement="top" show-delay="500">
-                                <img src="/assets/imagens/icons/excluir.png" class="mr-2" style="width: 20px">
-                                </span>
-                                </a>
-                            </td>
-                          </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div class="col-sm-7 col-xs-7">
-                        <table class="table table-sm table-striped col-sm-12 col-xs-12">
-                          <thead>
-                          <tr>
-                            <th>Nº</th>
-                            <th>Doc</th>
-                            <th>Data</th>
-                            <th>Banco</th>
-                            <th>Praça</th>
-                            <th>Agência</th>
-                            <th>Cheque</th>
-                            <th>Valor</th>
-                            <th>Ação</th>
-                          </tr>
-                          </thead>
-                          <tbody>
-                          <tr *ngFor="let ip of lstItensPagto ">
-                            <td></td>
-                            <td>{{ip.document}}</td>
-                            <td>{{ip.dt_Venc | date: 'dd/MM/yyyy'}}</td>
-                            <td>{{ip.banco}}</td>
-                            <td>{{ip.praca}}</td>
-                            <td>{{ip.agencia}}</td>
-                            <td>{{ip.num_Cheq}}</td>
-                            <td>{{ip.valor | currency : 'R$'}}</td>
-                            <td><a class="nav-link linkPoint"  (click)="showChildModal(ip)">
-                              <span tooltip="Editar" placement="top" show-delay="500">
-                                  <i class="fa fa-edit"></i>
-                                </span>
-                                </a>
-                            </td>
-                          </tr>
-                          </tbody>
-                        </table>
-                      </div>
+                              </a>
+                          </td>
+                          <td>
+                            <a class="nav-link linkPoint" (click)="ExcluirFormaPagamento(fp);"  >
+                            <span tooltip="Excluir" placement="top" show-delay="500">
+                              <img src="/assets/imagens/icons/excluir.png" class="mr-2" style="width: 20px">
+                              </span>
+                              </a>
+                          </td>
+                        </tr>
+                        </tbody>
+                      </table>
                     </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-sm-2 col-xs-2">
-                      &nbsp;
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-sm-3 col-xs-3">
-                    <button class="btn btn-primary pull-right btn-block" data-toggle="modal"  type="button" [disabled]="totalPedido <= totalPago" (click)="IncluirFormaPagamentoModal()">
-                      <img src="assets/imagens/icons/factory2.png" class="mr-2" style="width: 20px; color: white; ">
-                      Incluir
-                    </button>
-                  </div>
-                  <div class="col-sm-1 col-xs-1"></div>
-                  <div class="col-sm-3 col-xs-3">
-                    <button class="btn btn-primary pull-right btn-block" data-toggle="modal" data-target="#Estoque" type="button" data-backdrop="static" data-keyboard="false" data-dismiss = "modal" data-whatever="@mdo" [disabled]="blnDesabilitaBotoes">
-                      <img src="assets/imagens/icons/estoque.png" class="mr-2" style="width: 20px; color: white; ">
-                      Imprimir
-                    </button>
-                  </div>
-                  <div class="col-sm-1 col-xs-1"></div>
-                  <div class="col-sm-3 col-xs-3">
-                    <button class="btn btn-primary pull-right btn-block" data-toggle="modal" data-target="#Fabrica" type="button" [disabled]="blnDesabilitaBotoes">
-                      <img src="assets/imagens/icons/atualizar.png" class="mr-2" style="width: 15px; color: white; ">
-                      Atualizar
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <!-- </tab> -->
-               <!-- ****************ENTREGA / ENCERRAMENTO *********************** -->
-              <!-- <tab heading="Entrega/Encerramento"> -->
-              <div id="Entrega" class="tabcontent">
-                <div class="row" style="border: 1px;">
-                  <div class="col-sm-12 col-xs-12 table-responsive-xl">
-                    <div class="row">
-                      <div class="col-sm-2 col-xs-2">
-                          &nbsp;
-                      </div>
-                    </div>
-
-                    <div class="row">
-                      <div class="col-sm-12 col-xs-12">
-                        <div class="row">
-                          <div class="col-sm-2 col-xs-2">
-                              &nbsp;
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-sm-12 col-xs-12 ">
-                            <p class="bg-info text-white">Datas</p>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-sm-2 col-xs-2">
-                              &nbsp;
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-sm-2 col-xs-2">
-                              &nbsp;
-                          </div>
-                          <div class="col-sm-2 col-xs-2">
-                            Data Mínima:
-                          </div>
-                          <div class="col-sm-5 col-xs-5">
-                                <input class="form-control" formControlName="entregaMinima" name="entregaMinima" placeholder="dd/mm/aaaa" name="dtNascimento" ngbDatepicker #d2="ngbDatepicker"  >
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-sm-2 col-xs-2">
-                              &nbsp;
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-sm-2 col-xs-2">
-                              &nbsp;
-                          </div>
-                          <div class="col-sm-2 col-xs-2">
-                            Data entrega
-                          </div>
-                          <div class="col-sm-5 col-xs-5">
-                            <div class="row">
-                              <div class="col-sm-8 col-xs-8">
-                                <input class="form-control" placeholder="dd/mm/aaaa" formControlName="entrega" name="entrega" ngbDatepicker #d2="ngbDatepicker"  >
-                              </div>
-                              <div class="col-sm-3 col-xs-3">
-                                <button class="btn btn-primary" (click)="d2.toggle()" type="button"><i class="fa fa-table "></i></button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-sm-2 col-xs-2">
-                              &nbsp;
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-sm-2 col-xs-2">
-                              &nbsp;
-                          </div>
-                          <div class="col-sm-2 col-xs-2">
-                            Período:
-                          </div>
-                          <div class="col-sm-5 col-xs-5">
-                            <select name="idPeriodo" class="form-control" formControlName="per_Ent" [value]="4" [attr.disabled]="blnDesabilitaCampos">
-                              <option *ngFor=  "let c of (periodo)" [value]="c.idPeriodo">{{c.descricao}}</option>
-                            </select>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-sm-2 col-xs-2">
-                              &nbsp;
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-sm-12 col-xs-12 ">
-                            <p class="bg-info text-white">Dados para a Entrega</p>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-sm-2 col-xs-2">
-                              &nbsp;
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-sm-1 col-xs-1"></div>
-                          <div class="col-sm-1 col-xs-1">ddd: </div>
-                          <div class="col-sm-2 col-xs-2">
-                            <input name="ddd" class="form-control" autocomplete="off" placeholder="DDD" >
-                          </div>
-                          <div class="col-sm-1 col-xs-1">Fone: </div>
-                          <div class="col-sm-2 col-xs-2">
-                            <input name="Fone" class="form-control" autocomplete="off" placeholder="Fone" >
-                          </div>
-                          <div class="col-sm-1 col-xs-1">Ramal: </div>
-                          <div class="col-sm-2 col-xs-2">
-                            <input name="Ramal" class="form-control" autocomplete="off" placeholder="Ramal" >
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-sm-2 col-xs-2">
-                              &nbsp;
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-sm-2 col-xs-2">&nbsp;</div>
-                          <div class="col-sm-7 col-xs-7">
-                            <div class="form-check">
-                              <input class="form-check-input" type="checkbox" value="" id="chkEndCliente" />
-                              <label class="form-check-label" for="flexCheckDefault">
-                                Entrega no Endereço do Cliente
-                              </label>
-                            </div>
-                            <!-- <input type="checkbox" style="zoom: .5; -webkit-transform: scale(0.5,0.5);" name="chkEndCliente" class="form-control" autocomplete="off" placeholder="DDD" > -->
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-sm-2 col-xs-2">
-                              &nbsp;
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-sm-1 col-xs-1">&nbsp;</div>
-                          <div class="col-sm-1 col-xs-1">CEP</div>
-                          <div class="col-sm-4 col-xs-4">
-                            <input #CEP maxlength="8" formControlName="CEP" name="CEP" class="form-control"  autocomplete="off" placeholder="cep" (input)="ConsultaCEP(CEP.value)">
-                          </div>
-                          <div class="col-sm-1 col-xs-1"></div>
-                          <div class="col-sm-1 col-xs-1">UF</div>
-                          <div class="col-sm-3  col-xs-3">
-                            <select formControlName="Uf" name="uf" class="form-control"  >
-                              <option *ngFor=  "let c of (estados)" [value]="c.uf">{{c.estado}}</option>
-                            </select>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-sm-2 col-xs-2">
-                              &nbsp;
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-sm-1 col-xs-1">&nbsp;</div>
-                          <div class="col-sm-1 col-xs-1">Cidade</div>
-                          <div class="col-sm-9 col-xs-9">
-                            <input  formControlName="Cidade" name="cidade" class="form-control"  autocomplete="off" placeholder="Cidade" >
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-sm-2 col-xs-2">
-                              &nbsp;
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-sm-1 col-xs-1">&nbsp;</div>
-                          <div class="col-sm-1 col-xs-1">Logradouro</div>
-                          <div class="col-sm-9 col-xs-9">
-                            <input  formControlName="Logradouro" name="Logradouro" class="form-control" autocomplete="off" placeholder="Logradouro" >
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-sm-2 col-xs-2">
-                              &nbsp;
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-sm-1 col-xs-1">&nbsp;</div>
-                          <div class="col-sm-1 col-xs-1">Número</div>
-                          <div class="col-sm-3 col-xs-3">
-                            <input  formControlName="NumeroCasa" name="numero" class="form-control" autocomplete="off" placeholder="Número" >
-                          </div>
-                          <div class="col-sm-1 col-xs-1"></div>
-                          <div class="col-sm-1 col-xs-1">Complemento</div>
-                          <div class="col-sm-4 col-xs-4">
-                            <input  formControlName="Complemento" name="Complemento" class="form-control" autocomplete="off" placeholder="Complemento" >
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-sm-2 col-xs-2">
-                              &nbsp;
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-sm-1 col-xs-1">&nbsp;</div>
-                          <div class="col-sm-1 col-xs-1">Bairro</div>
-                          <div class="col-sm-9 col-xs-9">
-                            <input formControlName="Bairro" name="Bairro" class="form-control" autocomplete="off" placeholder="Bairro" >
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-sm-2 col-xs-2">
-                              &nbsp;
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-sm-1 col-xs-1">&nbsp;</div>
-                          <div class="col-sm-1 col-xs-1">Pto Referencia</div>
-                          <div class="col-sm-9 col-xs-9">
-                            <input formControlName="PtoReferencia" name="PtoRefer" class="form-control" autocomplete="off" placeholder="Referencia" >
-                          </div>
-                        </div>
-                      </div>
-                      <!-- <div class="col-sm-4 col-xs-4">
-
-                      </div> -->
-
+                    <div class="col-sm-7 col-xs-7">
+                      <table class="table table-sm table-striped col-sm-12 col-xs-12">
+                        <thead>
+                        <tr>
+                          <th>Nº</th>
+                          <th>Doc</th>
+                          <th>Data</th>
+                          <th>Banco</th>
+                          <th>Praça</th>
+                          <th>Agência</th>
+                          <th>Cheque</th>
+                          <th>Valor</th>
+                          <th>Ação</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let ip of lstItensPagto ">
+                          <td></td>
+                          <td>{{ip.document}}</td>
+                          <td>{{ip.dt_Venc | date: 'dd/MM/yyyy'}}</td>
+                          <td>{{ip.banco}}</td>
+                          <td>{{ip.praca}}</td>
+                          <td>{{ip.agencia}}</td>
+                          <td>{{ip.num_Cheq}}</td>
+                          <td>{{ip.valor | currency : 'R$'}}</td>
+                          <td><a class="nav-link linkPoint"  (click)="showChildModal(ip)">
+                            <span tooltip="Editar" placement="top" show-delay="500">
+                                <i class="fa fa-edit"></i>
+                              </span>
+                              </a>
+                          </td>
+                        </tr>
+                        </tbody>
+                      </table>
                     </div>
                   </div>
                 </div>
               </div>
-              <!-- </tab> -->
-            <!-- </tabset> -->
-
-            <div class="row">
-              <div class="col-sm-2 col-xs-2">
-                  &nbsp;
+              <div class="row">
+                <div class="col-sm-2 col-xs-2">
+                    &nbsp;
+                </div>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-sm-2 col-xs-2">
-                  &nbsp;
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-sm-2 col-xs-2">
-                  &nbsp;
-              </div>
-              <div class="col-sm-8 col-xs-8">
-                  <button (click)="SalvarPedido(pedidoForm.value)"type="button" class="btn btn-danger pull-right btn-block" [disabled]="!pedidoForm.valid" >
-                      <i class="fa fa-save"></i> Confirmar pedido
+              <div class="row">
+                <div class="col-sm-3 col-xs-3">
+                  <button class="btn btn-primary pull-right btn-block" data-toggle="modal"  type="button" [disabled]="((totalPedido + numValorFrete - numValorDesconto) <= totalPago) || blnPedidoIntegrado" (click)="IncluirFormaPagamentoModal()">
+                    <img src="assets/imagens/icons/factory2.png" class="mr-2" style="width: 20px; color: white; ">
+                    Incluir
                   </button>
+                </div>
+                <div class="col-sm-1 col-xs-1"></div>
+                <div class="col-sm-3 col-xs-3">
+                  <button class="btn btn-primary pull-right btn-block" data-toggle="modal" data-target="#Estoque" type="button" data-backdrop="static" data-keyboard="false" data-dismiss = "modal" data-whatever="@mdo" [disabled]="blnDesabilitaBotoes">
+                    <img src="assets/imagens/icons/estoque.png" class="mr-2" style="width: 20px; color: white; ">
+                    Imprimir
+                  </button>
+                </div>
+                <div class="col-sm-1 col-xs-1"></div>
+                <div class="col-sm-3 col-xs-3">
+                  <button class="btn btn-primary pull-right btn-block" data-toggle="modal" data-target="#Fabrica" type="button" [disabled]="blnDesabilitaBotoes">
+                    <img src="assets/imagens/icons/atualizar.png" class="mr-2" style="width: 15px; color: white; ">
+                    Atualizar
+                  </button>
+                </div>
               </div>
-              <!-- <div class="col-sm-8 col-xs-8">
-                <button (click)="findInvalidControls()"type="button" class="btn btn-primary pull-right btn-block" >
-                    <i class="fa fa-save"></i> teste
-                </button>
-              </div> -->
             </div>
+            <!-- </tab> -->
+              <!-- ****************ENTREGA / ENCERRAMENTO *********************** -->
+            <!-- <tab heading="Entrega/Encerramento"> -->
+            <div id="Entrega" class="tabcontent">
+              <div class="row" style="border: 1px;">
+                <div class="col-sm-12 col-xs-12 table-responsive-xl">
+                  <div class="row">
+                    <div class="col-sm-2 col-xs-2">
+                        &nbsp;
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-sm-12 col-xs-12">
+                      <div class="row">
+                        <div class="col-sm-2 col-xs-2">
+                            &nbsp;
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-12 col-xs-12 ">
+                          <p class="bg-info text-white">Datas</p>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-2 col-xs-2">
+                            &nbsp;
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-2 col-xs-2">
+                            &nbsp;
+                        </div>
+                        <div class="col-sm-2 col-xs-2">
+                          Data Mínima:
+                        </div>
+                        <div class="col-sm-5 col-xs-5">
+                              <input class="form-control" formControlName="entregaMinima" name="entregaMinima" placeholder="dd/mm/aaaa" name="dtNascimento" ngbDatepicker #d2="ngbDatepicker"  >
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-2 col-xs-2">
+                            &nbsp;
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-2 col-xs-2">
+                            &nbsp;
+                        </div>
+                        <div class="col-sm-2 col-xs-2">
+                          Data entrega
+                        </div>
+                        <div class="col-sm-5 col-xs-5">
+                          <div class="row">
+                            <div class="col-sm-8 col-xs-8">
+                              <input class="form-control" placeholder="dd/mm/aaaa" formControlName="entrega" name="entrega" ngbDatepicker #d2="ngbDatepicker"  >
+                            </div>
+                            <div class="col-sm-3 col-xs-3">
+                              <button class="btn btn-primary" (click)="d2.toggle()" type="button"><i class="fa fa-table "></i></button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-2 col-xs-2">
+                            &nbsp;
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-2 col-xs-2">
+                            &nbsp;
+                        </div>
+                        <div class="col-sm-2 col-xs-2">
+                          Período:
+                        </div>
+                        <div class="col-sm-5 col-xs-5">
+                          <select name="idPeriodo" class="form-control" formControlName="per_Ent" [value]="4" [attr.disabled]="blnDesabilitaCampos">
+                            <option *ngFor=  "let c of (periodo)" [value]="c.idPeriodo">{{c.descricao}}</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-2 col-xs-2">
+                            &nbsp;
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-12 col-xs-12 ">
+                          <p class="bg-info text-white">Dados para a Entrega</p>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-2 col-xs-2">
+                            &nbsp;
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-1 col-xs-1"></div>
+                        <div class="col-sm-1 col-xs-1">ddd: </div>
+                        <div class="col-sm-2 col-xs-2">
+                          <input name="ddd" class="form-control" autocomplete="off" placeholder="DDD" >
+                        </div>
+                        <div class="col-sm-1 col-xs-1">Fone: </div>
+                        <div class="col-sm-2 col-xs-2">
+                          <input name="Fone" class="form-control" autocomplete="off" placeholder="Fone" >
+                        </div>
+                        <div class="col-sm-1 col-xs-1">Ramal: </div>
+                        <div class="col-sm-2 col-xs-2">
+                          <input name="Ramal" class="form-control" autocomplete="off" placeholder="Ramal" >
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-2 col-xs-2">
+                            &nbsp;
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-2 col-xs-2">&nbsp;</div>
+                        <div class="col-sm-7 col-xs-7">
+                          <div class="form-check">
+                            <input checked class="form-check-input" type="checkbox" #chkEndCliente name="chkEndCliente" (change)="MesmoEnderecoCliente($event.target.checked)"/>
+                            <label class="form-check-label" for="flexCheckDefault">
+                              Entrega no Endereço do Cliente
+                            </label>
+                          </div>
+                          <!-- <input type="checkbox" style="zoom: .5; -webkit-transform: scale(0.5,0.5);" name="chkEndCliente" class="form-control" autocomplete="off" placeholder="DDD" > -->
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-2 col-xs-2">
+                            &nbsp;
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-1 col-xs-1">&nbsp;</div>
+                        <div class="col-sm-1 col-xs-1">CEP <span style="color:red" tooltip="Campo Obrigatório" placement="top" show-delay="500">&nbsp;&nbsp;*</span></div>
+                        <div class="col-sm-4 col-xs-4">
+                          <input type="text" pattern="[0-9]+" title="please enter number only" #CEP maxlength="8" formControlName="CEP" name="CEP" class="form-control"  autocomplete="off" placeholder="cep" (input)="ConsultaCEP(CEP.value)" [attr.disabled]="blnCampoEndereco == true ? true : null">
+                        </div>
+                        <div class="col-sm-1 col-xs-1"></div>
+                        <div class="col-sm-1 col-xs-1">UF <span style="color:red" tooltip="Campo Obrigatório" placement="top" show-delay="500">&nbsp;&nbsp;*</span></div>
+                        <div class="col-sm-3  col-xs-3">
+                          <select formControlName="Uf" #Uf name="uf" class="form-control"  [attr.disabled]="blnCampoEndereco == true ? true : null" (change)="ValidaEndereco()">
+                            <option *ngFor=  "let c of (estados)" [value]="c.uf">{{c.estado}}</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-2 col-xs-2">
+                            &nbsp;
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-1 col-xs-1">&nbsp;</div>
+                        <div class="col-sm-1 col-xs-1">Cidade<span style="color:red" tooltip="Campo Obrigatório" placement="top" show-delay="500">&nbsp;&nbsp;*</span></div>
+                        <div class="col-sm-9 col-xs-9">
+                          <input  formControlName="Cidade" #Cidade name="cidade" class="form-control"  autocomplete="off" placeholder="Cidade" [attr.disabled]="blnCampoEndereco == true ? true : null" (input)="ValidaEndereco()" style="text-transform:uppercase" >
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-2 col-xs-2">
+                            &nbsp;
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-1 col-xs-1">&nbsp;</div>
+                        <div class="col-sm-1 col-xs-1">Logradouro <span style="color:red" tooltip="Campo Obrigatório" placement="top" show-delay="500">&nbsp;&nbsp;*</span></div>
+                        <div class="col-sm-9 col-xs-9">
+                          <input  formControlName="Logradouro" #Logradouro name="Logradouro" class="form-control" autocomplete="off" placeholder="Logradouro" [attr.disabled]="blnCampoEndereco == true ? true : null" (input)="ValidaEndereco()" style="text-transform:uppercase" >
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-2 col-xs-2">
+                            &nbsp;
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-1 col-xs-1">&nbsp;</div>
+                        <div class="col-sm-1 col-xs-1">Número <span style="color:red" tooltip="Campo Obrigatório" placement="top" show-delay="500">&nbsp;&nbsp;*</span></div>
+                        <div class="col-sm-3 col-xs-3">
+                          <input  type="number" formControlName="NumeroCasa" #NumeroCasa name="NumeroCasa" class="form-control" autocomplete="off" placeholder="Número" [attr.disabled]="blnCampoEndereco == true ? true : null" (input)="ValidaEndereco()" style="text-transform:uppercase" >
+                        </div>
+                        <div class="col-sm-1 col-xs-1"></div>
+                        <div class="col-sm-1 col-xs-1">Complemento</div>
+                        <div class="col-sm-4 col-xs-4">
+                          <input  formControlName="Complemento" name="Complemento" class="form-control" autocomplete="off" placeholder="Complemento" [attr.disabled]="blnCampoEndereco == true ? true : null" style="text-transform:uppercase" >
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-2 col-xs-2">
+                            &nbsp;
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-1 col-xs-1">&nbsp;</div>
+                        <div class="col-sm-1 col-xs-1">Bairro <span style="color:red" tooltip="Campo Obrigatório" placement="top" show-delay="500">&nbsp;&nbsp;*</span></div>
+                        <div class="col-sm-9 col-xs-9">
+                          <input formControlName="Bairro" #Bairro name="Bairro" class="form-control" autocomplete="off" placeholder="Bairro" [attr.disabled]="blnCampoEndereco == true ? true : null" (keyup)="ValidaEndereco()" style="text-transform:uppercase" >
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-2 col-xs-2">
+                            &nbsp;
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-1 col-xs-1">&nbsp;</div>
+                        <div class="col-sm-1 col-xs-1">Pto Referencia</div>
+                        <div class="col-sm-9 col-xs-9">
+                          <input formControlName="PtoReferencia" name="PtoRefer" class="form-control" autocomplete="off" placeholder="Referencia" style="text-transform:uppercase" >
+                        </div>
+                      </div>
+                    </div>
+                    <!-- <div class="col-sm-4 col-xs-4">
+
+                    </div> -->
+
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- </tab> -->
+          <!-- </tabset> -->
+
+          <div class="row">
+            <div class="col-sm-2 col-xs-2">
+                &nbsp;
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2 col-xs-2">
+                &nbsp;
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2 col-xs-2">
+                &nbsp;
+            </div>
+            <div class="col-sm-8 col-xs-8">
+                <button (click)="EncerraPedido(pedidoForm.value)"type="button" class="btn btn-danger pull-right btn-block" [disabled]="!(blnItensPedido && blnItensPagto && ((totalPedido + numValorFrete - numValorDesconto) - totalPago) == 0 && blnMesmoEndereco && pedidoForm.valid && !blnPedidoIntegrado)" >
+                    <i class="fa fa-save"></i> Confirmar pedido
+                </button>
+                {{blnItensPedido}} -- blnItensPedido
+                {{blnItensPagto}} -- blnItensPagto
+                {{(totalPedido + numValorFrete - numValorDesconto) - totalPago}} -- TOTAL
+                {{blnMesmoEndereco}} -- blnMesmoEndereco
+                {{pedidoForm.valid}} -- pedidoForm.valid
+                {{blnPedidoIntegrado}} -- blnPedidoIntegrado
+            </div>
+            <!-- <div class="col-sm-8 col-xs-8">
+              <button (click)="findInvalidControls()"type="button" class="btn btn-primary pull-right btn-block" >
+                  <i class="fa fa-save"></i> teste
+              </button>
+            </div> -->
           </div>
       </form>
       <div class="dx-fieldset">
@@ -1120,7 +1055,7 @@
           </div>
           <div class="col-sm-5 col-xs-5 ">
             <!-- <input class="form-control" currencyMask  class="form-control"  [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" autocomplete="off" #val_Fin value="{{formaPagto == null ? '' : formaPagto.val_Fin | currency : 'R$'}}" [attr.disabled]="true" value="{{totalPedido - totalPago | currency : 'R$'}}"> -->
-            <input  class="form-control"  autocomplete="off" [attr.disabled]="true" value="{{totalPedido - totalPago | currency : 'R$'}}">
+            <input  class="form-control"  autocomplete="off" [attr.disabled]="true" value="{{(totalPedido + numValorFrete - numValorDesconto) - totalPago | currency : 'R$'}}">
           </div>
         </div>
         <div class="row">
@@ -1170,13 +1105,16 @@
             Nº Parc.:
           </div>
           <div class="col-sm-2 col-xs-2 ">
-            <input #NumParcelas type="number" [attr.disabled]="blnOutraFormas == true ? true : null" class="form-control" autocomplete="off" value="{{formaPagto == null ? '' : formaPagto.tot_Parc}}" (keyup)="SetarValidacaoGravacao()">
+            <select #NumParcelas class="form-control" (change)="SetarValorParcela()">
+              <option *ngFor=  "let c of (lstNumeroParcelas)" [value]="c">{{c}}</option>
+            </select>
+            <!-- <input #NumParcelas type="number" [attr.disabled]="blnOutraFormas == true ? true : null" class="form-control" autocomplete="off" value="{{formaPagto == null ? '' : formaPagto.tot_Parc}}" (keyup)="SetarValidacaoGravacao()"> -->
           </div>
           <div class="col-sm-1 col-xs-1 ">
             Valor:
           </div>
           <div class="col-sm-2 col-xs-2 ">
-            <input class="form-control" [attr.disabled]="blnOutraFormas == true ? true : null" autocomplete="off" value="" (keyup)="SetarValidacaoGravacao()" (mouseup)="SetarValidacaoGravacao()" mask="separator.2" thousandSeparator="." #ValorParcela>
+            <input class="form-control" [attr.disabled]="true" autocomplete="off" value="" (keyup)="SetarValidacaoGravacao()" (mouseup)="SetarValidacaoGravacao()" mask="separator.2" thousandSeparator="." #ValorParcela>
           </div>
           <div class="col-sm-1 col-xs-1 ">
             <input type="checkbox" class="form-control" [attr.disabled]="blnOutraFormas" autocomplete="off" (keyup)="SetarValidacaoGravacao()">

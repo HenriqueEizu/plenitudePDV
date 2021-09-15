@@ -10,17 +10,17 @@ import { Cliente, Endereco, Estado, Telefone, TipoTelefone } from './clientes.mo
 
 
 let tiposFone: TipoTelefone[] = [{
-  "IndTipoFone" : "F",
-  "DescTipoTelefone"  : "Fixo"
+  "IndTipoFone" : "P",
+  "DescTipoTelefone"  : "Uso Pessoal"
 }, {
   "IndTipoFone" : "C",
-  "DescTipoTelefone"  : "Celular"
+  "DescTipoTelefone"  : "Uso Comercial"
 }, {
-  "IndTipoFone" : "X",
-  "DescTipoTelefone"  : "Fax"
+  "IndTipoFone" : "T",
+  "DescTipoTelefone"  : "Todos"
 }, {
   "IndTipoFone" : "I",
-  "DescTipoTelefone"  : "Indefinido"
+  "DescTipoTelefone"  : "Informado"
 }];
 
 @Injectable({
@@ -51,10 +51,11 @@ export class ClientesService {
     return EnderecoLocal;
   }
 
-  ValidaCnpjCpf(id: any):Observable<any>{
+  ValidaCnpjCpf(id: any, idCliente : any):Observable<any>{
     var cpf : Observable<any>
     let params = new HttpParams();
     params = params.append('id', String(id));
+    params = params.append('idCliente', String(idCliente));
     cpf = this.http.get<any>(`${MEAT_API}/cliente/ValidaCnpjCpf`, {params: params} ).pipe();
     return cpf;
   }
@@ -109,7 +110,10 @@ export class ClientesService {
   }
 
   ExcluirCliente(id : number) : Observable<boolean>{
-    return this.http.delete<boolean>(`${MEAT_API}/cliente/Excluir/${id}`);
+    console.log("exclui cliente")
+    let params = new HttpParams();
+    params = params.append('idCliente', String(id));
+    return this.http.delete<boolean>(`${MEAT_API}/cliente/ExcluirCliente`,{params: params}).pipe();
   }
 
   AlterarCliente(cliente : Cliente) : Observable<boolean>{

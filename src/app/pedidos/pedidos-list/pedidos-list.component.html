@@ -21,7 +21,7 @@
 
 <div class="row">
   <div class="col-sm-3 col-xs-3">&nbsp;</div>
-    <div class="col-sm-6 col-xs-6 badge badge-primary"> <h5><img src="/assets/imagens/icons/clientes.png" class="mr-2" style="width: 30px"> Pedidos </h5></div>
+    <div class="col-sm-6 col-xs-6 badge badge-primary"> <h5><img src="/assets/imagens/icons/pedido.png" class="mr-2" style="width: 30px"> Pedidos </h5></div>
 </div>
 
 
@@ -44,11 +44,26 @@
                   <input #criterio name="criterio" class="form-control" autocomplete="off" placeholder="criterio" (input)="AtribuiValor(criterio.value)">
               </div>
               <div class="col-sm-5  col-xs-5" >
-                <button (click)="ConsultarCliente(campo,criterio)"type="button" class="btn btn-primary pull-right btn-block" [disabled]="!blnCriterio" >
+                <button (click)="ConsultarCliente(campo,criterio,integrado)"type="button" class="btn btn-primary pull-right btn-block" [disabled]="!blnCriterio" >
                   <i class="fa fa-save"></i> Consultar
                 </button>
 
               </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2 col-xs-2">
+                &nbsp;
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-5  col-xs-5" >
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" #integrado name="chkPedidoIntegrado" />
+                <label class="form-check-label" for="flexCheckDefault">
+                  Exibir Integrados
+                </label>
+              </div>
+            </div>
           </div>
           <div class="row">
             <div class="col-sm-2 col-xs-2">
