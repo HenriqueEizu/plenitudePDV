@@ -112,6 +112,34 @@ export class PedidosService {
       return this.http.put<RetornoPedido>(`${MEAT_API}/pedido/AlterarPedido/`,pedido,{headers: headers}).pipe(take(1));
     }
 
+    AlterarItemPedido(itemPedido : ItensPedido) : Observable<RetornoPedido>{
+      const headers = new HttpHeaders()
+      headers.append("Accept","text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+      headers.append("Accept-Encoding","gzip, deflate");
+      headers.append("Access-Control-Request-Headers","Content-type");
+      headers.append("Access-Control-Request-Method","POST,OPTIONS,GET");
+      headers.append('X-Requested-With','XMLHttpRequest');
+      headers.append('Access-Control-Allow-Origin', 'https://localhost:44377' );
+      headers.append('Content-Type', 'application/json');
+
+      return this.http.put<RetornoPedido>(`${MEAT_API}/pedido/AlterarItemPedido/`,itemPedido,{headers: headers}).pipe(take(1));
+    }
+
+    AlterarItemPagto(itemPagto : ItemPagamento) : Observable<RetornoPedido>{
+      const headers = new HttpHeaders()
+      headers.append("Accept","text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+      headers.append("Accept-Encoding","gzip, deflate");
+      headers.append("Access-Control-Request-Headers","Content-type");
+      headers.append("Access-Control-Request-Method","POST,OPTIONS,GET");
+      headers.append('X-Requested-With','XMLHttpRequest');
+      headers.append('Access-Control-Allow-Origin', 'https://localhost:44377' );
+      headers.append('Content-Type', 'application/json');
+
+      return this.http.put<RetornoPedido>(`${MEAT_API}/pedido/AlterarItemPagto/`,itemPagto,{headers: headers}).pipe(take(1));
+    }
+
+
+
     EncerraPedido(pedido : Pedido) : Observable<RetornoPedido>{
       const headers = new HttpHeaders()
       headers.append("Accept","text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");

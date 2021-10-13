@@ -44,7 +44,7 @@
               </div>
               <div class="col-sm-3  col-xs-3">
                   <cft-input errorMessage="Campo obrigatório e no formato de CPF/CNPJ" label="cpf cliente">
-                      <input  name="cnpjCpf" class="form-control" formControlName="cnpjCpf" autocomplete="off" placeholder="CPF">
+                      <input  name="cnpjCpf" class="form-control form-control-sm" formControlName="cnpjCpf" autocomplete="off" placeholder="CPF" [attr.disabled]="cliente.idCliente == null ? null : true">
                   </cft-input>
               </div>
               <div class="col-xs-1 col-sm-1" >
@@ -52,12 +52,12 @@
                   <i class="fa fa-remove"></i> O CPF/CNPJ não é válido ou já existente na base de dados.
                 </span>
               </div>
-              <div class="col-sm-1 col-xs-1">
+              <div class="col-sm-2 col-xs-2">
                       RG / IE:<span style="color:red" tooltip="Campo Obrigatório" placement="top" show-delay="500">&nbsp;&nbsp;*</span>
               </div>
               <div class="col-sm-3  col-xs-3">
                   <cft-input errorMessage="Campo obrigatório com maximo de 18 caracteres" label="RG / IE do Cliente usuário">
-                      <input name="IEstRG" class="form-control" formControlName="IEstRG" autocomplete="off" placeholder="RG /IE">
+                      <input name="IEstRG" class="form-control  form-control-sm" formControlName="IEstRG" autocomplete="off" placeholder="RG /IE">
                   </cft-input>
               </div>
               <div class="col-xs-2 col-sm-2" >
@@ -74,18 +74,18 @@
               </div>
               <div class="col-sm-3  col-xs-3">
                   <cft-input errorMessage="Campo obrigatório com maximo de 60 caracteres" label="Nome">
-                      <input name="nome" class="form-control" formControlName="nome" autocomplete="off" placeholder="Nome" style="text-transform:uppercase" >
+                      <input name="nome" class="form-control  form-control-sm" formControlName="nome" autocomplete="off" placeholder="Nome" style="text-transform:uppercase" >
                   </cft-input>
               </div>
               <div class="col-sm-1 col-xs-1">
                 &nbsp;
               </div>
-              <div class="col-sm-1 col-xs-1">
+              <div class="col-sm-2 col-xs-2">
                 Apelido:<span style="color:red" tooltip="Campo Obrigatório" placement="top" show-delay="500">&nbsp;&nbsp;*</span>
               </div>
               <div class="col-sm-3  col-xs-3">
                   <cft-input errorMessage="Campo obrigatório com maximo de 20 caracteres" label="Nome">
-                      <input name="apelido" class="form-control" formControlName="apelido" autocomplete="off" placeholder="Apelido" style="text-transform:uppercase" >
+                      <input name="apelido" class="form-control  form-control-sm" formControlName="apelido" autocomplete="off" placeholder="Apelido" style="text-transform:uppercase" >
                   </cft-input>
               </div>
           </div>
@@ -99,17 +99,17 @@
             </div>
             <div class="col-sm-3  col-xs-3">
                 <cft-input errorMessage="Campo obrigatório com maximo de 6 caracteres" label="Orgão Emissor">
-                    <input name="orgEmisRg" class="form-control" formControlName="orgEmisRg" autocomplete="off" placeholder="Orgão Emissor" style="text-transform:uppercase" >
+                    <input name="orgEmisRg" class="form-control  form-control-sm" formControlName="orgEmisRg" autocomplete="off" placeholder="Orgão Emissor" style="text-transform:uppercase" >
                 </cft-input>
             </div>
             <div class="col-sm-1 col-xs-1">
               &nbsp;
             </div>
-            <div class="col-sm-1 col-xs-1">
+            <div class="col-sm-2 col-xs-2">
               Estado Civil:<span style="color:red" tooltip="Campo Obrigatório" placement="top" show-delay="500">&nbsp;&nbsp;*</span>
             </div>
             <div class="col-sm-3  col-xs-3">
-              <select name="estCivil" class="form-control" formControlName="estCivil" >
+              <select name="estCivil" class="form-control  form-control-sm" formControlName="estCivil" >
                 <option value="C">Casado</option>
                 <option value="S">Solteiro</option>
                 <option value="D">Divorciado</option>
@@ -132,10 +132,10 @@
                 <div class="row">
                   <div class="col-sm-10  col-xs-10" >
                       <!-- <input class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d1="ngbDatepicker" formControlName="CP_CPDATALIMITEAPOSTA" > -->
-                      <input class="form-control" placeholder="dd/mm/aaaa" name="dtNascimento" ngbDatepicker #d1="ngbDatepicker"  formControlName="dtNascimento" >
+                      <input class="form-control  form-control-sm" placeholder="dd/mm/aaaa" name="dtNascimento" ngbDatepicker #d1="ngbDatepicker"  formControlName="dtNascimento" >
                   </div>
                   <div class="col-sm-2  col-xs-2" >
-                      <button class="btn btn-primary" (click)="d1.toggle()" type="button"><i class="fa fa-table "></i></button>
+                      <button class="btn btn-primary btn-sm" (click)="d1.toggle()" type="button"><i class="fa fa-table "></i></button>
                   </div>
                 </div>
                 <!-- <cft-input errorMessage="Data de Nasc é um campo obrigatório" label="Data de Nasc.">
@@ -145,12 +145,12 @@
             <div class="col-sm-1 col-xs-1">
               &nbsp;
             </div>
-            <div class="col-sm-1 col-xs-1">
+            <div class="col-sm-2 col-xs-2">
               Profissao:
             </div>
             <div class="col-sm-3  col-xs-3">
                 <cft-input errorMessage="Campo obrigatório com maximo de 30 caracteres" label="profissao">
-                    <input name="profProfissao" class="form-control" formControlName="profProfissao" autocomplete="off" placeholder="Profissao" style="text-transform:uppercase" >
+                    <input name="profProfissao" class="form-control  form-control-sm" formControlName="profProfissao" autocomplete="off" placeholder="Profissao" style="text-transform:uppercase" >
                 </cft-input>
             </div>
           </div>
@@ -163,25 +163,20 @@
             </div>
             <div class="col-sm-3  col-xs-3">
                 <cft-input errorMessage="CEP é um campo obrigatório" label="CEP">
-                    <input #CEP name="cep" class="form-control" formControlName="cep" autocomplete="off" placeholder="cep" (input)="ConsultaCEP(CEP.value)">
+                    <input #CEP name="cep" class="form-control  form-control-sm" formControlName="cep" autocomplete="off" placeholder="cep" (input)="ConsultaCEP(CEP.value)">
                     <!-- <input  name="CEP" class="form-control" formControlName="CEP" autocomplete="off" placeholder="CEP" > -->
                 </cft-input>
             </div>
             <div class="col-sm-1 col-xs-1">
                 &nbsp;
             </div>
-            <div class="col-sm-1 col-xs-1">
+            <div class="col-sm-2 col-xs-2">
               UF:<span style="color:red" tooltip="Campo Obrigatório" placement="top" show-delay="500">&nbsp;&nbsp;*</span>
             </div>
             <div class="col-sm-3  col-xs-3">
-                <select name="uf" class="form-control" formControlName="uf" >
+                <select name="uf" class="form-control  form-control-sm" formControlName="uf" >
                   <option *ngFor=  "let c of (estados)" [value]="c.uf">{{c.estado}}</option>
                 </select>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-12 col-xs-12">
-                &nbsp;
             </div>
           </div>
           <div class="row">
@@ -193,18 +188,18 @@
             </div>
             <div class="col-sm-3  col-xs-3">
                 <cft-input errorMessage="Campo obrigatório com maximo de 30 caracteres" label="localidade">
-                    <input name="localidade" class="form-control" formControlName="localidade" autocomplete="off" placeholder="Localidade/Cidade" style="text-transform:uppercase" >
+                    <input name="localidade" class="form-control  form-control-sm" formControlName="localidade" autocomplete="off" placeholder="Localidade/Cidade" style="text-transform:uppercase" >
                 </cft-input>
             </div>
             <div class="col-sm-1 col-xs-1">
                 &nbsp;
             </div>
-            <div class="col-sm-1 col-xs-1">
+            <div class="col-sm-2 col-xs-2">
               Logradouro:<span style="color:red" tooltip="Campo Obrigatório" placement="top" show-delay="500">&nbsp;&nbsp;*</span>
             </div>
             <div class="col-sm-3  col-xs-3">
                 <cft-input errorMessage="Campo obrigatório com maximo de 30 caracteres" label="Logradouro">
-                    <input name="logradouro" class="form-control" formControlName="logradouro" autocomplete="off" placeholder="Logradouro" style="text-transform:uppercase" >
+                    <input name="logradouro" class="form-control  form-control-sm" formControlName="logradouro" autocomplete="off" placeholder="Logradouro" style="text-transform:uppercase" >
                 </cft-input>
             </div>
           </div>
@@ -217,19 +212,19 @@
             </div>
             <div class="col-sm-3  col-xs-3">
                 <cft-input errorMessage="Campo obrigatório com maximo de 8 caracteres" label="Numero">
-                    <input name="numero" class="form-control" formControlName="numero" autocomplete="off" placeholder="Numero" style="text-transform:uppercase" >
+                    <input name="numero" class="form-control  form-control-sm" formControlName="numero" autocomplete="off" placeholder="Numero" style="text-transform:uppercase" >
                 </cft-input>
             </div>
 
             <div class="col-sm-1 col-xs-1">
                 &nbsp;
             </div>
-            <div class="col-sm-1 col-xs-1">
+            <div class="col-sm-2 col-xs-2">
               Complemento:<span style="color:red" tooltip="Campo Obrigatório" placement="top" show-delay="500">&nbsp;&nbsp;*</span>
             </div>
             <div class="col-sm-3  col-xs-3">
                 <cft-input errorMessage="Campo obrigatório com maximo de 40 caracteres" label="Complemento">
-                    <input name="complemento" class="form-control" formControlName="complemento" autocomplete="off" placeholder="Complemento" style="text-transform:uppercase" >
+                    <input name="complemento" class="form-control  form-control-sm" formControlName="complemento" autocomplete="off" placeholder="Complemento" style="text-transform:uppercase" >
                 </cft-input>
             </div>
 
@@ -247,18 +242,18 @@
             </div>
             <div class="col-sm-3  col-xs-3">
                 <cft-input errorMessage="Campo obrigatório com maximo de 40 caracteres" label="Bairro">
-                    <input name="bairro" class="form-control" formControlName="bairro" autocomplete="off" placeholder="Bairro" style="text-transform:uppercase"  >
+                    <input name="bairro" class="form-control  form-control-sm"  formControlName="bairro" autocomplete="off" placeholder="Bairro" style="text-transform:uppercase"  >
                 </cft-input>
             </div>
             <div class="col-sm-1 col-xs-1">
                 &nbsp;
             </div>
-            <div class="col-sm-1 col-xs-1">
+            <div class="col-sm-2 col-xs-2">
               EMail:<span style="color:red" tooltip="Campo Obrigatório" placement="top" show-delay="500">&nbsp;&nbsp;*</span>
             </div>
             <div class="col-sm-3  col-xs-3">
                 <cft-input errorMessage="EMail é um campo obrigatório" label="EMail">
-                    <input name="eMail" class="form-control" formControlName="eMail" autocomplete="off" placeholder="EMail" style="text-transform:uppercase" >
+                    <input name="eMail" class="form-control  form-control-sm" formControlName="eMail" autocomplete="off" placeholder="EMail" style="text-transform:uppercase" >
                 </cft-input>
             </div>
           </div>
@@ -271,7 +266,7 @@
             </div>
             <div class="col-sm-3  col-xs-3">
                 <cft-input errorMessage="Campo obrigatório com maximo de 40 caracteres" label="Contato">
-                    <input name="contato" class="form-control" formControlName="contato" autocomplete="off" placeholder="Contato" style="text-transform:uppercase" >
+                    <input name="contato" class="form-control  form-control-sm" formControlName="contato" autocomplete="off" placeholder="Contato" style="text-transform:uppercase" >
                 </cft-input>
             </div>
           </div>
@@ -295,6 +290,7 @@
                 <th>Numero</th>
                 <th>Ramal.</th>
                 <th>Tipo Telefone</th>
+                <th>Ordenação</th>
                 <th scope="col">Ação</th>
                 <th scope="col">Ação</th>
               </tr>
@@ -321,16 +317,21 @@
                     {{tl.descTipoFone}}
                   </span>
                 </td>
-                <td><a class="nav-link linkPoint"  (click)="EditarTelefoneModal(tl)">
+                <td>
+                  <span [tooltip]="tl.descTipoFone" placement="top" show-delay="500">
+                    {{tl.ordenador}}
+                  </span>
+                </td>
+                <td><a  (click)="EditarTelefoneModal(tl)">
                   <span tooltip="Editar" placement="top" show-delay="500">
                       <i class="fa fa-edit"></i>
                     </span>
                     </a>
                 </td>
                 <td>
-                  <a class="nav-link linkPoint" (click)="ExcluirTelefone(tl);"  >
+                  <a (click)="ExcluirTelefone(tl);"  >
                   <span tooltip="Excluir" placement="top" show-delay="500">
-                    <img src="/assets/imagens/icons/excluir.png" class="mr-2" style="width: 20px">
+                    <i class="fa fa-minus-circle" style="color:red;"></i>
                     </span>
                     </a>
                 </td>
@@ -417,7 +418,7 @@
             &nbsp;
           </div>
           <div class="col-sm-2 col-xs-2">
-            <button class="btn btn-primary pull-right btn-block" data-toggle="modal" data-target="#Fabrica" type="button" (click)="showTelefoneModal()">
+            <button class="btn btn-primary pull-right btn-block btn-sm" data-toggle="modal" data-target="#Fabrica" type="button" (click)="showTelefoneModal()">
               <img src="assets/imagens/icons/phone.png" class="mr-2" style="width: 20px; color: white; ">
               +
           </button>
@@ -431,10 +432,9 @@
                 &nbsp;
             </div>
             <div class="col-sm-8 col-xs-8">
-                <button (click)="SalvarCliente(clienteForm.value)"type="button" class="btn btn-primary pull-right btn-block" [disabled]="!clienteForm.valid" >
+                <button (click)="SalvarCliente(clienteForm.value)"type="button" class="btn btn-primary pull-right btn-block btn-sm" [disabled]="!clienteForm.valid" >
                     <i class="fa fa-save"></i> Salvar
                 </button>
-                {{clienteForm.valid}}
             </div>
             <!-- <div class="col-sm-8 col-xs-8">
               <button (click)="findInvalidControls()"type="button" class="btn btn-primary pull-right btn-block" >
@@ -462,20 +462,25 @@
       <!-- Modal body -->
       <div class="modal-body ">
         <div class="row">
-          <div class="col-sm-1 col-xs-1 ">
+          <div class="col-sm-1 col-xs-1 text-right">
             DDD:
           </div>
-          <div class="col-sm-2 col-xs-2 ">
-            <input #codddd name="codddd" class="form-control" placeholder="DDD" type="text" [allowNegativeNumbers]="false" mask="separator.2"   maxlength="2" (keyup)="ValidarGravacao()">
-          </div>
           <div class="col-sm-1 col-xs-1 ">
-            &nbsp;
+            <input #codddd name="codddd" class="form-control  form-control-sm" placeholder="DDD" type="text" [allowNegativeNumbers]="false" mask="separator.2"   maxlength="2" (keyup)="ValidarGravacao()">
           </div>
-          <div class="col-sm-2 col-xs-2 ">
+          <div class="col-sm-2 col-xs-2 text-right">
             Numero:
           </div>
           <div class="col-sm-3 col-xs-3 ">
-            <input #numero name="numero" class="form-control" placeholder="Número" type="text" [allowNegativeNumbers]="false" mask="separator.2"  maxlength="9" (keyup)="ValidarGravacao()">
+            <input #numero name="numero" class="form-control  form-control-sm" placeholder="Número" type="text" [allowNegativeNumbers]="false" mask="separator.2"  maxlength="9" (keyup)="ValidarGravacao()">
+          </div>
+          <div class="col-sm-2 col-xs-2 text-right">
+            Ordenação:
+          </div>
+          <div class="col-sm-2 col-xs-2 ">
+            <select #ordenacao name="ordenacao" class="form-control  form-control-sm"  >
+              <option *ngFor=  "let c of (ordenacaoFone)" [value]="c">{{c}}</option>
+            </select>
           </div>
         </div>
         <div class="row">
@@ -484,20 +489,18 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-sm-1 col-xs-1 ">
+          <div class="col-sm-1 col-xs-1 text-right">
             Ramal:
           </div>
           <div class="col-sm-2 col-xs-2 ">
-            <input #ramal name="ramal" class="form-control" placeholder="Ramal" type="text" [allowNegativeNumbers]="false" mask="separator.2"  maxlength="4" (keyup)="ValidarGravacao()">
+            <input #ramal name="ramal" class="form-control  form-control-sm" placeholder="Ramal" type="text" [allowNegativeNumbers]="false" mask="separator.2"  maxlength="4" (keyup)="ValidarGravacao()">
           </div>
-          <div class="col-sm-1 col-xs-1 ">
-            &nbsp;
-          </div>
-          <div class="col-sm-2 col-xs-2 ">
+
+          <div class="col-sm-2 col-xs-2 text-right">
             Tipo Telefone:
           </div>
           <div class="col-sm-3 col-xs-3 ">
-            <select #indTipoFone name="indtipoFone" class="form-control"  >
+            <select #indTipoFone name="indtipoFone" class="form-control  form-control-sm"  >
               <option *ngFor=  "let c of (tiposTelefone)" [value]="c.IndTipoFone">{{c.DescTipoTelefone}}</option>
             </select>
           </div>
@@ -508,12 +511,12 @@
       <div class="modal-footer">
         <div class="row">
           <div class="col-sm-6 col-xs-6 ">
-            <button class="btn btn-primary pull-right btn-block" type="button" data-dismiss="modal" [disabled]="!blnInserirTelefone" (click)="SalvarTelefone()">
+            <button class="btn btn-primary pull-right btn-block btn-sm" type="button" data-dismiss="modal" [disabled]="!blnInserirTelefone" (click)="SalvarTelefone()">
               Salvar
             </button>
           </div>
           <div class="col-sm-6 col-xs-6 ">
-            <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="hideTelefoneModal()">Fechar</button>
+            <button type="button" class="btn btn-danger pull-right btn-block btn-sm" data-dismiss="modal" (click)="hideTelefoneModal()">Fechar</button>
           </div>
         </div>
       </div>

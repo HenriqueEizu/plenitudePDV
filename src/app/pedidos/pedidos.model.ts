@@ -229,14 +229,36 @@ export interface Pedido {
   obs_Fin	: string;
 }
 
-export interface ItensPedido{
-  id_IPv : number,
-  produto : string,
-  quantid : number,
-  valuni : number,
-  valtot : number,
-  saida : string,
-  tipoFrete : string,
+export class ItensPedido{
+
+  public id_IPv	: number;
+  get _id_IPv(): number {return this.id_IPv;}
+  set _id_IPv(p : number) {this.id_IPv = p; }
+
+  public produto	: string;
+  get _produto(): string {return this.produto;}
+  set _produto(p : string) {this.produto = p; }
+
+  public quantid	: number;
+  get _quantid(): number {return this.quantid;}
+  set _quantid(p : number) {this.quantid = p; }
+
+  public valuni	: number;
+  get _valuni(): number {return this.valuni;}
+  set _valuni(p : number) {this.valuni = p; }
+
+  public valtot	: number;
+  get _valtot(): number {return this.valtot;}
+  set _valtot(p : number) {this.valtot = p; }
+
+  public saida	: string;
+  get _saida(): string {return this.saida;}
+  set _saida(p : string) {this.saida = p; }
+
+  public tipoFrete	: string;
+  get _tipoFrete(): string {return this.tipoFrete;}
+  set _tipoFrete(p : string) {this.tipoFrete = p; }
+
 }
 
 export interface RetornoPedido{

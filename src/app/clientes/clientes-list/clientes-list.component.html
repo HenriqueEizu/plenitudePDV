@@ -36,15 +36,15 @@
         <form>
           <div class="row">
               <div class="col-sm-3  col-xs-3" >
-                  <select #campo name="campo" class="form-control" >
+                  <select #campo name="campo" class="form-control form-control-sm" >
                       <option *ngFor=  "let c of (arrFiltro)" [value]="c.campo">{{c.desc_campo}}</option>
                   </select>
               </div>
               <div class="col-sm-4  col-xs-4">
-                  <input #criterio name="criterio" class="form-control" autocomplete="off" placeholder="criterio" (input)="AtribuiValor(criterio.value)">
+                  <input #criterio name="criterio" class="form-control form-control-sm" autocomplete="off" placeholder="criterio" (input)="AtribuiValor(criterio.value)">
               </div>
               <div class="col-sm-5  col-xs-5" >
-                <button (click)="ConsultarCliente(campo,criterio)"type="button" class="btn btn-primary pull-right btn-block" [disabled]="!blnCriterio" >
+                <button (click)="ConsultarCliente(campo,criterio)"type="button" class="btn btn-primary pull-right btn-block btn-sm" [disabled]="!blnCriterio" >
                   <i class="fa fa-save"></i> Consultar
                 </button>
 
@@ -70,17 +70,17 @@
               <table class="table table-striped col-sm-12 col-xs-12">
                 <thead>
                 <tr>
-                  <th scope="col" sortable="obJ_PESSOA.NOME" (sort)="onSort($event)">Nome</th>
-                  <th scope="col" sortable="obJ_PESSOA.CnpjCpf" (sort)="onSort($event)">CPF/CNPJ</th>
-                  <th scope="col" sortable="obJ_PESSOA.IEstRG" (sort)="onSort($event)">RG/IE</th>
-                  <th scope="col" sortable="obJ_PESSOA.IndFisJur" (sort)="onSort($event)">Tipo Pessoa</th>
+                  <th scope="col" sortable="obJ_PESSOA.nome" (sort)="onSort($event)">Nome</th>
+                  <th scope="col" sortable="obJ_PESSOA.cnpjCpf" (sort)="onSort($event)">CPF/CNPJ</th>
+                  <th scope="col" sortable="obJ_PESSOA.iEstRG" (sort)="onSort($event)">RG/IE</th>
+                  <th scope="col" sortable="obJ_PESSOA.indFisJur" (sort)="onSort($event)">Tipo Pessoa</th>
                   <th scope="col">Ação</th>
                   <th scope="col">Ação</th>
 
                 </tr>
                 </thead>
                 <tbody>
-                <tr *ngFor="let cliente of clientes | slice: pageSize | slice: 0:itemsPerPage">
+                <tr *ngFor="let cliente of clientes  | slice: pageSize | slice: 0:itemsPerPage">
                   <td>
                     <span [tooltip]="cliente.obJ_PESSOA.nome" placement="top" show-delay="500">
                       <ngb-highlight [result]="cliente.obJ_PESSOA.nome.substring(0,15)" [term]="service.searchTerm"></ngb-highlight>
@@ -101,15 +101,15 @@
                       <ngb-highlight [result]="cliente.obJ_PESSOA.indFisJur.substring(0,15) " [term]="service.searchTerm"></ngb-highlight>
                     </span>
                   </td>
-                  <td><a class="nav-link" [routerLink]="['/cliente',cliente.id_Cli]">
+                  <td><a [routerLink]="['/cliente',cliente.id_Cli]">
                     <span tooltip="Editar" placement="top" show-delay="500">
-                        <i class="fa fa-edit"></i>
+                        <i class="fa fa-edit" ></i>
                       </span>
                       </a>
                   </td>
-                  <td><a class="nav-link" (click)="ExcluirCliente(cliente.id_Cli);"  [routerLink]="['/cliente',cliente.id_Cli]">
+                  <td><a  (click)="ExcluirCliente(cliente.id_Cli);"  [routerLink]="['/cliente',cliente.id_Cli]">
                     <span tooltip="Editar" placement="top" show-delay="500">
-                      <img src="/assets/imagens/icons/excluir.png" class="mr-2" style="width: 20px">
+                      <i class="fa fa-minus-circle" style="color: red;"></i>
                       </span>
                       </a>
                   </td>

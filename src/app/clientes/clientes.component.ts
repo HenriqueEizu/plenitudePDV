@@ -41,6 +41,7 @@ export class ClientesComponent implements OnInit {
   @ViewChild('numero') numeroInput: ElementRef;
   @ViewChild('ramal') ramalInput: ElementRef;
   @ViewChild('indTipoFone') IndTipoFoneInput: ElementRef;
+  @ViewChild('ordenacao') ordenacaoInput: ElementRef;
 
   insertModalRef : BsModalRef;
   @ViewChild('template') template;
@@ -57,6 +58,7 @@ export class ClientesComponent implements OnInit {
   myDate = new Date();
   cliente : any;
   pessoa : any;
+  ordenacaoFone = [];
 
   estados : Estado[];
   usuarioLogado : Usuario = null;
@@ -90,6 +92,7 @@ export class ClientesComponent implements OnInit {
   ngOnInit(): void {
 
 
+    this.PopulaParcela()
 
     this.clienteService.GetAllEstados().subscribe((es : Estado[]) => {
       console.log(es);
@@ -157,6 +160,17 @@ export class ClientesComponent implements OnInit {
 
   asyncValidation(params) {
     return sendRequest(params.value);
+  }
+
+  PopulaParcela(){
+    var i : number;
+    var ctr : number = 0;
+    console.log("Popula parcelas ****************")
+    this.ordenacaoFone = [];
+    for (i = 1; i <= 10; i++){
+      this.ordenacaoFone.push(i);
+      ctr++;
+    }
   }
 
   public findInvalidControls() {
@@ -230,7 +244,7 @@ export class ClientesComponent implements OnInit {
       telefone.ramal = String(this.ramalInput.nativeElement.value).trim();
       telefone.indusofone = this.IndTipoFoneInput.nativeElement.value;
       telefone.descTipoFone = this.tiposTelefone.filter(c=> c.IndTipoFone == this.IndTipoFoneInput.nativeElement.value)[0].DescTipoTelefone
-      telefone.ordenador = this.ordenador;
+      telefone.ordenador = this.ordenacaoInput.nativeElement.value;;
 
       if (this.blnEditarTelefone == true) {
         const telefoneAlt = this.coltelefones.findIndex(c=> c.idTelefone === telefone.idTelefone);
@@ -239,7 +253,7 @@ export class ClientesComponent implements OnInit {
       }
       this.coltelefones.push(telefone);
       this.coltelefones = this.coltelefones.sort((a,b)  => {
-        return a.idTelefone- b.idTelefone;
+        return a.ordenador- b.ordenador;
       });
       this.blnEditarTelefone = false;
       this.hideTelefoneModal()
@@ -316,7 +330,7 @@ export class ClientesComponent implements OnInit {
     this.numeroInput.nativeElement.value = foneCarregado.numero;
     this.ramalInput.nativeElement.value = foneCarregado.ramal;
     this.IndTipoFoneInput.nativeElement.value = foneCarregado.indusofone
-    this.ordenador = foneCarregado.ordenador;
+    this.ordenacaoInput.nativeElement.value = foneCarregado.ordenador;
     this.ValidarGravacao();
     this.telefoneModal.show();
   }

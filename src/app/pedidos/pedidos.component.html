@@ -40,14 +40,14 @@
                       Nº Pedido:
               </div>
               <div class="col-sm-3  col-xs-3">
-                <input name="id_Ped" class="form-control" formControlName="id_Ped" autocomplete="off" [attr.disabled]="true"  placeholder="Nº Pedido">
+                <input name="id_Ped" class="form-control  form-control-sm" formControlName="id_Ped" autocomplete="off" [attr.disabled]="true"  placeholder="Nº Pedido">
               </div>
             <div class="col-sm-2 col-xs-2">
                     {{labelCpfCliente}}
             </div>
             <div class="col-sm-3  col-xs-3">
               <cft-input errorMessage="*" label="Cliente">
-                <input name="nome_Cli" class="form-control" formControlName="nome_Cli" autocomplete="off" placeholder="Digite CPF/CNPF" [attr.disabled]="strDesabilitaCliente">
+                <input name="nome_Cli" class="form-control  form-control-sm" formControlName="nome_Cli" autocomplete="off" placeholder="Digite CPF/CNPF" [attr.disabled]="strDesabilitaCliente">
               </cft-input>
             </div>
             <div class="col-xs-2 col-sm-2" >
@@ -67,7 +67,7 @@
                     Versão:
             </div>
             <div class="col-sm-3  col-xs-3">
-                <input name="versao" class="form-control" formControlName="versao" autocomplete="off" placeholder="Versão" [attr.disabled]="true">
+                <input name="versao" class="form-control  form-control-sm" formControlName="versao" autocomplete="off" placeholder="Versão" [attr.disabled]="true">
             </div>
             <div class="col-sm-2 col-xs-2">
                     {{labelCliente}}
@@ -86,13 +86,13 @@
                     Data:
             </div>
             <div class="col-sm-3  col-xs-3">
-                <input name="dtPed" class="form-control" formControlName="dtPed" autocomplete="off" placeholder="Data Pedido" [attr.disabled]="true">
+                <input name="dtPed" class="form-control  form-control-sm" formControlName="dtPed" autocomplete="off" placeholder="Data Pedido" [attr.disabled]="true">
             </div>
             <div class="col-sm-2 col-xs-2">
                     Observação:
             </div>
             <div class="col-sm-3  col-xs-3">
-                <textarea class="form-control" name="observ" rows="4" cols="50" formControlName="observ" [attr.disabled]="blnDesabilitaCampos" style="text-transform:uppercase" ></textarea>
+                <textarea class="form-control  form-control-sm" name="observ" rows="4" cols="50" formControlName="observ" [attr.disabled]="blnDesabilitaCampos" style="text-transform:uppercase" ></textarea>
             </div>
           </div>
           <div class="row">
@@ -105,13 +105,13 @@
                     Situação:
             </div>
             <div class="col-sm-3  col-xs-3">
-                <input name="descrSituacao" class="form-control" formControlName="descrSituacao" autocomplete="off" placeholder="Situação" [attr.disabled]="true">
+                <input name="descrSituacao" class="form-control  form-control-sm" formControlName="descrSituacao" autocomplete="off" placeholder="Situação" [attr.disabled]="true">
             </div>
             <div class="col-sm-2 col-xs-2">
                     Ent.Min.:
             </div>
             <div class="col-sm-3  col-xs-3">
-              <input name="entMin" class="form-control"  autocomplete="off" placeholder="ent.Min" [attr.disabled]="true" value="{{data}}">
+              <input name="entMin" class="form-control  form-control-sm"  autocomplete="off" placeholder="ent.Min" [attr.disabled]="true" value="{{data}}">
             </div>
           </div>
           <div class="row">
@@ -124,7 +124,7 @@
               Periodo:
             </div>
             <div class="col-sm-3  col-xs-3">
-                <select name="idPeriodo" class="form-control" formControlName="per_Ent" [value]="4" [attr.disabled]="blnDesabilitaCampos">
+                <select name="idPeriodo" class="form-control  form-control-sm" formControlName="per_Ent" [value]="4" [attr.disabled]="blnDesabilitaCampos">
                   <option *ngFor=  "let c of (periodo)" [value]="c.idPeriodo">{{c.descricao}}</option>
                 </select>
             </div>
@@ -135,12 +135,12 @@
               <div class="row">
                 <div class="col-sm-10  col-xs-10" >
                   <cft-input errorMessage="" label="Observação">
-                    <input  class="form-control" placeholder="dd/mm/yyyy" name="entrega" ngbDatepicker #d1="ngbDatepicker" formControlName="entrega" [minDate]="dataMin" [readonly]="true">
-                    <!-- <input  name="Entrega" class="form-control" formControlName="Entrega" autocomplete="off" placeholder="dd/mm/aaaa"> -->
+                    <input  class="form-control  form-control-sm" placeholder="dd/mm/yyyy" name="entrega" ngbDatepicker #d1="ngbDatepicker" formControlName="entrega" [minDate]="dataMin" [readonly]="true">
+                    <!-- <input  name="Entrega" class="form-control  form-control-sm" formControlName="Entrega" autocomplete="off" placeholder="dd/mm/aaaa"> -->
                   </cft-input>
                 </div>
                 <div class="col-sm-2  col-xs-2" >
-                    <button class="btn btn-primary" (click)="d1.toggle()" type="button" [attr.disabled]="blnDesabilitaCampos"><i class="fa fa-table " ></i></button>
+                    <button class="btn btn-primary btn-sm" (click)="d1.toggle()" type="button" [attr.disabled]="blnDesabilitaCampos"><i class="fa fa-table " ></i></button>
                 </div>
                 <div class="col-xs-12 col-sm-12" >
                   <span *ngIf="pedidoForm.get('entrega').getError('dataEntrega')" style="color:red">
@@ -160,7 +160,7 @@
                 Midia:
             </div>
             <div class="col-sm-3  col-xs-3">
-              <select name="idMidia" class="form-control" formControlName="idMidia" #idMidia [attr.disabled]="blnDesabilitaCampos">
+              <select name="idMidia" class="form-control  form-control-sm" formControlName="idMidia" #idMidia [attr.disabled]="blnDesabilitaCampos">
                 <option *ngFor=  "let c of (midias)" [value]="c.idMidia">{{c.descMidia}}</option>
               </select>
             </div>
@@ -169,7 +169,7 @@
             </div>
             <div class="col-sm-3  col-xs-3">
               <cft-input errorMessage="Campo obrigatório com maximo de 60 caracteres" label="Midia" >
-                  <input name="obsMidia" class="form-control" formControlName="obsMidia" autocomplete="off" placeholder="Midia" [attr.disabled]="blnDesabilitaCampos" style="text-transform:uppercase" >
+                  <input name="obsMidia" class="form-control  form-control-sm" formControlName="obsMidia" autocomplete="off" placeholder="Midia" [attr.disabled]="blnDesabilitaCampos" style="text-transform:uppercase" >
               </cft-input>
             </div>
             <div class="col-xs-2 col-sm-2" >
@@ -188,7 +188,7 @@
                 Vendedores:
             </div>
             <div class="col-sm-3  col-xs-3">
-              <select name="idVendedor" class="form-control" formControlName="idVendedor" [attr.disabled]="blnDesabilitaCampos">
+              <select name="idVendedor" class="form-control  form-control-sm" formControlName="idVendedor" [attr.disabled]="blnDesabilitaCampos">
                 <option *ngFor=  "let c of (vendedores)" [value]="c.idVendedor">{{c.nome}}</option>
               </select>
             </div>
@@ -203,15 +203,15 @@
                 &nbsp;
             </div>
             <div class="col-sm-8 col-xs-8">
-                <button (click)="SalvarPedido(pedidoForm.value)"type="button" class="btn btn-primary pull-right btn-block" [disabled]="!pedidoForm.valid || blnPedidoIntegrado" >
+                <button (click)="SalvarPedido(pedidoForm.value)"type="button" class="btn btn-primary pull-right btn-block btn-sm" [disabled]="!pedidoForm.valid || blnPedidoIntegrado" >
                     <i class="fa fa-save"></i> Salvar
                 </button>
             </div>
-            <div class="col-sm-8 col-xs-8">
-              <!-- <button (click)="findInvalidControls()"type="button" class="btn btn-primary pull-right btn-block" >
+            <!-- <div class="col-sm-8 col-xs-8">
+              <button (click)="findInvalidControls()"type="button" class="btn btn-primary pull-right btn-block" >
                   <i class="fa fa-save"></i> teste
-              </button> -->
-            </div>
+              </button>
+            </div> -->
           </div>
           <div class="row">
             <div class="col-sm-2 col-xs-2">
@@ -220,16 +220,16 @@
           </div>
           <!-- <tabset> -->
             <div class="tab">
-              <button class="tablinks active" id="AbaProdutos" (click)="AbaAtiva($event,'Produtos')">Produtos</button>
-              <button class="tablinks" (click)="AbaAtiva($event,'Financeiro')">Financeiro</button>
-              <button class="tablinks" (click)="AbaAtiva($event,'Entrega')">Entrega/Encerramento</button>
+              <button class="tablinks active btn-sm" id="AbaProdutos" (click)="AbaAtiva($event,'Produtos')">Produtos</button>
+              <button class="tablinks btn-sm" (click)="AbaAtiva($event,'Financeiro')">Financeiro</button>
+              <button class="tablinks btn-sm" (click)="AbaAtiva($event,'Entrega')">Entrega/Encerramento</button>
             </div>
             <!-- ****************************PRODUTOS*********************************** -->
             <!-- <tab heading="Produtos" id="tab1" class="bordatab"> -->
             <div id="Produtos" class="tabcontent" >
               <div class="row" style="border: 1px;">
-                <div class="col-sm-12 col-xs-12 table-responsive-xl">
-                  <table class="table table-sm table-striped col-sm-12 col-xs-12">
+                <div class="col-sm-12 col-xs-12 table-responsive-xl" >
+                  <table class="table table-sm table-striped col-sm-12 col-xs-12" >
                     <thead>
                     <tr>
                       <th>Produto</th>
@@ -243,7 +243,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr *ngFor="let ip of itensPedido ">
+                    <tr *ngFor="let ip of itensPedido " >
                       <td>
                         <span [tooltip]="ip.produto" placement="top" show-delay="500">
                           {{ip.produto != null ? ip.produto.substring(0,60) : null}}
@@ -274,18 +274,23 @@
                           {{ip.tipoFrete}}
                         </span>
                       </td>
-                      <td><a class="nav-link linkPoint"  (click)="showChildModal(ip)">
-                        <span tooltip="Editar" placement="top" show-delay="500">
-                            <i class="fa fa-edit"></i>
-                          </span>
+                      <td >
+                        <div [hidden]="blnPedidoIntegrado">
+                          <a class="linkPoint"  (click)="showChildModal(ip)">
+                            <span tooltip="Editar" placement="top" show-delay="500">
+                              <i class="fa fa-edit"></i>
+                            </span>
                           </a>
+                        </div>
                       </td>
                       <td>
-                        <a class="nav-link linkPoint" (click)="ExcluirItemPedido(ip);"  >
-                        <span tooltip="Excluir" placement="top" show-delay="500">
-                          <img src="/assets/imagens/icons/excluir.png" class="mr-2" style="width: 20px">
-                          </span>
+                        <div [hidden]="blnPedidoIntegrado">
+                          <a class="linkPoint" (click)="ExcluirItemPedido(ip);"  >
+                            <span tooltip="Excluir" placement="top" show-delay="500">
+                              <i class="fa fa-minus-circle" style="color:red;"></i>
+                            </span>
                           </a>
+                        </div>
                       </td>
 
                     </tr>
@@ -301,7 +306,7 @@
                   <b>TOTAL:</b>
                 </div>
                 <div class="col-sm-8 col-xs-8">
-                  <p class="bg-light text-dark">{{totalPedido - numValorFrete + numValorDesconto | currency : 'R$'}}</p>
+                  <p class="bg-light text-dark">{{totalPedido | currency : 'R$'}}</p>
 
                 </div>
               </div>
@@ -312,7 +317,7 @@
               </div>
               <div class="row">
                 <div class="col-sm-3 col-xs-3">
-                  <button class="btn btn-primary pull-right btn-block" data-toggle="modal" data-target="#Fabrica" type="button" [disabled]="blnDesabilitaBotoes || blnPedidoIntegrado || pedido.id_Ped == null">
+                  <button class="btn btn-primary pull-right btn-block btn-sm" data-toggle="modal" data-target="#Fabrica" type="button" [disabled]="blnDesabilitaBotoes || blnPedidoIntegrado || pedido.id_Ped == null">
                     <img src="assets/imagens/icons/factory2.png" class="mr-2" style="width: 20px; color: white; ">
                     Fábrica
                 </button>
@@ -320,14 +325,14 @@
                 <div class="col-sm-1 col-xs-1"></div>
                 <div class="col-sm-3 col-xs-3">
                   <!-- <button class="btn btn-primary pull-right btn-block" data-toggle="modal" data-target="#Estoque" type="button" data-backdrop="static" data-keyboard="false" data-dismiss = "modal" data-whatever="@mdo" [disabled]="blnDesabilitaBotoes || blnPedidoIntegrado || pedido.id_Ped == null"> -->
-                    <button class="btn btn-primary pull-right btn-block" data-toggle="modal" data-target="#Estoque" type="button" data-backdrop="static" data-keyboard="false" data-dismiss = "modal" data-whatever="@mdo" [disabled]="blnDesabilitaBotoes || blnPedidoIntegrado || pedido.id_Ped == null">
+                    <button class="btn btn-primary pull-right btn-block btn-sm" data-toggle="modal" data-target="#Estoque" type="button" data-backdrop="static" data-keyboard="false" data-dismiss = "modal" data-whatever="@mdo" [disabled]="blnDesabilitaBotoes || blnPedidoIntegrado || pedido.id_Ped == null">
                     <img src="assets/imagens/icons/estoque.png" class="mr-2" style="width: 20px; color: white; ">
                     Estoque
                   </button>
                 </div>
                 <div class="col-sm-1 col-xs-1"></div>
                 <div class="col-sm-3 col-xs-3">
-                  <button class="btn btn-primary pull-right btn-block" data-toggle="modal" data-target="#Fabrica" type="button" [disabled]="blnDesabilitaBotoes ">
+                  <button class="btn btn-primary pull-right btn-block btn-sm" data-toggle="modal" data-target="#Fabrica" type="button" [disabled]="blnDesabilitaBotoes" (click)="AtualiazarItemPedido(true)">
                     <img src="assets/imagens/icons/atualizar.png" class="mr-2" style="width: 15px; color: white; ">
                     Atualizar
                   </button>
@@ -338,7 +343,7 @@
             <!-- ****************FINACNCEIRO *********************** -->
             <div id="Financeiro" class="tabcontent">
             <!-- <tab heading="Financeiro"> -->
-              <div class="row" style="border: 1px;">
+              <div class="row" style="border: 1px;" >
                 <div class="col-sm-12 col-xs-12 table-responsive-xl">
                   <div class="row">
                     <div class="col-sm-2 col-xs-2">
@@ -350,17 +355,16 @@
                       Tot.Itens
                     </div>
                     <div class="col-sm-2 col-xs-2">
-                      <input class="form-control" autocomplete="off" [attr.disabled]="true" value="{{totalPedido  | currency : 'R$'}}">
+                      <input class="form-control  form-control-sm" autocomplete="off" [attr.disabled]="true" value="{{totalPedido  | currency : 'R$'}}">
                     </div>
                     <div class="col-sm-1 col-xs-1">
                       Desconto(%)
                     </div>
                     <div class="col-sm-2 col-xs-2">
-                      <!-- <input type="number" pattern="\d*" maxlength="4" style="-moz-appearance:auto;"> -->
-                      <input #Desc_Por name="Desc_Por" class="form-control" formControlName="Desc_Por" placeholder="Desconto%" [disabled]="!blnItensPedido || blnItensPagto || ((totalPedido - totalPago) == 0)"  type="text" [allowNegativeNumbers]="false" mask="separator.2" maxlength="2" (keyup)="AtualizaValorPedido(Desc_Por.value,'Porcentagem')">
+                      <input #Desc_Por class="form-control  form-control-sm" [attr.disabled]="(!blnItensPedido || !blnItensPagto || blnPedidoIntegrado ) == true ? true : null"formControlName="Desc_Por" autocomplete="off" placeholder="Desconto%"   type="text" [allowNegativeNumbers]="false" mask="separator.2" (keyup)="AtualizaValorPedido(Desc_Por.value,'Porcentagem')">
                     </div>
                     <div class="col-sm-2 col-xs-2">
-                      <input #Desconto class="form-control" autocomplete="off" placeholder="Desconto" formControlName="Desconto"  prefix="R$ " type="text" [allowNegativeNumbers]="false" mask="separator.2" thousandSeparator="."  [disabled]="!blnItensPedido || blnItensPagto || ((totalPedido - totalPago) == 0)" (keyup)="AtualizaValorPedido(Desconto.value,'Desconto')">
+                      <input #Desconto class="form-control  form-control-sm" [attr.disabled]="(!blnItensPedido || !blnItensPagto || blnPedidoIntegrado) == true ? true : null"  formControlName="Desconto" autocomplete="off" placeholder="Desconto"   prefix="R$ " type="text" [allowNegativeNumbers]="false" mask="separator.2" thousandSeparator="."   (keyup)="AtualizaValorPedido(Desconto.value,'Desconto')">
                     </div>
                     <div class="col-sm-1 col-xs-1">
                       &nbsp;
@@ -369,7 +373,7 @@
                       Total (- desconto)
                     </div>
                     <div class="col-sm-2 col-xs-2">
-                      <input class="form-control" autocomplete="off" [attr.disabled]="true" value="{{(totalPedido + numValorFrete ) | currency : 'R$'}}">
+                      <input class="form-control  form-control-sm" autocomplete="off" [attr.disabled]="true" value="{{(totalPedido - numValorDesconto ) | currency : 'R$'}}">
                     </div>
                   </div>
                   <div class="row">
@@ -382,7 +386,7 @@
                       Frete
                     </div>
                     <div class="col-sm-2 col-xs-2">
-                        <input #VlFrete class="form-control" formControlName="VlFrete" autocomplete="off" placeholder="Frete" prefix="R$ " type="text" [allowNegativeNumbers]="false" mask="separator.2" thousandSeparator="." autocomplete="off" placeholder="Frete" [disabled]="!blnItensPedido" (keyup)="AtualizaValorPedido(VlFrete.value,'VlFrete')">
+                        <input #VlFrete class="form-control  form-control-sm" formControlName="VlFrete" autocomplete="off" placeholder="Frete" prefix="R$ " type="text" [allowNegativeNumbers]="false" mask="separator.2" thousandSeparator="." autocomplete="off" placeholder="Frete" [attr.disabled]="(!blnItensPedido || blnPedidoIntegrado) == true ? true : null" (keyup)="AtualizaValorPedido(VlFrete.value,'VlFrete')">
                         <!-- <input class="form-control" #VlFrete name="VlFrete" prefix="R$ " formControlName="VlFrete" type="text" [allowNegativeNumbers]="false" mask="separator.2" thousandSeparator="." autocomplete="off" placeholder="Frete" [attr.disabled]="blnDesabilitaCampos"> -->
                         <!-- <input class="form-control" autocomplete="off" placeholder="Frete" [attr.disabled]="blnDesabilitaCampos"> -->
                     </div>
@@ -393,7 +397,7 @@
                       Total a pagar(+frete - desc)
                     </div>
                     <div class="col-sm-2 col-xs-2">
-                      <input class="form-control" autocomplete="off" [attr.disabled]="true" value="{{(totalPedido + numValorFrete - numValorDesconto ) | currency : 'R$'}}">
+                      <input class="form-control  form-control-sm" autocomplete="off" [attr.disabled]="true" value="{{(totalPedido + numValorFrete - numValorDesconto ) | currency : 'R$'}}">
                     </div>
                     <div class="col-sm-1 col-xs-1">
                       &nbsp;
@@ -402,7 +406,7 @@
                       Saldo (não inclui frete)
                     </div>
                     <div class="col-sm-2 col-xs-2">
-                      <input name="obsMidia" class="form-control" formControlName="obsMidia" autocomplete="off" placeholder="Midia" [attr.disabled]="true" value="{{(totalPedido + numValorFrete - numValorDesconto) - totalPago | currency : 'R$'}}">
+                      <input name="obsMidia" class="form-control  form-control-sm" formControlName="obsMidia" autocomplete="off" placeholder="Midia" [attr.disabled]="true" value="{{(totalPedido - numValorDesconto) - totalPago | currency : 'R$'}}">
                     </div>
                   </div>
                   <div class="row">
@@ -452,18 +456,23 @@
                           <td>
                               {{fp.val_Fin | currency : 'R$'}}
                           </td>
-                          <td><a class="nav-link linkPoint"  (click)="AlterarFormaPagamentoModal(fp)">
-                            <span tooltip="Editar" placement="top" show-delay="500">
-                                <i class="fa fa-edit"></i>
-                              </span>
+                          <td>
+                            <div [hidden]="blnPedidoIntegrado">
+                              <a  class="linkPoint" (click)="AlterarFormaPagamentoModal(fp)">
+                                <span tooltip="Editar" placement="top" show-delay="500">
+                                  <i class="fa fa-edit"></i>
+                                </span>
                               </a>
+                            </div>
                           </td>
                           <td>
-                            <a class="nav-link linkPoint" (click)="ExcluirFormaPagamento(fp);"  >
-                            <span tooltip="Excluir" placement="top" show-delay="500">
-                              <img src="/assets/imagens/icons/excluir.png" class="mr-2" style="width: 20px">
-                              </span>
+                            <div [hidden]="blnPedidoIntegrado">
+                              <a class="linkPoint" (click)="ExcluirFormaPagamento(fp);"  >
+                                <span tooltip="Excluir" placement="top" show-delay="500">
+                                  <i class="fa fa-minus-circle" style="color:red;"></i>
+                                </span>
                               </a>
+                            </div>
                           </td>
                         </tr>
                         </tbody>
@@ -494,11 +503,14 @@
                           <td>{{ip.agencia}}</td>
                           <td>{{ip.num_Cheq}}</td>
                           <td>{{ip.valor | currency : 'R$'}}</td>
-                          <td><a class="nav-link linkPoint"  (click)="showChildModal(ip)">
-                            <span tooltip="Editar" placement="top" show-delay="500">
-                                <i class="fa fa-edit"></i>
-                              </span>
+                          <td>
+                            <div [hidden]="blnPedidoIntegrado">
+                              <a  class="linkPoint" (click)="AlteraItemPagamentoJanela(ip)">
+                                <span tooltip="Editar" placement="top" show-delay="500">
+                                  <i class="fa fa-edit"></i>
+                                </span>
                               </a>
+                            </div>
                           </td>
                         </tr>
                         </tbody>
@@ -514,21 +526,21 @@
               </div>
               <div class="row">
                 <div class="col-sm-3 col-xs-3">
-                  <button class="btn btn-primary pull-right btn-block" data-toggle="modal"  type="button" [disabled]="((totalPedido + numValorFrete - numValorDesconto) <= totalPago) || blnPedidoIntegrado" (click)="IncluirFormaPagamentoModal()">
+                  <button class="btn btn-primary pull-right btn-block btn-sm" data-toggle="modal"  type="button" [disabled]="((totalPedido + numValorFrete - numValorDesconto) <= totalPago) || blnPedidoIntegrado" (click)="IncluirFormaPagamentoModal()">
                     <img src="assets/imagens/icons/factory2.png" class="mr-2" style="width: 20px; color: white; ">
                     Incluir
                   </button>
                 </div>
                 <div class="col-sm-1 col-xs-1"></div>
                 <div class="col-sm-3 col-xs-3">
-                  <button class="btn btn-primary pull-right btn-block" data-toggle="modal" data-target="#Estoque" type="button" data-backdrop="static" data-keyboard="false" data-dismiss = "modal" data-whatever="@mdo" [disabled]="blnDesabilitaBotoes">
+                  <button class="btn btn-primary pull-right btn-block btn-sm" data-toggle="modal" data-target="#Estoque" type="button" data-backdrop="static" data-keyboard="false" data-dismiss = "modal" data-whatever="@mdo" [disabled]="blnDesabilitaBotoes">
                     <img src="assets/imagens/icons/estoque.png" class="mr-2" style="width: 20px; color: white; ">
                     Imprimir
                   </button>
                 </div>
                 <div class="col-sm-1 col-xs-1"></div>
                 <div class="col-sm-3 col-xs-3">
-                  <button class="btn btn-primary pull-right btn-block" data-toggle="modal" data-target="#Fabrica" type="button" [disabled]="blnDesabilitaBotoes">
+                  <button class="btn btn-primary pull-right btn-block btn-sm" data-toggle="modal" data-target="#Fabrica" type="button" [disabled]="blnDesabilitaBotoes" (click)="AtualizaFormaPagamento(true)">
                     <img src="assets/imagens/icons/atualizar.png" class="mr-2" style="width: 15px; color: white; ">
                     Atualizar
                   </button>
@@ -538,7 +550,7 @@
             <!-- </tab> -->
               <!-- ****************ENTREGA / ENCERRAMENTO *********************** -->
             <!-- <tab heading="Entrega/Encerramento"> -->
-            <div id="Entrega" class="tabcontent">
+            <div id="Entrega" class="tabcontent" >
               <div class="row" style="border: 1px;">
                 <div class="col-sm-12 col-xs-12 table-responsive-xl">
                   <div class="row">
@@ -572,7 +584,7 @@
                           Data Mínima:
                         </div>
                         <div class="col-sm-5 col-xs-5">
-                              <input class="form-control" formControlName="entregaMinima" name="entregaMinima" placeholder="dd/mm/aaaa" name="dtNascimento" ngbDatepicker #d2="ngbDatepicker"  >
+                              <input  class="form-control  form-control-sm" formControlName="entregaMinima" name="entregaMinima" placeholder="dd/mm/aaaa" [attr.disabled]="blnPedidoIntegrado == true ? true : null"  >
                         </div>
                       </div>
                       <div class="row">
@@ -590,10 +602,10 @@
                         <div class="col-sm-5 col-xs-5">
                           <div class="row">
                             <div class="col-sm-8 col-xs-8">
-                              <input class="form-control" placeholder="dd/mm/aaaa" formControlName="entrega" name="entrega" ngbDatepicker #d2="ngbDatepicker"  >
+                              <input  class="form-control  form-control-sm" placeholder="dd/mm/aaaa" formControlName="entrega" name="entrega" ngbDatepicker #d2="ngbDatepicker"  [disabled]="blnPedidoIntegrado">
                             </div>
                             <div class="col-sm-3 col-xs-3">
-                              <button class="btn btn-primary" (click)="d2.toggle()" type="button"><i class="fa fa-table "></i></button>
+                              <button [attr.disabled]="blnPedidoIntegrado == true ? true : null" class="btn btn-primary  btn-sm" (click)="d2.toggle()" type="button"><i class="fa fa-table "></i></button>
                             </div>
                           </div>
                         </div>
@@ -611,7 +623,7 @@
                           Período:
                         </div>
                         <div class="col-sm-5 col-xs-5">
-                          <select name="idPeriodo" class="form-control" formControlName="per_Ent" [value]="4" [attr.disabled]="blnDesabilitaCampos">
+                          <select name="idPeriodo" class="form-control  form-control-sm" formControlName="per_Ent" [value]="4" [attr.disabled]="blnPedidoIntegrado == true ? true : null">
                             <option *ngFor=  "let c of (periodo)" [value]="c.idPeriodo">{{c.descricao}}</option>
                           </select>
                         </div>
@@ -635,15 +647,15 @@
                         <div class="col-sm-1 col-xs-1"></div>
                         <div class="col-sm-1 col-xs-1">ddd: </div>
                         <div class="col-sm-2 col-xs-2">
-                          <input name="ddd" class="form-control" autocomplete="off" placeholder="DDD" >
+                          <input [attr.disabled]="blnPedidoIntegrado == true ? true : null" name="ddd" class="form-control  form-control-sm" autocomplete="off" placeholder="DDD" >
                         </div>
                         <div class="col-sm-1 col-xs-1">Fone: </div>
                         <div class="col-sm-2 col-xs-2">
-                          <input name="Fone" class="form-control" autocomplete="off" placeholder="Fone" >
+                          <input [attr.disabled]="blnPedidoIntegrado == true ? true : null" name="Fone" class="form-control  form-control-sm" autocomplete="off" placeholder="Fone" >
                         </div>
                         <div class="col-sm-1 col-xs-1">Ramal: </div>
                         <div class="col-sm-2 col-xs-2">
-                          <input name="Ramal" class="form-control" autocomplete="off" placeholder="Ramal" >
+                          <input [attr.disabled]="blnPedidoIntegrado == true ? true : null" name="Ramal" class="form-control  form-control-sm" autocomplete="off" placeholder="Ramal" >
                         </div>
                       </div>
                       <div class="row">
@@ -655,7 +667,7 @@
                         <div class="col-sm-2 col-xs-2">&nbsp;</div>
                         <div class="col-sm-7 col-xs-7">
                           <div class="form-check">
-                            <input checked class="form-check-input" type="checkbox" #chkEndCliente name="chkEndCliente" (change)="MesmoEnderecoCliente($event.target.checked)"/>
+                            <input checked class="form-check-input" type="checkbox" #chkEndCliente name="chkEndCliente" (change)="MesmoEnderecoCliente($event.target.checked)" [attr.disabled]="blnPedidoIntegrado == true ? true : null"/>
                             <label class="form-check-label" for="flexCheckDefault">
                               Entrega no Endereço do Cliente
                             </label>
@@ -677,7 +689,7 @@
                         <div class="col-sm-1 col-xs-1"></div>
                         <div class="col-sm-1 col-xs-1">UF <span style="color:red" tooltip="Campo Obrigatório" placement="top" show-delay="500">&nbsp;&nbsp;*</span></div>
                         <div class="col-sm-3  col-xs-3">
-                          <select formControlName="Uf" #Uf name="uf" class="form-control"  [attr.disabled]="blnCampoEndereco == true ? true : null" (change)="ValidaEndereco()">
+                          <select formControlName="Uf" #Uf name="uf" class="form-control  form-control-sm"  [attr.disabled]="blnCampoEndereco == true ? true : null" (change)="ValidaEndereco()">
                             <option *ngFor=  "let c of (estados)" [value]="c.uf">{{c.estado}}</option>
                           </select>
                         </div>
@@ -691,7 +703,7 @@
                         <div class="col-sm-1 col-xs-1">&nbsp;</div>
                         <div class="col-sm-1 col-xs-1">Cidade<span style="color:red" tooltip="Campo Obrigatório" placement="top" show-delay="500">&nbsp;&nbsp;*</span></div>
                         <div class="col-sm-9 col-xs-9">
-                          <input  formControlName="Cidade" #Cidade name="cidade" class="form-control"  autocomplete="off" placeholder="Cidade" [attr.disabled]="blnCampoEndereco == true ? true : null" (input)="ValidaEndereco()" style="text-transform:uppercase" >
+                          <input  formControlName="Cidade" #Cidade name="cidade" class="form-control  form-control-sm"  autocomplete="off" placeholder="Cidade" [attr.disabled]="blnCampoEndereco == true ? true : null" (input)="ValidaEndereco()" style="text-transform:uppercase" >
                         </div>
                       </div>
                       <div class="row">
@@ -703,7 +715,7 @@
                         <div class="col-sm-1 col-xs-1">&nbsp;</div>
                         <div class="col-sm-1 col-xs-1">Logradouro <span style="color:red" tooltip="Campo Obrigatório" placement="top" show-delay="500">&nbsp;&nbsp;*</span></div>
                         <div class="col-sm-9 col-xs-9">
-                          <input  formControlName="Logradouro" #Logradouro name="Logradouro" class="form-control" autocomplete="off" placeholder="Logradouro" [attr.disabled]="blnCampoEndereco == true ? true : null" (input)="ValidaEndereco()" style="text-transform:uppercase" >
+                          <input  formControlName="Logradouro" #Logradouro name="Logradouro" class="form-control  form-control-sm" autocomplete="off" placeholder="Logradouro" [attr.disabled]="blnCampoEndereco == true ? true : null" (input)="ValidaEndereco()" style="text-transform:uppercase" >
                         </div>
                       </div>
                       <div class="row">
@@ -715,12 +727,12 @@
                         <div class="col-sm-1 col-xs-1">&nbsp;</div>
                         <div class="col-sm-1 col-xs-1">Número <span style="color:red" tooltip="Campo Obrigatório" placement="top" show-delay="500">&nbsp;&nbsp;*</span></div>
                         <div class="col-sm-3 col-xs-3">
-                          <input  type="number" formControlName="NumeroCasa" #NumeroCasa name="NumeroCasa" class="form-control" autocomplete="off" placeholder="Número" [attr.disabled]="blnCampoEndereco == true ? true : null" (input)="ValidaEndereco()" style="text-transform:uppercase" >
+                          <input  type="number" formControlName="NumeroCasa" #NumeroCasa name="NumeroCasa" class="form-control  form-control-sm" autocomplete="off" placeholder="Número" [attr.disabled]="blnCampoEndereco == true ? true : null" (input)="ValidaEndereco()" style="text-transform:uppercase" >
                         </div>
                         <div class="col-sm-1 col-xs-1"></div>
                         <div class="col-sm-1 col-xs-1">Complemento</div>
                         <div class="col-sm-4 col-xs-4">
-                          <input  formControlName="Complemento" name="Complemento" class="form-control" autocomplete="off" placeholder="Complemento" [attr.disabled]="blnCampoEndereco == true ? true : null" style="text-transform:uppercase" >
+                          <input  formControlName="Complemento" name="Complemento" class= "form-control  form-control-sm" autocomplete="off" placeholder="Complemento" [attr.disabled]="blnCampoEndereco == true ? true : null" style="text-transform:uppercase" >
                         </div>
                       </div>
                       <div class="row">
@@ -732,7 +744,7 @@
                         <div class="col-sm-1 col-xs-1">&nbsp;</div>
                         <div class="col-sm-1 col-xs-1">Bairro <span style="color:red" tooltip="Campo Obrigatório" placement="top" show-delay="500">&nbsp;&nbsp;*</span></div>
                         <div class="col-sm-9 col-xs-9">
-                          <input formControlName="Bairro" #Bairro name="Bairro" class="form-control" autocomplete="off" placeholder="Bairro" [attr.disabled]="blnCampoEndereco == true ? true : null" (keyup)="ValidaEndereco()" style="text-transform:uppercase" >
+                          <input formControlName="Bairro" #Bairro name="Bairro" class="form-control  form-control-sm" autocomplete="off" placeholder="Bairro" [attr.disabled]="blnCampoEndereco == true ? true : null" (keyup)="ValidaEndereco()" style="text-transform:uppercase" >
                         </div>
                       </div>
                       <div class="row">
@@ -744,7 +756,7 @@
                         <div class="col-sm-1 col-xs-1">&nbsp;</div>
                         <div class="col-sm-1 col-xs-1">Pto Referencia</div>
                         <div class="col-sm-9 col-xs-9">
-                          <input formControlName="PtoReferencia" name="PtoRefer" class="form-control" autocomplete="off" placeholder="Referencia" style="text-transform:uppercase" >
+                          <input formControlName="PtoReferencia" name="PtoRefer" class="form-control  form-control-sm" autocomplete="off" placeholder="Referencia" style="text-transform:uppercase" >
                         </div>
                       </div>
                     </div>
@@ -774,7 +786,7 @@
                 &nbsp;
             </div>
             <div class="col-sm-8 col-xs-8">
-                <button (click)="EncerraPedido(pedidoForm.value)"type="button" class="btn btn-danger pull-right btn-block" [disabled]="!(blnItensPedido && blnItensPagto && ((totalPedido + numValorFrete - numValorDesconto) - totalPago) == 0 && blnMesmoEndereco && pedidoForm.valid && !blnPedidoIntegrado)" >
+                <button (click)="EncerraPedido(pedidoForm.value)"type="button" class="btn btn-danger pull-right btn-block btn-sm" [disabled]="!(blnItensPedido && blnItensPagto && ((totalPedido + numValorFrete - numValorDesconto) - totalPago) == 0 && blnMesmoEndereco && pedidoForm.valid && !blnPedidoIntegrado)" >
                     <i class="fa fa-save"></i> Confirmar pedido
                 </button>
                 {{blnItensPedido}} -- blnItensPedido
@@ -805,7 +817,7 @@
       <!-- Modal Header -->
       <div class="modal-header">
         <h4 class="modal-title">Itens de Estoque</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <button type="button" class="close btn-sm" data-dismiss="modal">&times;</button>
       </div>
 
       <!-- Modal Inserir itensPedido -->
@@ -828,13 +840,13 @@
             Pal.Chave:
           </div>
           <div class="col-sm-4 col-xs-4 ">
-            <input #palavraChave name="palavraChave" class="form-control"  autocomplete="off" placeholder="Palavra Chave" (input)="AtribuiValor(palavraChave.value)">
+            <input #palavraChave name="palavraChave" class="form-control  form-control-sm"  autocomplete="off" placeholder="Palavra Chave" (input)="AtribuiValor(palavraChave.value)">
           </div>
           <div class="col-sm-1 col-xs-1 ">
             &nbsp;
           </div>
           <div class="col-sm-3 col-xs-3 ">
-            <button class="btn btn-primary pull-right btn-block" type="button" [disabled]="!blnCriterio"
+            <button class="btn btn-primary pull-right btn-block btn-sm" type="button" [disabled]="!blnCriterio"
             (click)="ConsultarItensEstoque(Id_Alm,palavraChave)">
               <img src="assets/imagens/icons/pesquisa2.png" class="mr-2" style="width: 20px; color: white; ">
               Pesquisar
@@ -854,7 +866,7 @@
             Estoque:
           </div>
           <div class="col-sm-4 col-xs-4 ">
-            <select #Id_Alm name="Id_Alm" class="form-control"  >
+            <select #Id_Alm name="Id_Alm" class="form-control  form-control-sm"  >
               <option *ngFor=  "let c of (estoques)" [value]="c.id_Alm">{{c.descr}}</option>
             </select>
           </div>
@@ -862,7 +874,7 @@
             &nbsp;
           </div>
           <div class="col-sm-3 col-xs-3 ">
-            <input name="qtdItens" class="form-control"  autocomplete="off" placeholder="Qtd Itens" [value]="qtdItensPesquisa">
+            <input name="qtdItens" class="form-control  form-control-sm"  autocomplete="off" placeholder="Qtd Itens" [value]="qtdItensPesquisa">
           </div>
         </div>
         <div class="row">
@@ -909,12 +921,12 @@
       <div class="modal-footer">
         <div class="row">
           <div class="col-sm-6 col-xs-6 ">
-            <button class="btn btn-primary pull-right btn-block" type="button" (click)="SalvarItensEstoque(itensEstoque)" [disabled]="!blnHabilitaInserirItensEstqoue" data-dismiss="modal">
+            <button class="btn btn-primary pull-right btn-block btn-sm" type="button" (click)="SalvarItensEstoque(itensEstoque)" [disabled]="!blnHabilitaInserirItensEstqoue" data-dismiss="modal">
               Inserir
             </button>
           </div>
           <div class="col-sm-6 col-xs-6 ">
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+            <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Fechar</button>
           </div>
         </div>
       </div>
@@ -926,8 +938,8 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title pull-left">Alteração de Item de Pedido</h4>
-        <button type="button" class="close pull-right" aria-label="Close" (click)="hideChildModal()">
+        <h4 class="modal-title pull-left">Alteração do Item do Pedido</h4>
+        <button type="button" class="close pull-right btn-sm" aria-label="Close" (click)="hideChildModal()">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -951,7 +963,7 @@
             Quantidade:
           </div>
           <div class="col-sm-3 col-xs-3 ">
-            <input name="Quantid" class="form-control" placeholder="Nº Pedido" [value]="itensPedido == null ? '' : itensPedidoAlteracao.quantid">
+            <input name="Quantid" class="form-control  form-control-sm" placeholder="Nº Pedido" [value]="itensPedido == null ? '' : itensPedidoAlteracao.quantid" [attr.disabled]="true">
           </div>
           <div class="col-sm-1 col-xs-1 ">
               Frete:
@@ -959,14 +971,14 @@
           <div class="col-sm-5 col-xs-5 ">
             <div class="row ">
               <div class="form-check col-sm-4 col-xs-4">
-                <input type="radio" class="form-check-input" name="tipoFrete" [checked]="itensPedido == null ? '' : itensPedidoAlteracao.tipoFrete == 'CLIENTE' ? true : false " > cliente
+                <input type="radio" class="form-check-input" name="tipoFrete" value="C" [checked]="itensPedido == null ? '' : itensPedidoAlteracao.tipoFrete == 'CLIENTE' ? true : false "  (change)="ClickTipoFrete($event.target.value)"> cliente
               </div>
               <div class="form-check col-sm-4 col-xs-4">
-                <input type="radio" class="form-check-input" name="tipoFrete"  [checked]="itensPedido == null ? '' : itensPedidoAlteracao.tipoFrete == 'FÁBRICA' ? true : false " > fábrica
+                <input type="radio" class="form-check-input" name="tipoFrete" value="F"  [checked]="itensPedido == null ? '' : itensPedidoAlteracao.tipoFrete == 'FÁBRICA' ? true : false " (change)="ClickTipoFrete($event.target.value)"> fábrica
               </div>
               <!-- <div class="form-check disabled"> -->
               <div class="form-check disabled">
-                <input type="radio" class="form-check-input" name="tipoFrete" [checked]="itensPedido == null ? '' : itensPedidoAlteracao.tipoFrete == 'TERCEIROS' ? true : false " > terceiros
+                <input type="radio" class="form-check-input" name="tipoFrete" value="T" [checked]="itensPedido == null ? '' : itensPedidoAlteracao.tipoFrete == 'TERCEIROS' ? true : false " (change)="ClickTipoFrete($event.target.value)"> terceiros
               </div>
               <!-- <div class=" "><input type="radio" [checked]="itensPedido == null ? '' : itensPedidoAlteracao.TipoFrete == 'CLIENTE' ? true : false " > cliente</div>
               <div class="col-sm-4 col-xs-4 "><input type="radio" [checked]="itensPedido == null ? '' : itensPedidoAlteracao.TipoFrete == 'FÁBRICA' ? true : false " > fabrica</div>
@@ -984,13 +996,13 @@
             Vl. Tabela:
           </div>
           <div class="col-sm-3 col-xs-3 ">
-            <input name="Quantid" class="form-control" placeholder="Nº Pedido" [value]="itensPedido == null ? '' :itensPedidoAlteracao.quantid">
+            <input name="Quantid" class="form-control  form-control-sm" placeholder="Nº Pedido" [value]="itensPedido == null ? '' :itensPedidoAlteracao.valuni | currency : 'R$'" [attr.disabled]="true">
           </div>
           <div class="col-sm-2 col-xs-2 ">
               Desconto(%):
           </div>
           <div class="col-sm-4 col-xs-4 ">
-            <input name="Quantid" class="form-control" placeholder="Nº Pedido" [value]="itensPedido == null ? '' :itensPedidoAlteracao.quantid ">
+            <input #Desc_itPedido name="Quantid" class="form-control  form-control-sm" placeholder="Desconto(%)" type="text" [allowNegativeNumbers]="false" mask="separator.2" maxlength="2" (keyup)="AtualizaValorItempedido(Desc_itPedido.value,'porc')">
           </div>
         </div>
         <div class="row">
@@ -1003,13 +1015,13 @@
             Unitário:
           </div>
           <div class="col-sm-3 col-xs-3 ">
-            <input name="Quantid" class="form-control" placeholder="Nº Pedido" [value]="itensPedido == null ? '' :itensPedidoAlteracao.valuni | currency : 'R$'">
+            <input #VlUnitario placeholder="Valor Unit." name="vlUnitario"class="form-control  form-control-sm" type="text"  [value]="itensPedido == null ? '' :itensPedidoAlteracao.valuni | currency : 'R$'" (keyup)="AtualizaValorItempedido(VlUnitario.value,'valor')" (keypress)="IsNumber($event)" (blur)="AtribuiValorFormat()">
           </div>
           <div class="col-sm-2 col-xs-2 ">
               Vl. Total:
           </div>
           <div class="col-sm-4 col-xs-4 ">
-            <input name="Quantid" class="form-control" placeholder="Nº Pedido" [value]="itensPedido == null ? '' :itensPedidoAlteracao.valtot | currency : 'R$'">
+            <input #VlTotalItemPed  name="VlTotalItemPed" class="form-control  form-control-sm" placeholder="Valor Total" [value]="itensPedido == null ? '' :itensPedidoAlteracao.valtot | currency : 'R$'" [attr.disabled]="true">
           </div>
         </div>
       </div>
@@ -1018,12 +1030,12 @@
       <div class="modal-footer">
         <div class="row">
           <div class="col-sm-6 col-xs-6 ">
-            <button class="btn btn-primary pull-right btn-block" type="button" (click)="SalvarItensEstoque(itensEstoque)" [disabled]="!blnHabilitaInserirItensEstqoue" data-dismiss="modal">
+            <button class="btn btn-primary pull-right btn-block btn-sm" type="button" (click)="AlterarItemPedido(itensPedidoAlteracao)" data-dismiss="modal">
               Alterar
             </button>
           </div>
           <div class="col-sm-6 col-xs-6 ">
-            <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="hideChildModal()">Fechar</button>
+            <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal" (click)="hideChildModal()">Fechar</button>
           </div>
         </div>
       </div>
@@ -1038,7 +1050,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title pull-left">Plano de Pagamento do Pedido</h4>
-        <button type="button" class="close pull-right" aria-label="Fechar" (click)="AlterarFormapagamentoFechar()">
+        <button type="button" class="close pull-right btn-sm" aria-label="Fechar" (click)="AlterarFormapagamentoFechar()">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -1054,8 +1066,8 @@
             Saldo Devedor:
           </div>
           <div class="col-sm-5 col-xs-5 ">
-            <!-- <input class="form-control" currencyMask  class="form-control"  [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" autocomplete="off" #val_Fin value="{{formaPagto == null ? '' : formaPagto.val_Fin | currency : 'R$'}}" [attr.disabled]="true" value="{{totalPedido - totalPago | currency : 'R$'}}"> -->
-            <input  class="form-control"  autocomplete="off" [attr.disabled]="true" value="{{(totalPedido + numValorFrete - numValorDesconto) - totalPago | currency : 'R$'}}">
+            <!-- <input class="form-control" currencyMask  class="form-control  form-control-sm"  [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" autocomplete="off" #val_Fin value="{{formaPagto == null ? '' : formaPagto.val_Fin | currency : 'R$'}}" [attr.disabled]="true" value="{{totalPedido - totalPago | currency : 'R$'}}"> -->
+            <input  class="form-control  form-control-sm"  autocomplete="off" [attr.disabled]="true" value="{{(totalPedido - numValorDesconto) - totalPago | currency : 'R$'}}">
           </div>
         </div>
         <div class="row">
@@ -1068,8 +1080,8 @@
             Valor à Amortizar:
           </div>
           <div class="col-sm-5 col-xs-5 ">
-            <input (keyup)="SetarValidacaoGravacao()" class="form-control" prefix="R$ "type="text" [allowNegativeNumbers]="true" mask="separator.2" thousandSeparator="."  #val_Fin2 value ="">
-              <!-- <input currencyMask    class="form-control"  [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" autocomplete="off" #val_Fin2 value="{{formaPagto == null ? '' : formaPagto.val_Fin | currency : 'R$'}}"> -->
+            <input (keyup)="LimpaCampos('valorAmortizar')" [attr.disabled]="blnAlterarFormaPagto == true ? true : null" class="form-control" prefix="R$ "type="text" [allowNegativeNumbers]="true" mask="separator.2" thousandSeparator="."  #val_Fin2 value ="">
+              <!-- <input currencyMask    class="form-control  form-control-sm"  [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" autocomplete="off" #val_Fin2 value="{{formaPagto == null ? '' : formaPagto.val_Fin | currency : 'R$'}}"> -->
           </div>
         </div>
         <div class="row">
@@ -1083,10 +1095,10 @@
           </div>
           <div class="col-sm-5 col-xs-5 ">
             <!-- <select [attr.disabled]="false"> -->
-            <select #id_Forma name="id_Forma" class="form-control" value="{{formaPagto == null ? '' : formaPagto.id_Forma}}" (change)="SetarValidacaoGravacao()">
+            <select #id_Forma name="id_Forma" class="form-control  form-control-sm" value="{{formaPagto == null ? '' : formaPagto.id_Forma}}" (change)="SetarValidacaoGravacao('formaPagto')" [attr.disabled]="blnFormapagto == true ? true : null || blnAlterarFormaPagto == true ? true : null">
               <option *ngFor=  "let c of (formaPagtoDominio)" [value]="c.id_Forma">{{c.formaPag}}</option>
             </select>
-            <!-- <input class="form-control" autocomplete="off" [attr.disabled]="true" value="{{formaPagto == null ? '' : formaPagto.formaPag}}"> -->
+            <!-- <input class="form-control  form-control-sm" autocomplete="off" [attr.disabled]="true" value="{{formaPagto == null ? '' : formaPagto.formaPag}}"> -->
           </div>
         </div>
         <div class="row">
@@ -1105,19 +1117,19 @@
             Nº Parc.:
           </div>
           <div class="col-sm-2 col-xs-2 ">
-            <select #NumParcelas class="form-control" (change)="SetarValorParcela()">
+            <select #NumParcelas class="  form-control-sm" (change)="SetarValorParcela()" [attr.disabled]="blnOutraFormas == true ? true : null">
               <option *ngFor=  "let c of (lstNumeroParcelas)" [value]="c">{{c}}</option>
             </select>
-            <!-- <input #NumParcelas type="number" [attr.disabled]="blnOutraFormas == true ? true : null" class="form-control" autocomplete="off" value="{{formaPagto == null ? '' : formaPagto.tot_Parc}}" (keyup)="SetarValidacaoGravacao()"> -->
+            <!-- <input #NumParcelas type="number" [attr.disabled]="blnOutraFormas == true ? true : null" class="form-control  form-control-sm" autocomplete="off" value="{{formaPagto == null ? '' : formaPagto.tot_Parc}}" (keyup)="SetarValidacaoGravacao()"> -->
           </div>
           <div class="col-sm-1 col-xs-1 ">
             Valor:
           </div>
           <div class="col-sm-2 col-xs-2 ">
-            <input class="form-control" [attr.disabled]="true" autocomplete="off" value="" (keyup)="SetarValidacaoGravacao()" (mouseup)="SetarValidacaoGravacao()" mask="separator.2" thousandSeparator="." #ValorParcela>
+            <input class="form-control  form-control-sm" [attr.disabled]="true" autocomplete="off" value="" mask="separator.2" thousandSeparator="." #ValorParcela >
           </div>
           <div class="col-sm-1 col-xs-1 ">
-            <input type="checkbox" class="form-control" [attr.disabled]="blnOutraFormas" autocomplete="off" (keyup)="SetarValidacaoGravacao()">
+            <input type="checkbox" class="form-control  form-control-sm" [attr.disabled]="blnAlterarFormaPagto == true ? true : null" autocomplete="off" (keyup)="SetarValidacaoGravacao('imbuteFrete')" [attr.disabled]="blnOutraFormas == true ? true : null">
           </div>
           <div class="col-sm-2 col-xs-2 ">
             Imbute frete
@@ -1138,25 +1150,25 @@
             1º Chq.:
           </div>
           <div class="col-sm-2 col-xs-2 ">
-            <input class="form-control" [attr.disabled]="blnCheques == true ? true : null" autocomplete="off"  maxlength="6" value="" #cheque (keyup)="SetarValidacaoGravacao()">
+            <input class="form-control  form-control-sm" [attr.disabled]="(blnCheques == true ? true : null) && !(blnAlterarFormaPagto == true ? true : null)" autocomplete="off"  maxlength="6" value="" #cheque (keyup)="SetarValidacaoGravacao('cheque')">
           </div>
           <div class="col-sm-1 col-xs-1 ">
             Banco:
           </div>
           <div class="col-sm-2 col-xs-2 ">
-            <input class="form-control" [attr.disabled]="blnCheques == true ? true : null" autocomplete="off"  maxlength="3" value="" #banco (keyup)="SetarValidacaoGravacao()">
+            <input class="form-control  form-control-sm" [attr.disabled]="(blnCheques == true ? true : null) && !(blnAlterarFormaPagto == true ? true : null)" autocomplete="off"  maxlength="3" value="" #banco (keyup)="SetarValidacaoGravacao('cheque')">
           </div>
           <div class="col-sm-1 col-xs-1 ">
             Agência:
           </div>
           <div class="col-sm-2 col-xs-2 ">
-            <input class="form-control" [attr.disabled]="blnCheques == true ? true : null" autocomplete="off"  maxlength="4" value="" #agencia (keyup)="SetarValidacaoGravacao()">
+            <input class="form-control  form-control-sm" [attr.disabled]="(blnCheques == true ? true : null) && !(blnAlterarFormaPagto == true ? true : null)" autocomplete="off"  maxlength="4" value="" #agencia (keyup)="SetarValidacaoGravacao('cheque')">
           </div>
           <div class="col-sm-1 col-xs-1 ">
             Praça:
           </div>
           <div class="col-sm-2 col-xs-2 ">
-            <input class="form-control" [attr.disabled]="blnCheques == true ? true : null" autocomplete="off"  maxlength="3" value="" #praca (keyup)="SetarValidacaoGravacao()">
+            <input class="form-control  form-control-sm" [attr.disabled]="(blnCheques == true ? true : null) && !(blnAlterarFormaPagto == true ? true : null)" autocomplete="off"  maxlength="3" value="" #praca (keyup)="SetarValidacaoGravacao('cheque')">
           </div>
         </div>
         <div class="row">
@@ -1177,7 +1189,7 @@
             Nº Autorização
           </div>
           <div class="col-sm-5 col-xs-5 ">
-            <input #autorizacao class="form-control"  autocomplete="off" maxlength="6" value="" (keyup)="SetarValidacaoGravacao()" [attr.disabled]="blnAutorizacao == true ? true : null">
+            <input #autorizacao class="form-control  form-control-sm"  autocomplete="off" maxlength="6" value="" (keyup)="SetarValidacaoGravacao('autorizacao')" [attr.disabled]="(blnAutorizacao == true ? true : null) && (blnAlterarFormaPagtoNumparc == true ? true : null)">
           </div>
         </div>
         <div class="row">
@@ -1189,16 +1201,112 @@
       <div class="modal-footer">
         <div class="row">
           <div class="col-sm-6 col-xs-6 ">
-            <button class="btn btn-primary pull-right btn-block" type="button" (click)="SalvarFormaPagamento(formaPagto)" [disabled]="blnGravaFormaPagto" data-dismiss="modal">
+            <button class="btn btn-primary pull-right btn-block btn-sm" type="button" (click)="SalvarFormaPagamento(formaPagto)" [disabled]="(blnGravaFormaPagto == true ? true : null) && (blnAlterarFormaPagtoNumparc == true ? true : null)" data-dismiss="modal">
               Gravar
             </button>
           </div>
           <div class="col-sm-6 col-xs-6 ">
-            <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="AlterarFormapagamentoFechar()">Fechar</button>
+            <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal" (click)="AlterarFormapagamentoFechar()">Fechar</button>
           </div>
         </div>
       </div>
     </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal EDITAR ITEMPAGAMENTO -->
+<div bsModal #AlterarItemPagamentoModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Alteração do Item de Pagamento</h4>
+        <button type="button" class="close pull-right btn-sm" aria-label="Close" (click)="hideAlterarItemPagamentoModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <!-- Modal body -->
+      <div class="modal-body ">
+        <div class="row">
+          <div class="col-sm-3 col-xs-3 ">
+            Forma de Pagamento:
+          </div>
+          <div class="col-sm-8 col-xs-8 ">
+            {{itemPagtoEditavel == null ? "" : itemPagtoEditavel.formaPag }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-1 col-xs-1 ">
+            &nbsp;
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-1 col-xs-1 ">
+            Valor:
+          </div>
+          <div class="col-sm-3 col-xs-3 ">
+            <input name="ValoritemPagto" class="form-control  form-control-sm" placeholder="Valor" [value]="itemPagtoEditavel == null ? '' : itemPagtoEditavel.valor | currency : 'R$' " [attr.disabled]="true">
+          </div>
+          <div class="col-sm-2 col-xs-2 ">
+              Vencimento:
+          </div>
+          <div class="col-sm-5 col-xs-5 ">
+            <div class="row ">
+              <input name="Vencimento" class="form-control form-control-sm" placeholder="Vencimento" [value]="itemPagtoEditavel == null ? '' : itemPagtoEditavel.dt_Venc | date: 'dd/MM/yyyy' " [attr.disabled]="true">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-1 col-xs-1 ">
+            &nbsp;
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-1 col-xs-1 ">
+            1º Chq.:
+          </div>
+          <div class="col-sm-2 col-xs-2 ">
+            <input class="form-control  form-control-sm" [attr.disabled]="blnGravaitemPagto == true ? true : null" autocomplete="off"  maxlength="6" [value]="itemPagtoEditavel == null ? '' : itemPagtoEditavel.num_Cheq" #chequeItemPagto >
+          </div>
+          <div class="col-sm-1 col-xs-1 ">
+            Banco:
+          </div>
+          <div class="col-sm-2 col-xs-2 ">
+            <input class="form-control  form-control-sm" [attr.disabled]="blnGravaitemPagto == true ? true : null" autocomplete="off"  maxlength="3" [value]="itemPagtoEditavel == null ? '' : itemPagtoEditavel.banco" #bancoItemPagto >
+          </div>
+          <div class="col-sm-1 col-xs-1 ">
+            Agência:
+          </div>
+          <div class="col-sm-2 col-xs-2 ">
+            <input class="form-control  form-control-sm" [attr.disabled]="blnGravaitemPagto == true ? true : null" autocomplete="off"  maxlength="4" [value]="itemPagtoEditavel == null ? '' : itemPagtoEditavel.agencia" #agenciaItemPagto >
+          </div>
+          <div class="col-sm-1 col-xs-1 ">
+            Praça:
+          </div>
+          <div class="col-sm-2 col-xs-2 ">
+            <input class="  form-control-sm" [attr.disabled]="blnGravaitemPagto == true ? true : null" autocomplete="off"  maxlength="3" [value]="itemPagtoEditavel == null ? '' : itemPagtoEditavel.praca" #pracaItemPagto >
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-1 col-xs-1 ">
+            &nbsp;
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <div class="row">
+          <div class="col-sm-6 col-xs-6 ">
+            <button class="btn btn-primary pull-right btn-block btn-sm" type="button" (click)="AlterarItemPedido(itensPedidoAlteracao)" data-dismiss="modal" [attr.disabled]="blnGravaitemPagto == true ? true : null">
+              Alterar
+            </button>
+          </div>
+          <div class="col-sm-6 col-xs-6 ">
+            <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal" (click)="hideAlterarItemPagamentoModal()">Fechar</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

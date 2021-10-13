@@ -13,6 +13,7 @@ import { ClientesRouting } from './clientes.routing';
 import { ClientesComponent } from './clientes.component';
 import { ClientesService } from './clientes.service';
 import { ClientesListComponent } from './clientes-list/clientes-list.component';
+import { ClienteListSortableHeader } from './clientes-list/sortable.directive';
 
 const maskConfig: Partial<IConfig> = {  validation: false,};
 
@@ -21,7 +22,7 @@ const maskConfig: Partial<IConfig> = {  validation: false,};
     DxValidatorModule,
     CommonModule, FormsModule, HttpClientModule, ClientesRouting,SharedModule.forRoot(), ModalModule.forRoot(),NgxMaskModule.forRoot(maskConfig)],
   exports: [],
-  declarations: [ClientesComponent, ClientesListComponent],
+  declarations: [ClientesComponent, ClientesListComponent,ClienteListSortableHeader],
   providers: [ClientesService], //,ClubeDeactivateGuard, ClubeResolverGuard],
 })
 export class ClientesModule {}

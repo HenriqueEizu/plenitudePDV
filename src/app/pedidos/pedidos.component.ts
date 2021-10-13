@@ -38,6 +38,8 @@ export class PedidosComponent implements OnInit {
 
   @ViewChild('AlterarFormaPagtoModal') public AlterarFormaPagtoModal:ModalDirective;
 
+  @ViewChild('AlterarItemPagamentoModal') public AlterarItemPagamentoModal:ModalDirective;
+
   private blnDataEntrega = new BehaviorSubject<any>(false);
 
   get isDataEntrega() {
@@ -72,6 +74,7 @@ export class PedidosComponent implements OnInit {
   idcli : any;
   idEndereco : any;
   idEnderecoTipo : any;
+  endCliente : Endereco;
   idPessoa : any;
   data : string;
   dataMin : any;
@@ -85,6 +88,7 @@ export class PedidosComponent implements OnInit {
   lstItensPagto : ItemPagamento[];
   formaPagto : FormaPagamento = null;
   itemPagto : ItemPagamento = null;
+  itemPagtoEditavel : ItemPagamento = null;
   estoques : Estoque[];
   formaPagtoDominio : FormaPagamento[];
   blnCriterio : Boolean = false;
@@ -98,12 +102,10 @@ export class PedidosComponent implements OnInit {
   totalPedido : number ;
   totalPago : number ;
   usuarioLogado : Usuario;
-  blnGravaFormaPagto : Boolean = true;
-  blnOutraFormas : Boolean = true;
-  blnCheques : Boolean = true;
-  blnAutorizacao : Boolean = true;
+  clientePedido :  Cliente;
+
   strOperacaoFormaPagto : string = null;
-  currFormapagto;
+  currFormapagto : ItemPagamento;
   retornoRecalculaped : RetornoCalculaPedido;
   blnItensPedido : Boolean = false;
   blnItensPagto : Boolean = false;
@@ -115,7 +117,18 @@ export class PedidosComponent implements OnInit {
   blnClienteInvalido : Boolean = false;
   numValorFrete : number = 0;
   numValorDesconto : number = 0;
-
+  strTipoFrete : string;
+  blnAlterarFormaPagto : boolean = false;
+  blnAlterarFormaPagtoNumparc : boolean = true;
+  blnGravaitemPagto : boolean = true;
+  // ******* Form forma pagto ********
+  blnFormaPagtoPlanoPagto: boolean ;
+  blnOutraFormas : Boolean = true;
+  blnCheques : Boolean = true;
+  blnAutorizacao : Boolean = true;
+  blnGravaFormaPagto : Boolean = true;
+  blnFormapagto : boolean = true;
+  // ******* Form forma pagto ********
 
   @Output() increaseQty = new EventEmitter<ItensEstoque>()
   @Output() decreaseQty = new EventEmitter<ItensEstoque>()
@@ -139,9 +152,12 @@ export class PedidosComponent implements OnInit {
   @ViewChild('VlFrete') VlFreteInput: ElementRef;
   @ViewChild('Desc_Por') Desc_PorInput: ElementRef;
   @ViewChild('Desconto') DescontoInput: ElementRef;
-
+  @ViewChild('Desc_itPedido') Desc_itPedidoInput: ElementRef;
+  @ViewChild('VlUnitario') VlUnitarioInput: ElementRef;
+  @ViewChild('VlTotalItemPed') VlTotalItemPedInput: ElementRef;
 
   @ViewChild('chkEndCliente') chkEndClienteInput: ElementRef;
+
 
 
 
@@ -215,49 +231,24 @@ export class PedidosComponent implements OnInit {
       this.blnDesabilitaCampos = this.pedido.situacao == 1 ? null :  "true";
       this.blnDesabilitaBotoes = false
       if (this.pedido.entrega != null)
-      this.pedido.entrega = this.ConvertDataJson(this.pedido.entrega,0);
+        this.pedido.entrega = this.ConvertDataJson(this.pedido.entrega,0);
       this.data = formatDate(this.pedido.dtPed,"dd/MM/yyyy","en-US");
       this.dataMinima = this.ConvertDataJson(this.pedido.entrega,31);
       this.blnPedidoIntegrado = this.pedido.situacao == 4;
       this.blnClienteInvalido = true;
       this.numValorFrete = this.pedido.vlFrete;
       this.numValorDesconto = this.pedido.desconto;
-      console.log("pedido*************VlFrete********");
-      console.log(this.pedido.vlFrete)
-    }
-
-
-
-    this.pedidoService.GetItensPedido(this.nNumeroIped == null ? 0 : this.nNumeroIped).subscribe((ie : ItensPedido[]) => {
-      this.itensPedido = ie.filter(c => c.quantid > 0);
-      this.totalPedido = ie.reduce((sum, current) => sum + current.valtot, 0);
-      this.totalPedido = this.totalPedido + this.numValorFrete - this.numValorDesconto;
-      this.itensPedidoAlteracao = ie[0]
-      this.blnItensPedido = this.itensPedido.length > 0
-      console.log("blnItenspedido");
-      console.log(this.blnItensPedido);
-      console.log("totalPedido");
-      console.log(this.totalPedido);
-    });
-
-    this.pedidoService.GetFormaPagamento(this.nNumeroIped == null ? 0 : this.nNumeroIped).subscribe((ie : FormaPagamento[]) => {
-      this.lstFormaPagto = ie.filter(c => c.id_Frp > 0);
-      console.log(ie);
-      this.formaPagto = ie[0];
-      this.totalPago = ie.reduce((sum, current) => sum + current.val_Fin, 0);
-      this.pedidoService.GetItensPagamento(ie[0].id_Frp == null ? 0 : ie[0].id_Frp).subscribe((ip : ItemPagamento[]) => {
-          this.lstItensPagto = ip.filter(c => c.id_Frp > 0);
-          this.itemPagto = ip[0];
-          this.blnItensPagto = this.lstItensPagto.length > 0
-          console.log("blnItensPagto");
-          console.log(this.lstItensPagto);
-          console.log(this.blnItensPagto);
-          console.log("totalPago");
-          console.log(this.totalPago);
+      this.clienteService.GetIdCliente(this.pedido.id_Cli).subscribe((es : Cliente) => {
+        this.clientePedido = es;
         });
 
-    });
+      console.log("pedido*************VlFrete********");
+      console.log(this.pedido.desc_Por)
+    }
 
+    this.AtualiazarItemPedido(false);
+
+    this.AtualizaFormaPagamento(false);
 
     this.pedidoForm = this.formBuilder.group({
       id_Ped : [this.pedido.id_Ped],
@@ -274,22 +265,53 @@ export class PedidosComponent implements OnInit {
       per_Ent : this.formBuilder.control(this.pedido.per_Ent == null ? "T" : this.pedido.per_Ent),
       entrega : this.formBuilder.control(this.pedido.entrega == null ? this.dataMin : this.pedido.entrega,[Validators.required,this.ValidaDataEntrega]),
       entregaMinima: this.formBuilder.control(this.pedido.entrega == null ? this.dataMin : this.dataMinima),
-      CEP: this.formBuilder.control(this.pedido.endereco.cep),
-      Uf: this.formBuilder.control(this.pedido.endereco.uf),
-      Cidade: this.formBuilder.control(this.pedido.endereco.localidade),
-      NumeroCasa: this.formBuilder.control(this.pedido.endereco.numero),
+      CEP: this.formBuilder.control(this.pedido.endereco.cep,[Validators.required]),
+      Uf: this.formBuilder.control(this.pedido.endereco.uf,[Validators.required]),
+      Cidade: this.formBuilder.control(this.pedido.endereco.localidade,[Validators.required]),
+      NumeroCasa: this.formBuilder.control(this.pedido.endereco.numero,[Validators.required]),
       Complemento: this.formBuilder.control(this.pedido.endereco.complemento),
-      Logradouro: this.formBuilder.control(this.pedido.endereco.logradouro),
-      Bairro: this.formBuilder.control(this.pedido.endereco.bairro),
+      Logradouro: this.formBuilder.control(this.pedido.endereco.logradouro,[Validators.required]),
+      Bairro: this.formBuilder.control(this.pedido.endereco.bairro,[Validators.required]),
       PtoReferencia: this.formBuilder.control(this.pedido.endereco.pontoReferencia),
       VlFrete : this.formBuilder.control(String(this.pedido.vlFrete == null ? "0" : this.pedido.vlFrete).replace(".",",")),
-      Desc_Por : this.formBuilder.control(String(this.pedido.desc_Por == null ? "0" : this.pedido.desc_Por).replace(".",",")),
+      Desc_Por : this.formBuilder.control(String(this.pedido.desc_Por == null ? "0" : this.pedido.desc_Por)),
       Desconto : this.formBuilder.control(String(this.pedido.desconto == null ? "0" : this.pedido.desconto).replace(".",","))
       // Entrega : this.formBuilder.control(this.pedido.Entrega == null ? this.dataMin : this.pedido.Entrega,[Validators.required,this.ValidaDataEntrega3(this.pedido)]),
     },{validator:PedidosComponent.ValidaMidia});
 
     document.getElementById('AbaProdutos').click();
 
+  }
+
+  AtualiazarItemPedido(blnMsg : boolean){
+    this.pedidoService.GetItensPedido(this.nNumeroIped == null ? 0 : this.nNumeroIped).subscribe((ie : ItensPedido[]) => {
+      this.itensPedido = ie.filter(c => c.quantid > 0);
+      this.totalPedido = ie.reduce((sum, current) => sum + current.valtot, 0);
+      this.itensPedidoAlteracao = ie[0]
+      this.blnItensPedido = this.itensPedido.length > 0
+      if (blnMsg == true)
+        this.alertService.showAlertSuccess("Item do pedido atualizado com sucesso");
+
+    });
+
+  }
+
+  AtualizaFormaPagamento(blnMsg : boolean){
+    this.pedidoService.GetFormaPagamento(this.nNumeroIped == null ? 0 : this.nNumeroIped).subscribe((ie : FormaPagamento[]) => {
+      this.lstFormaPagto = ie.filter(c => c.id_Frp > 0);
+      console.log(ie);
+      this.formaPagto = ie[0];
+      this.totalPago = ie.reduce((sum, current) => sum + current.val_Fin, 0);
+      this.pedidoService.GetItensPagamento(ie[0].id_Frp == null ? 0 : ie[0].id_Frp).subscribe((ip : ItemPagamento[]) => {
+          this.lstItensPagto = ip.filter(c => c.id_Frp > 0);
+          this.itemPagto = ip[0];
+          this.blnItensPagto = this.lstItensPagto.length > 0
+        });
+
+        if (blnMsg == true)
+          this.alertService.showAlertSuccess("forma/Item de pagamento atualizados com sucesso");
+
+    });
   }
 
 
@@ -473,14 +495,27 @@ export class PedidosComponent implements OnInit {
     }else{
       this.blnMesmoEndereco = true;
       this.blnCampoEndereco = true;
-      this.pedidoForm.patchValue({ CEP: this.pedido.endereco.cep});
-      this.pedidoForm.patchValue({ Uf: this.pedido.endereco.uf});
-      this.pedidoForm.patchValue({ Cidade: this.pedido.endereco.localidade});
-      this.pedidoForm.patchValue({ Logradouro: this.pedido.endereco.logradouro});
-      this.pedidoForm.patchValue({ NumeroCasa: this.pedido.endereco.numero});
-      this.pedidoForm.patchValue({ Complemento: this.pedido.endereco.complemento});
-      this.pedidoForm.patchValue({ Bairro: this.pedido.endereco.bairro});
-      this.pedidoForm.patchValue({ PtoReferencia: this.pedido.endereco.pontoReferencia});
+      if (this.endCliente != undefined){
+        this.pedidoForm.patchValue({ CEP: this.endCliente.cep});
+        this.pedidoForm.patchValue({ Uf: this.endCliente.uf});
+        this.pedidoForm.patchValue({ Cidade: this.endCliente.localidade});
+        this.pedidoForm.patchValue({ Logradouro: this.endCliente.logradouro});
+        this.pedidoForm.patchValue({ NumeroCasa: this.endCliente.numero});
+        this.pedidoForm.patchValue({ Complemento: this.endCliente.complemento});
+        this.pedidoForm.patchValue({ Bairro: this.endCliente.bairro});
+        this.pedidoForm.patchValue({ PtoReferencia: this.endCliente.pontoReferencia});
+      }
+      else{
+        this.pedidoForm.patchValue({ CEP: this.clientePedido.obJ_PESSOA.obJ_ENDERECO.cep});
+        this.pedidoForm.patchValue({ Uf: this.clientePedido.obJ_PESSOA.obJ_ENDERECO.uf});
+        this.pedidoForm.patchValue({ Cidade: this.clientePedido.obJ_PESSOA.obJ_ENDERECO.localidade});
+        this.pedidoForm.patchValue({ Logradouro: this.clientePedido.obJ_PESSOA.obJ_ENDERECO.logradouro});
+        this.pedidoForm.patchValue({ NumeroCasa: this.clientePedido.obJ_PESSOA.obJ_ENDERECO.numero});
+        this.pedidoForm.patchValue({ Complemento: this.clientePedido.obJ_PESSOA.obJ_ENDERECO.complemento});
+        this.pedidoForm.patchValue({ Bairro: this.clientePedido.obJ_PESSOA.obJ_ENDERECO.bairro});
+        this.pedidoForm.patchValue({ PtoReferencia: this.clientePedido.obJ_PESSOA.obJ_ENDERECO.pontoReferencia});
+      }
+
     }
 
   }
@@ -515,8 +550,9 @@ export class PedidosComponent implements OnInit {
           this.cliente = c.obJ_PESSOA.nome
           this.idcli  = c.id_Cli
           this.idEndereco  = c.obJ_PESSOA.idEndereco
-          this.idEnderecoTipo  = "";
-          this.labelCliente = "Cliente:"
+          this.endCliente = c.obJ_PESSOA.obJ_ENDERECO
+          this.MesmoEnderecoCliente(true);
+          this.labelCliente = "Cliente: "
           // this.pedidoForm.controls['nome_Cli'].setErrors({'clienteNotValid': null});
         }else{
           this.blnClienteInvalido = true;
@@ -627,6 +663,39 @@ export class PedidosComponent implements OnInit {
     console.log(item)
   }
 
+  AlterarItemPedido(item: ItensPedido){
+    var itemPedidoAlterado = new ItensPedido();
+    this.blnGravaitemPagto = false;
+    itemPedidoAlterado.id_IPv = item.id_IPv;
+    itemPedidoAlterado.tipoFrete = this.strTipoFrete;
+    itemPedidoAlterado.quantid = this.Desc_itPedidoInput.nativeElement.value == "" ? 0 : this.Desc_itPedidoInput.nativeElement.value;
+    if (this.VlUnitarioInput.nativeElement.value != "" && this.VlUnitarioInput.nativeElement.value != "R$ ,00")
+      itemPedidoAlterado.valuni = this.PegarNumero(this.VlUnitarioInput.nativeElement.value);
+
+
+    this.pedidoService.AlterarItemPedido(itemPedidoAlterado).subscribe(
+      success => {
+        if (success.ok == "1"){
+          this.pedidoService.GetItensPedido(this.nNumeroIped).subscribe((ie : ItensPedido[]) => {
+          this.totalPedido = ie.reduce((sum, current) => sum + current.valtot, 0);
+          this.itensPedido = ie.filter(c => c.quantid > 0);
+          this.blnItensPedido = this.itensPedido.length > 0;
+          });
+          this.hideChildModal();
+          this.alertService.showAlertSuccess("Item alterado com sucesso");
+          }
+          else{
+            this.hideChildModal();
+            this.alertService.showAlertDanger("Erro ao alterar item de pedido") ;
+          }
+      },
+      error =>  {
+            this.hideChildModal();
+            this.alertService.showAlertDanger("Erro ao alterar item de pedido") ;
+            }
+    );
+  }
+
   SalvarItensEstoque(itens : ItensEstoque[] ){
 
     var intCtr : number;
@@ -639,8 +708,8 @@ export class PedidosComponent implements OnInit {
       success => {
         this.pedidoService.GetItensPedido(this.nNumeroIped).subscribe((ie : ItensPedido[]) => {
         this.totalPedido = ie.reduce((sum, current) => sum + current.valtot, 0);
-        this.totalPedido = this.totalPedido + this.numValorFrete - this.numValorDesconto;
-          this.itensPedido = ie.filter(c => c.quantid > 0);
+        this.itensPedido = ie.filter(c => c.quantid > 0);
+        this.blnItensPedido = this.itensPedido.length > 0;
         });
         this.router.navigate(['pedido/' + this.nNumeroIped]);
         this.alertService.showAlertSuccess("Item inserido com sucesso");
@@ -686,12 +755,7 @@ export class PedidosComponent implements OnInit {
     var valorAmortizar : number;
     this.blnGravaFormaPagto = true;
 
-    valorAmortizar = (this.totalPedido + this.numValorFrete - this.numValorDesconto) - this.totalPago;
-
-    console.log ("valorAmortizar");
-    console.log (valorAmortizar);
-    console.log (this.totalPedido);
-    console.log (this.totalPago);
+    valorAmortizar = (this.totalPedido - this.numValorDesconto) - this.totalPago;
 
     this.strOperacaoFormaPagto = "Incluir";
     this.ResetFormaPagamento();
@@ -704,16 +768,28 @@ export class PedidosComponent implements OnInit {
     else
       strvalor = "R$ " + String(valorAmortizar) + ",00";
 
+    this.blnFormapagto = false;
+
     this.val_Fin2Input.nativeElement.value = strvalor;
     this.NumParcelasInput.nativeElement.value = "1";
     this.ValorParcelaInput.nativeElement.value = strvalor;
+
     this.AlterarFormaPagtoModal.show();
   }
 
   SalvarFormaPagamento(formaPagto : FormaPagamento){
+
+  var valor : number;
+
+  valor = Number(String(this.ValorParcelaInput.nativeElement.value).replace('R$','').replace(',','.'));
+
+
     formaPagto.usrIns = this.usuarioLogado.usuario;
     console.log(this.usuarioLogado);
     formaPagto.id_Usr = this.usuarioLogado.id_Usr;
+    this.blnAlterarFormaPagto = false;
+    this.blnAlterarFormaPagtoNumparc = true;
+
 
     let tipoPagto = this.formaPagtoDominio.filter(c=> c.id_Forma == this.id_FormaInput.nativeElement.value);
     var itempagto = new ItemPagamento();
@@ -728,7 +804,7 @@ export class PedidosComponent implements OnInit {
     itempagto.praca = this.pracaInput.nativeElement.value;
     itempagto.num_Cheq = this.chequeInput.nativeElement.value;
     itempagto.num_Parc = Number(this.NumParcelasInput.nativeElement.value);
-    itempagto.valor = Number(String(this.ValorParcelaInput.nativeElement.value).replace('R$','').replace(',','.'));
+    itempagto.valor = valor == 0 ? formaPagto.val_Fin : valor;
     this.pedidoService.IncluirFormaPagamento(formaPagto,itempagto).subscribe(
       success => {
         console.log("success");
@@ -737,12 +813,13 @@ export class PedidosComponent implements OnInit {
         if (success.ok == "1"){
           this.pedidoService.GetItensPedido(this.nNumeroIped).subscribe((ie : ItensPedido[]) => {
           this.totalPedido = ie.reduce((sum, current) => sum + current.valtot, 0);
-          this.totalPedido = this.totalPedido + this.numValorFrete - this.numValorDesconto;
-            this.itensPedido = ie.filter(c => c.quantid >  0);
+          this.itensPedido = ie.filter(c => c.quantid >  0);
+          this.blnItensPedido = this.itensPedido.length > 0;
           });
           this.pedidoService.GetFormaPagamento(this.nNumeroIped).subscribe((fp : FormaPagamento[]) => {
             this.totalPago = fp.reduce((sum, current) => sum + current.val_Fin, 0);
               this.lstFormaPagto = fp.filter(c => c.id_Frp > 0);
+              this.blnItensPagto = this.lstFormaPagto.length > 0;
             });
 
           this.router.navigate(['pedido/' + this.nNumeroIped]);
@@ -772,6 +849,7 @@ export class PedidosComponent implements OnInit {
         success => {
                     this.pedidoService.GetItensPedido(this.nNumeroIped).subscribe((ie : ItensPedido[]) => {
                       this.itensPedido = ie.filter( c => c.quantid > 0);
+                      this.blnItensPedido = this.itensPedido.length > 0;
                     });
                     this.router.navigate(['pedido/' + this.nNumeroIped]);
                     this.alertService.showAlertSuccess("Item do pedido excluído com sucesso");
@@ -781,6 +859,10 @@ export class PedidosComponent implements OnInit {
                   }
       )
   }
+
+  ClickTipoFrete(value){
+    this.strTipoFrete = value;
+ }
 
 
   ExcluirFormaPagamento(fp : FormaPagamento){
@@ -799,6 +881,7 @@ export class PedidosComponent implements OnInit {
                       this.totalPago = fp.reduce((sum, current) => sum + current.val_Fin, 0);
                       this.pedidoService.GetItensPagamento(fp[0].id_Frp).subscribe((ip : ItemPagamento[]) => {
                         this.lstItensPagto = ip.filter(c => c.id_Frp > 0);
+                        this.blnItensPagto = this.lstFormaPagto.length > 0;
                       });
                     });
                     this.router.navigate(['pedido/' + this.nNumeroIped]);
@@ -813,19 +896,29 @@ export class PedidosComponent implements OnInit {
   public showChildModal(itemPedido : ItensPedido):void {
 
     this.itensPedidoAlteracao = itemPedido;
+    this.VlTotalItemPedInput.nativeElement.value = this.FormataReal(String(itemPedido.valtot));
+    this.VlUnitarioInput.nativeElement.value = ""
+    this.Desc_itPedidoInput.nativeElement.value = ""
+    this.strTipoFrete = itemPedido.tipoFrete.substring(0,1).toUpperCase();
     this.childModal.show();
 
   }
 
   AlterarFormaPagamentoModal(formaPagto : FormaPagamento){
     this.formaPagto = formaPagto;
+    this.blnAlterarFormaPagto = true;
+    this.blnAlterarFormaPagtoNumparc = !(formaPagto.tot_Parc > 1);
+    console.log(this.blnAlterarFormaPagtoNumparc)
+
+    console.log(formaPagto)
+
     this.pedidoService.GetItensPagamento(formaPagto.id_Frp).subscribe((ip : ItemPagamento[]) => {
       let itensPagto = ip;
       var strvalor : string;
       var numValor : number;
       var strValorFin : string;
 
-      numValor = (this.totalPedido + this.numValorFrete - this.numValorDesconto) - this.totalPago;
+      numValor = (this.totalPedido - this.numValorDesconto) - this.totalPago;
       if (String(numValor).indexOf(".") > -1)
         strvalor = "R$ " + String(numValor).replace(".",",");
       else
@@ -836,10 +929,11 @@ export class PedidosComponent implements OnInit {
       else
         strValorFin = "R$ " + String(formaPagto.val_Fin) + ",00";
 
+      this.PopulaParcela(formaPagto.tot_Parc,formaPagto.tot_Parc);
+
       this.val_Fin2Input.nativeElement.value = strvalor;
       this.id_FormaInput.nativeElement.value = formaPagto.id_Forma;
       this.autorizacaoInput.nativeElement.value = formaPagto.aut_Cart;
-      this.NumParcelasInput.nativeElement.value = itensPagto[0].num_Parc;
       this.chequeInput.nativeElement.value = itensPagto[0].num_Cheq;
       this.bancoInput.nativeElement.value = itensPagto[0].banco;
       this.agenciaInput.nativeElement.value = itensPagto[0].agencia;
@@ -853,14 +947,20 @@ export class PedidosComponent implements OnInit {
   }
 
   AlterarFormapagamentoFechar(){
+    this.blnAlterarFormaPagto = false;
+    this.blnAlterarFormaPagtoNumparc = true;
     this.AlterarFormaPagtoModal.hide();
   }
 
   SelecionarFormaPagamento(fp : FormaPagamento){
+    this.currFormapagto = new ItemPagamento();
+
     if (fp.id_Frp != null){
-      this.currFormapagto = fp.formaPag;
+      this.currFormapagto.formaPag = fp.formaPag;
+      console.log(this.currFormapagto);
       this.pedidoService.GetItensPagamento(fp.id_Frp == null ? 0 : fp.id_Frp).subscribe((ip : ItemPagamento[]) => {
         this.lstItensPagto = ip;
+        this.blnItensPagto = this.lstItensPagto.length > 0
       });
     }
 
@@ -870,12 +970,29 @@ export class PedidosComponent implements OnInit {
     this.childModal.hide();
    }
 
+   public hideAlterarItemPagamentoModal():void {
+    this.blnGravaitemPagto = false;
+    this.AlterarItemPagamentoModal.hide();
+   }
+
   FormataNumero(strValor : string): number{
 
     if (strValor == null || strValor == "")
       return 0;
 
     return Number(strValor.replace("R$","").replace(",","."));
+  }
+
+  PegarNumero(valor : string): number{
+    var nResult : number;
+
+    if (valor.indexOf(",00") > -1)
+      nResult = Number(valor.replace("R$","").replace(",00",""))
+    else
+      nResult = Number(valor.replace("R$","").replace(",","."))
+
+    return nResult;
+
   }
 
 
@@ -978,28 +1095,46 @@ export class PedidosComponent implements OnInit {
 
   EncerraPedido(pedido: Pedido){
 
+    var instvendedor = new Vendedor();
+
     let msgSuccess = "Pedido encerrado com sucesso";
     let msgErro = "Erro ao encerrar Pedido. Tente novamente";
     let msgQuestãoTitulo = "Confirmação de Encerramento do Pedido"
     let msgQuestaoCorpo = "Você realmente deseja encerrar este Pedido?"
     let msgBotao = "Encerrar"
 
-    console.log("hhhhhhhhhhhhhhhhhhhhhhhhhhh");
-    console.log(pedido.dtPed)
+    console.log("pedido tela");
+    console.log(pedido)
+    console.log("pedido code behind");
+    console.log(this.pedido)
 
-    pedido = this.pedido;
-
-
-    let DataAtual = new Date();
-    pedido.dtPed = DataAtual;
-    pedido.entrega = DataAtual;
-    if (this.VlFreteInput.nativeElement.value != null)
+      let DataAtual = new Date();
+    // pedido.dtPed = DataAtual;
+    // pedido.entrega = DataAtual;
+    if (this.VlFreteInput.nativeElement.value != null && this.VlFreteInput.nativeElement.value != "")
       pedido.vlFrete = Number(String(this.VlFreteInput.nativeElement.value).replace('R$ ','').replace(",","."));
-    else
+
+    if (this.DescontoInput.nativeElement.value != null && this.DescontoInput.nativeElement.value != "")
+      pedido.desconto = Number(String(this.DescontoInput.nativeElement.value).replace('R$ ','').replace(",","."));
+
+    if (this.Desc_PorInput.nativeElement.value != null && this.Desc_PorInput.nativeElement.value != "")
+      pedido.desc_Por = Number(String(this.DescontoInput.nativeElement.value).replace('R$ ','').replace(",","."));
+
+    let dateString = pedido["entrega"]["year"] + "-" + pedido["entrega"]["month"] + "-" + pedido["entrega"]["day"];
+    let newDate = new Date(dateString);
+    let datePedidoStr = String(pedido["dtPed"]).substr(6,4) + "-" + String(pedido["dtPed"]).substr(3,2) + "-" + String(pedido["dtPed"]).substr(0,2)
+    let datePed = new Date(datePedidoStr)
+    pedido.entrega = newDate;
+    pedido.tipo = this.pedido.tipo;
+    pedido.dtPed = datePed;
+
+    instvendedor.idVendedor = pedido["idVendedor"];
+    pedido.vendedor = instvendedor;
 
     console.log("DataAtual gggggggggggggggggggg");
     console.log(this.VlFreteInput)
-    console.log(pedido)
+    console.log(pedido.vendedor)
+    console.log(pedido.entrega)
     console.log("DataAtual gggggggggggggggggggg");
 
 
@@ -1029,21 +1164,67 @@ export class PedidosComponent implements OnInit {
   }
 
   SetarValorParcela(){
-    var strvalor : string;
-    var valorAmortizar : number;
+    var strvalor : string ;
+    var nValor : number;
+
+    this.LimpaCampos("valorParcela");
+
+    strvalor = this.val_Fin2Input.nativeElement.value;
+
     var NumParc = Number(this.NumParcelasInput.nativeElement.value);
 
-    valorAmortizar = ((this.totalPedido + this.numValorFrete - this.numValorDesconto)  - this.totalPago) / NumParc;
-    if (String(valorAmortizar.toFixed(2)).indexOf(".") > -1)
-      strvalor = "R$ " + String(valorAmortizar.toFixed(2)).replace(".",",");
-    else
-      strvalor = "R$ " + String(valorAmortizar.toFixed(2)) + ",00";
+    nValor = Number(strvalor.replace(",",".").replace("R$",""));
 
-    this.ValorParcelaInput.nativeElement.value = strvalor;
+
+
+    nValor = nValor / NumParc
+
+    this.ValorParcelaInput.nativeElement.value = this.FormataReal(String(nValor));
 
   }
 
-  SetarValidacaoGravacao(){
+  LimpaCampos(campo : string){
+
+    switch (campo)
+    {
+      case "valorAmortizar":
+        this.id_FormaInput.nativeElement.value = "";
+        this.NumParcelasInput.nativeElement.value = "";
+        this.ValorParcelaInput.nativeElement.value = "";
+        this.chequeInput.nativeElement.value = "";
+        this.bancoInput.nativeElement.value = "";
+        this.agenciaInput.nativeElement.value = "";
+        this.pracaInput.nativeElement.value = "";
+        this.autorizacaoInput.nativeElement.value = "";
+        break;
+
+      case "tipoPagto":
+
+        this.NumParcelasInput.nativeElement.value = "";
+        this.ValorParcelaInput.nativeElement.value = "";
+        this.chequeInput.nativeElement.value = "";
+        this.bancoInput.nativeElement.value = "";
+        this.agenciaInput.nativeElement.value = "";
+        this.pracaInput.nativeElement.value = "";
+        this.autorizacaoInput.nativeElement.value = "";
+        break;
+
+      case "valorParcela":
+        this.chequeInput.nativeElement.value = "";
+        this.bancoInput.nativeElement.value = "";
+        this.agenciaInput.nativeElement.value = "";
+        this.pracaInput.nativeElement.value = "";
+        this.autorizacaoInput.nativeElement.value = "";
+        break;
+
+      case "cheque":
+        this.autorizacaoInput.nativeElement.value = "";
+        break;
+
+    }
+  }
+
+  SetarValidacaoGravacao(campo : string){
 
     var strvalor : string;
     var valorAmortizar : number;
@@ -1056,17 +1237,24 @@ export class PedidosComponent implements OnInit {
     this.blnCheques  = true;
     this.blnAutorizacao  = true;
 
-    console.log("entrou no A ***************")
+
+    if ((campo != "autorizacao") && (campo != "cheque")){
+      this.NumParcelasInput.nativeElement.value = 1;
+      this.ValorParcelaInput.nativeElement.value = "";
+    }
+
+
     if (this.id_FormaInput == undefined)
       return true;
 
-    console.log("entrou no AAAAA ***************")
-
     let tipoPagto = this.formaPagtoDominio.filter(c=> c.id_Forma == this.id_FormaInput.nativeElement.value);
 
-    let valorFinan = Number(String(this.val_Fin2Input.nativeElement.value).replace("R$","").replace(",","."))
+    let valorFinan = Number(String(this.val_Fin2Input.nativeElement.value).replace("R$","").replace(".","").replace(",","."))
 
-    console.log(tipoPagto[0].tp_Pagto + " - tipo pagamento");
+    if (valorFinan > 0)
+      this.blnFormapagto = false;
+    else
+      this.blnFormapagto = true;
 
     if (valorFinan > ((this.totalPedido + this.numValorFrete - this.numValorDesconto)  - this.totalPago)){
       this.blnGravaFormaPagto = true;
@@ -1079,100 +1267,98 @@ export class PedidosComponent implements OnInit {
 
     this.blnGravaFormaPagto  = false;
 
-    var forPgto = this.formaPagtoDominio.filter(c=> c.id_Forma == this.id_FormaInput.nativeElement.value);
-    numParcMinimo = forPgto[0].numMinParcelas;
-    numParcMaximo = forPgto[0].numMaxParcelas;
+    if (this.id_FormaInput.nativeElement.value > 0){
+      var forPgto = this.formaPagtoDominio.filter(c=> c.id_Forma == this.id_FormaInput.nativeElement.value);
+      numParcMinimo = forPgto[0].numMinParcelas;
+      numParcMaximo = forPgto[0].numMaxParcelas;
+    }
     // numeroParc = Number(this.NumParcelasInput.nativeElement.value);
     numeroParc = numParcMinimo;
     this.PopulaParcela(Number(numParcMinimo),Number(numParcMaximo))
 
-    console.log(numParcMinimo +  " parc min")
-    console.log(numParcMaximo +  " parc max")
-    console.log(numeroParc +  " nº parc ")
+    valorAmortizar = valorFinan / numeroParc;
 
-    valorAmortizar = ((this.totalPedido + this.numValorFrete - this.numValorDesconto)  - this.totalPago) / numeroParc;
     if (String(valorAmortizar.toFixed(2)).indexOf(".") > -1)
       strvalor = "R$ " + String(valorAmortizar.toFixed(2)).replace(".",",");
     else
       strvalor = "R$ " + String(valorAmortizar.toFixed(2)) + ",00";
 
-    this.ValorParcelaInput.nativeElement.value = strvalor;
 
-    switch (tipoPagto[0].tp_Pagto){
+    if (tipoPagto.length > 0){
 
-      case "Q": //cheque
-        console.log("passou pelo cheque")
-        this.blnCheques = false;
-        if (this.chequeInput.nativeElement.value == ""){
-          this.blnGravaFormaPagto = true;
-          return;
-        }
-        else if (this.agenciaInput.nativeElement.value == ""){
-          this.blnGravaFormaPagto = true;
-          return;
-        }
-        else if (this.bancoInput.nativeElement.value == ""){
-          this.blnGravaFormaPagto = true;
-          return;
-        }
-        else if (this.pracaInput.nativeElement.value == ""){
-          this.blnGravaFormaPagto = true;
-          return;
-        }
-        break;
-      case "D": //debito
+      if (campo == "formaPagto")
+        this.LimpaCampos("tipoPagto");
+
+      switch (tipoPagto[0].tp_Pagto){
+
+        case "Q": //cheque
+
+          if (campo == "cheque")
+            this.LimpaCampos("cheque");
+
+          this.blnCheques = false;
+          if (this.chequeInput.nativeElement.value == ""){
+            this.blnGravaFormaPagto = true;
+            return;
+          }
+          else if (this.agenciaInput.nativeElement.value == ""){
+            this.blnGravaFormaPagto = true;
+            return;
+          }
+          else if (this.bancoInput.nativeElement.value == ""){
+            this.blnGravaFormaPagto = true;
+            return;
+          }
+          else if (this.pracaInput.nativeElement.value == ""){
+            this.blnGravaFormaPagto = true;
+            return;
+          }
+          break;
+        case "D": //debito
+          // validar campo autorização
+          this.blnAutorizacao = false;
+
+          if (this.autorizacaoInput.nativeElement.value == ""){
+            this.blnGravaFormaPagto = true;
+            return;
+          }
+          break;
+
+        case "C": //crédito
         // validar campo autorização
-        console.log("passou pelo debito")
-        this.blnAutorizacao = false;
-        if (this.autorizacaoInput.nativeElement.value == ""){
-          this.blnGravaFormaPagto = true;
-          return;
-        }
-        break;
+          this.blnAutorizacao = false;
 
-      case "C": //debito
-      // validar campo autorização
+          if (numeroParc == 0){
+            this.blnGravaFormaPagto = true;
+            return;
+          }
 
-        if (numeroParc == 0){
-          this.blnGravaFormaPagto = true;
-          return;
-        }
-        console.log("passou pelo credito")
-        this.blnAutorizacao = false;
+          if ((numParcMinimo > 1) && (numeroParc <= numParcMaximo) && (campo != "autorizacao") && (campo != "cheque")) {
+            this.blnOutraFormas = false;
+            this.ValorParcelaInput.nativeElement.value = strvalor;
+            this.NumParcelasInput.nativeElement.value = numParcMinimo;
+          }
 
+          if (numParcMaximo == 1 )
+            this.blnOutraFormas = true;
 
-        if ((numParcMinimo > 1) && (numeroParc <= numParcMaximo) ) {
-          console.log("passou pelo credito cccccccccccccccccc")
-          this.blnOutraFormas = false;
-          // valorAmortizar = (this.totalPedido - this.totalPago) / numeroParc;
-          // if (String(valorAmortizar.toFixed(2)).indexOf(".") > -1)
-          //   strvalor = "R$ " + String(valorAmortizar.toFixed(2)).replace(".",",");
-          // else
-          //   strvalor = "R$ " + String(valorAmortizar.toFixed(2)) + ",00";
-
-          // this.ValorParcelaInput.nativeElement.value = strvalor;
-
-        }
-
-        if (numParcMaximo == 1 )
-          this.blnOutraFormas = true;
-
-        if (numeroParc > numParcMaximo){
-          this.blnGravaFormaPagto = true;
-          this.blnOutraFormas = false
-        }
+          if (numeroParc > numParcMaximo){
+            this.blnGravaFormaPagto = true;
+            this.blnOutraFormas = false
+          }
 
 
-        if (this.autorizacaoInput.nativeElement.value == ""){
-          this.blnGravaFormaPagto = true;
-          return;
-        }
+          if (this.autorizacaoInput.nativeElement.value == ""){
+            this.blnGravaFormaPagto = true;
+            return;
+          }
 
-        if (numParcMaximo > 1 && numeroParc == 1)
-          this.blnGravaFormaPagto = true;
-          return;
+          if (numParcMaximo > 1 && numeroParc == 1)
+            this.blnGravaFormaPagto = true;
+            return;
 
-        break;
+          break;
+      }
     }
 
     this.blnGravaFormaPagto = false;
@@ -1189,9 +1375,58 @@ export class PedidosComponent implements OnInit {
     }
   }
 
+  IsNumber($event) {
+    if ($event.charCode >= 48 && $event.charCode < 58 || $event.charCode == 82 || $event.charCode == 44 || $event.charCode == 36)
+      return true
+    else
+      return false
+  }
+
+  AtualizaValorItempedido(valor: string,tipoDesc : string){
+    var valorAux : number;
+
+    valorAux = valor == "" ? 0 : Number(valor.trim().replace("R$","").replace(",00","").replace(",","."));
+
+    if (tipoDesc == "valor"){
+      this.Desc_itPedidoInput.nativeElement.value = ""
+
+      this.VlTotalItemPedInput.nativeElement.value = this.FormataReal(String(valorAux * this.itensPedidoAlteracao.quantid));
+    }
+    else{
+      this.VlUnitarioInput.nativeElement.value = ""
+      console.log("entrou desconto")
+      console.log(this.itensPedidoAlteracao.valuni)
+      console.log(this.itensPedidoAlteracao.valuni *  (valorAux/100))
+      console.log(valorAux/100)
+      console.log(valorAux)
+
+      this.VlTotalItemPedInput.nativeElement.value = this.FormataReal(String((this.itensPedidoAlteracao.valuni - (this.itensPedidoAlteracao.valuni *  (valorAux/100))) * this.itensPedidoAlteracao.quantid ));
+    }
+  }
+
+  AtribuiValorFormat(){
+    this.VlUnitarioInput.nativeElement.value = this.VlTotalItemPedInput.nativeElement.value;
+  }
+
+  FormataReal(valor : string):string{
+
+    var strResult : string;
+
+    if ((valor.indexOf(",") > -1)  || (valor.indexOf(".") > -1)){
+      strResult = "R$ " + valor.replace(".",",");
+    }else
+      strResult = "R$ " + valor + ",00"
+
+    return strResult
+
+    return null;
+  }
+
+
+
   AtualizaValorPedido(valor: string,tipoValor : string){
     var valorAux : number;
-    valorAux = Number(String(valor).replace("R$","").replace(",","."));
+    valorAux = Number(String(valor).replace("R$","").replace(".","").replace(",","."));
 
     if (tipoValor == "VlFrete")
       this.numValorFrete = valorAux
@@ -1200,16 +1435,24 @@ export class PedidosComponent implements OnInit {
       this.numValorDesconto = valorAux;
     }
     else{
+      if (String(this.Desc_PorInput.nativeElement.value).length > 2)
+      {
+        this.Desc_PorInput.nativeElement.value = String(this.Desc_PorInput.nativeElement.value).substr(0,2);
+        valorAux = this.Desc_PorInput.nativeElement.value
+      }
       this.DescontoInput.nativeElement.value = "R$ " + String(Number((this.totalPedido * (valorAux/100))).toFixed(2)).replace(".",",");
       this.numValorDesconto = this.totalPedido * (valorAux/100);
     }
+
+    if ((this.totalPedido - this.numValorDesconto - this.totalPago) < 0)
+      this.alertService.showAlertDanger("Desconto concedido após o pagamento. Saldo em haver") ;
   }
 
   ResetFormaPagamento(){
     var strvalor : string;
     var valorAmortizar : number;
 
-    valorAmortizar = (this.totalPedido + this.numValorFrete - this.numValorDesconto) - this.totalPago;
+    valorAmortizar = (this.totalPedido - this.numValorDesconto) - this.totalPago;
     if (String(valorAmortizar).indexOf(".") > -1)
       strvalor = "R$ " + String(valorAmortizar).replace(".",",");
     else
@@ -1254,6 +1497,11 @@ export class PedidosComponent implements OnInit {
     evt.currentTarget.className += " active";
   }
 
-
+  AlteraItemPagamentoJanela(itemPagto : ItemPagamento){
+    this.itemPagtoEditavel = itemPagto;
+    this.blnGravaitemPagto = !(this.currFormapagto.formaPag.indexOf("CHEQUE") > -1);
+    this.itemPagtoEditavel.formaPag = this.currFormapagto.formaPag;
+    this.AlterarItemPagamentoModal.show();
+  }
 
 }

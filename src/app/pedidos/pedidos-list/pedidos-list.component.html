@@ -36,15 +36,15 @@
         <form>
           <div class="row">
               <div class="col-sm-3  col-xs-3" >
-                  <select #campo name="campo" class="form-control" >
+                  <select #campo name="campo" class="form-control form-control-sm" >
                       <option *ngFor=  "let c of (arrFiltro)" [value]="c.campo">{{c.desc_campo}}</option>
                   </select>
               </div>
               <div class="col-sm-4  col-xs-4">
-                  <input #criterio name="criterio" class="form-control" autocomplete="off" placeholder="criterio" (input)="AtribuiValor(criterio.value)">
+                  <input #criterio name="criterio" class="form-control form-control-sm" autocomplete="off" placeholder="criterio" (input)="AtribuiValor(criterio.value)">
               </div>
               <div class="col-sm-5  col-xs-5" >
-                <button (click)="ConsultarCliente(campo,criterio,integrado)"type="button" class="btn btn-primary pull-right btn-block" [disabled]="!blnCriterio" >
+                <button (click)="ConsultarCliente(campo,criterio,integrado)"type="button" class="btn btn-primary pull-right btn-block btn-sm" [disabled]="!blnCriterio" >
                   <i class="fa fa-save"></i> Consultar
                 </button>
 
@@ -122,16 +122,16 @@
                       <ngb-highlight [result]="pedido.descrTipo.substring(0,5)" [term]="service.searchTerm"></ngb-highlight>
                     </span>
                   </td>
-                  <td><a class="nav-link" [routerLink]="['/pedido',pedido.id_Ped]">
+                  <td><a  [routerLink]="['/pedido',pedido.id_Ped]">
                     <span tooltip="Editar" placement="top" show-delay="500">
                         <i class="fa fa-edit"></i>
                       </span>
                       </a>
                   </td>
-                  <td><a class="nav-link" (click)="ExcluirPedido(pedido.id_Ped);"  [routerLink]="['/pedido',pedido.id_Ped]">
+                  <td><a (click)="ExcluirPedido(pedido.id_Ped);"  [routerLink]="['/pedido',pedido.id_Ped]">
                     <span tooltip="Editar" placement="top" show-delay="500">
-                      <img src="/assets/imagens/icons/excluir.png" class="mr-2" style="width: 20px">
-                      </span>
+                      <i class="fa fa-minus-circle" style="color:red;"></i>
+                    </span>
                       </a>
                   </td>
                 </tr>

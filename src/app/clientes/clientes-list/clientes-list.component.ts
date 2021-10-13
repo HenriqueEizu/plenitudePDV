@@ -93,6 +93,8 @@ export class ClientesListComponent implements OnInit {
       }
     });
 
+    console.log(this.service)
+    console.log("ssssssssssssssssss")
     this.service.sortColumn = column;
     this.service.sortDirection = direction;
   }
